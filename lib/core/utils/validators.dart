@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class Validators {
+  static String? email(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+    if (value == null || value.trim().isEmpty) {
+      return l10n.emailRequired;
+    }
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value.trim())) {
+      return l10n.emailInvalid;
+    }
+    return null;
+  }
+
+  static String? password(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+    if (value == null || value.isEmpty) {
+      return l10n.passwordRequired;
+    }
+    if (value.length < 8) {
+      return l10n.passwordTooShort;
+    }
+    return null;
+  }
+}

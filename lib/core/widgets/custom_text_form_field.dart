@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/theme/text_styles.dart';
+
+class CustomTextFormField extends StatefulWidget {
+  final String hintText;
+  final TextEditingController controller;
+  final TextInputType keyboardType;
+  final TextStyle? hintStyle;
+  final Color? fillColor;
+  final Color? cursorColor;
+  final bool obscureText;
+  final double? width;
+  final double? height;
+  final String? Function(String?)? validator;
+
+  const CustomTextFormField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    this.obscureText = false,
+    this.keyboardType = TextInputType.text,
+    this.hintStyle,
+    this.fillColor,
+    this.cursorColor,
+    this.width,
+    this.height,
+    required this.validator,
+  });
+
+  @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  late bool isSecure;
+
+  @override
+  void initState() {
+    super.initState();
+    isSecure = widget.obscureText;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final onSurface = colorScheme.onSurface;
+    final dividerColor = theme.dividerColor;
+    final surfaceColor = widget.fillColor ?? colorScheme.surface;
+    final textStyle = AppTextStyles.regular14Black.copyWith(color: onSurface);
+
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      alignment: Alignment.center,
+      child: TextFormField(
+        style: textStyle,
+        cursorColor: AppColors.primary,
+        controller: widget.controller,
+        obscureText: widget.obscureText ? isSecure : false,
+        keyboardType: widget.keyboardType,
+        decoration: InputDecoration(
+          suffixIcon: widget.obscureText
+              ? IconButton(
+                  icon: isSecure
+                      ? Icon(Icons.visibility_off_outlined,
+                          color: dividerColor, size: 24)
+                      : const Icon(Icons.visibility_outlined,
+                          color: AppColors.primary, size: 24),
+                  onPressed: () {
+                    setState(() {
+                      isSecure = !isSecure;
+                    });
+                  },
+                )
+              : null,
+          filled: true,
+          fillColor: surfaceColor,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
+              borderSide: BorderSide(color: dividerColor)),
+          focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              borderSide: BorderSide(color: AppColors.primary)),
+          errorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              borderSide: BorderSide(color: AppColors.redColor)),
+          focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              borderSide: BorderSide(color: AppColors.redColor)),
+          errorStyle:
+              AppTextStyles.regular14Black.copyWith(color: AppColors.redColor),
+          hintText: widget.hintText,
+          hintStyle: widget.hintStyle ??
+              AppTextStyles.regular14Black
+                  .copyWith(color: onSurface.withAlpha(102)),
+        ),
+        validator: widget.validator,
+      ),
+    );
+  }
+}

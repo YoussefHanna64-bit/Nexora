@@ -1,0 +1,18 @@
+{
+  "@@locale": "en",
+
+  "welcomeBack": "Welcome Back",
+  "signInSubtitle": "Sign in to continue shopping",
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "forgotPassword": "Forgot password?",
+  "or": "OR",
+  "signInWithGoogle": "Sign in with Google",
+  "dontHaveAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  "emailRequired": "Please enter your email",
+  "emailInvalid": "Please enter a valid email address",
+  "passwordRequired": "Please enter your password",
+  "passwordTooShort": "Password must be at least 8 characters"
+}

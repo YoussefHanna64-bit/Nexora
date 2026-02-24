@@ -1,0 +1,18 @@
+{
+  "@@locale": "ar",
+
+  "welcomeBack": "مرحباً بعودتك",
+  "signInSubtitle": "سجّل دخولك لمتابعة التسوق",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "login": "تسجيل الدخول",
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "or": "أو",
+  "signInWithGoogle": "تسجيل الدخول بـ Google",
+  "dontHaveAccount": "ليس لديك حساب؟",
+  "signUp": "إنشاء حساب",
+  "emailRequired": "يرجى إدخال بريدك الإلكتروني",
+  "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+  "passwordRequired": "يرجى إدخال كلمة المرور",
+  "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل"
+}
