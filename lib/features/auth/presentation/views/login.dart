@@ -87,7 +87,9 @@ class _LoginState extends State<Login> {
                     ),
                     CustomPrimaryButton(
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {}
+                          if (formKey.currentState!.validate()) {
+                            context.go(Routes.home);
+                          }
                         },
                         buttonText: l10n.login,
                         isLoading: false),
