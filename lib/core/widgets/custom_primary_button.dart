@@ -3,7 +3,7 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
 
-class CustomPrimaryButton extends StatefulWidget {
+class CustomPrimaryButton extends StatelessWidget {
   final String buttonText;
   final Color? fillColor;
   final VoidCallback onPressed;
@@ -22,18 +22,13 @@ class CustomPrimaryButton extends StatefulWidget {
   });
 
   @override
-  State<CustomPrimaryButton> createState() => _CustomPrimaryButtonState();
-}
-
-class _CustomPrimaryButtonState extends State<CustomPrimaryButton> {
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width:widget.width??double.infinity,
-      height: widget.height,
+      width:width??double.infinity,
+      height: height,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(widget.isLoading
+          backgroundColor: WidgetStateProperty.all(isLoading
               ? AppColors.greyColor
               : AppColors.primary),
           shape: WidgetStateProperty.all(
@@ -42,13 +37,13 @@ class _CustomPrimaryButtonState extends State<CustomPrimaryButton> {
             ),
           ),
         ),
-        onPressed: widget.isLoading ? null : widget.onPressed,
-        child: widget.isLoading
+        onPressed: isLoading ? null : onPressed,
+        child: isLoading
             ? const CircularProgressIndicator(
           color: AppColors.whiteColor,
           strokeWidth: 2,
         )
-            : Text(widget.buttonText, style: AppTextStyles.bold16White),
+            : Text(buttonText, style: AppTextStyles.bold16White),
       ),
     );
   }

@@ -2,17 +2,26 @@
   "@@locale": "en",
 
   "welcomeBack": "Welcome Back",
+  "createAccount": "Create Account",
   "signInSubtitle": "Sign in to continue shopping",
+  "signUpSubtitle": "Sign up to start shopping",
+  "fullName": "Full Name",
   "email": "Email",
   "password": "Password",
+  "confirmPassword": "Confirm Password",
   "login": "Login",
   "forgotPassword": "Forgot password?",
   "or": "OR",
   "signInWithGoogle": "Sign in with Google",
   "dontHaveAccount": "Don't have an account?",
+  "alreadyHaveAccount": "Already have an account?",
   "signUp": "Sign Up",
+  "usernameRequired": "Please enter your full name",
+  "usernameTooShort": "Name must be at least 3 characters",
   "emailRequired": "Please enter your email",
   "emailInvalid": "Please enter a valid email address",
   "passwordRequired": "Please enter your password",
-  "passwordTooShort": "Password must be at least 8 characters"
+  "passwordTooShort": "Password must be at least 8 characters",
+  "confirmPasswordRequired": "Please confirm your password",
+  "passwordsDoNotMatch": "Passwords do not match"
 }

@@ -48,141 +48,137 @@ class _LoginState extends State<Login> {
       ),
       body: Form(
         key: formKey,
-        child: SizedBox(
-          height: h,
-          width: w,
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.04, vertical: h * 0.02),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: w * 0.04, vertical: h * 0.02),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      l10n.welcomeBack,
+                      style: AppTextStyles.extraBold28Black
+                          .copyWith(color: onSurface),
+                    ),
+                    Text(
+                      l10n.signInSubtitle,
+                      style: AppTextStyles.regular14Grey,
+                    ),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    CustomTextFormField(
+                      hintText: l10n.email,
+                      controller: emailController,
+                      validator: (value) => Validators.email(context, value),
+                    ),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    CustomTextFormField(
+                        hintText: l10n.password,
+                        controller: passwordController,
+                        validator: (value) =>
+                            Validators.password(context, value),
+                        obscureText: true),
+                    SizedBox(
+                      height: h * 0.04,
+                    ),
+                    CustomPrimaryButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {}
+                        },
+                        buttonText: l10n.login,
+                        isLoading: false),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          text: l10n.forgotPassword,
+                          style: AppTextStyles.bold16Primary,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              context.go(Routes.register);
+                            }),
+                    ),
+                    SizedBox(
+                      height: h * 0.03,
+                    ),
+                    Row(children: [
+                      Expanded(
+                          child: Divider(
+                            color: Theme.of(context).dividerColor,
+                        thickness: 2,
+                        indent: 10,
+                        endIndent: 9,
+                      )),
                       Text(
-                        l10n.welcomeBack,
-                        style: AppTextStyles.extraBold28Black
-                            .copyWith(color: onSurface),
-                      ),
-                      Text(
-                        l10n.signInSubtitle,
+                        l10n.or,
                         style: AppTextStyles.regular14Grey,
                       ),
-                      SizedBox(
-                        height: h * 0.02,
+                      Expanded(
+                          child: Divider(
+                        color: Theme.of(context).dividerColor,
+                        thickness: 2,
+                        indent: 10,
+                        endIndent: 14,
+                      )),
+                    ]),
+                    SizedBox(
+                      height: h * 0.04,
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Image.asset(
+                        AppIcons.google,
+                        height: 20,
+                        width: 20,
                       ),
-                      CustomTextFormField(
-                        hintText: l10n.email,
-                        controller: emailController,
-                        validator: (value) => Validators.email(context, value),
+                      label: Text(
+                        l10n.signInWithGoogle,
+                        style: AppTextStyles.regular14Black
+                            .copyWith(color: onSurface),
                       ),
-                      SizedBox(
-                        height: h * 0.02,
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(double.infinity, 0),
+                        shadowColor: Colors.transparent,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.surface,
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        side: BorderSide(
+                          color: Theme.of(context).dividerColor,
+                          width: 1,
+                        ),
                       ),
-                      CustomTextFormField(
-                          hintText: l10n.password,
-                          controller: passwordController,
-                          validator: (value) =>
-                              Validators.password(context, value),
-                          obscureText: true),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
-                      CustomPrimaryButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {}
-                          },
-                          buttonText: l10n.login,
-                          isLoading: false),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                            text: l10n.forgotPassword,
+                    ),
+                    SizedBox(
+                      height: h * 0.04,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          l10n.dontHaveAccount,
+                          style: AppTextStyles.regular14Grey,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: l10n.signUp,
                             style: AppTextStyles.bold16Primary,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 context.go(Routes.register);
-                              }),
-                      ),
-                      SizedBox(
-                        height: h * 0.03,
-                      ),
-                      Row(children: [
-                        Expanded(
-                            child: Divider(
-                              color: Theme.of(context).dividerColor,
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 9,
-                        )),
-                        Text(
-                          l10n.or,
-                          style: AppTextStyles.regular14Grey,
-                        ),
-                        Expanded(
-                            child: Divider(
-                          color: Theme.of(context).dividerColor,  
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 14,
-                        )),
-                      ]),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: Image.asset(
-                          AppIcons.google,
-                          height: 20,
-                          width: 20,
-                        ),
-                        label: Text(
-                          l10n.signInWithGoogle,
-                          style: AppTextStyles.regular14Black
-                              .copyWith(color: onSurface),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(double.infinity, 0),
-                          shadowColor: Colors.transparent,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surface,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
-                          side: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
+                              },
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            l10n.dontHaveAccount,
-                            style: AppTextStyles.regular14Grey,
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              text: l10n.signUp,
-                              style: AppTextStyles.bold16Primary,
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  context.go(Routes.register);
-                                },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )),
-            ),
+                      ],
+                    ),
+                  ],
+                )),
           ),
         ),
       ),

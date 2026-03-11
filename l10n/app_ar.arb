@@ -2,17 +2,26 @@
   "@@locale": "ar",
 
   "welcomeBack": "مرحباً بعودتك",
+  "createAccount": "إنشاء حساب",
   "signInSubtitle": "سجّل دخولك لمتابعة التسوق",
+  "signUpSubtitle": "أنشئ حسابًا لبدء التسوق",
+  "fullName": "الاسم بالكامل",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
+  "confirmPassword": "تأكيد كلمة المرور",
   "login": "تسجيل الدخول",
   "forgotPassword": "نسيت كلمة المرور؟",
   "or": "أو",
   "signInWithGoogle": "تسجيل الدخول بـ Google",
   "dontHaveAccount": "ليس لديك حساب؟",
+  "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
   "signUp": "إنشاء حساب",
+  "usernameRequired": "يرجى إدخال اسمك الكامل",
+  "usernameTooShort": "يجب أن يكون الاسم 3 أحرف على الأقل",
   "emailRequired": "يرجى إدخال بريدك الإلكتروني",
   "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
   "passwordRequired": "يرجى إدخال كلمة المرور",
-  "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل"
+  "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+  "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+  "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين"
 }
