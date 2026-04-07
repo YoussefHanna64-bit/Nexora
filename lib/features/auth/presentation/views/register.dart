@@ -23,12 +23,13 @@ class _RegisterState extends State<Register> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-     final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     final isDark = context.read<ThemeCubit>().isDark;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     var w = MediaQuery.of(context).size.width;
@@ -92,7 +93,7 @@ class _RegisterState extends State<Register> {
                         validator: (value) =>
                             Validators.password(context, value),
                         obscureText: true),
-                         SizedBox(
+                    SizedBox(
                       height: h * 0.02,
                     ),
                     CustomTextFormField(
@@ -116,7 +117,7 @@ class _RegisterState extends State<Register> {
                     Row(children: [
                       Expanded(
                           child: Divider(
-                            color: Theme.of(context).dividerColor,
+                        color: Theme.of(context).dividerColor,
                         thickness: 2,
                         indent: 10,
                         endIndent: 9,
@@ -151,8 +152,7 @@ class _RegisterState extends State<Register> {
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 0),
                         shadowColor: Colors.transparent,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.surface,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
@@ -172,7 +172,7 @@ class _RegisterState extends State<Register> {
                           l10n.alreadyHaveAccount,
                           style: AppTextStyles.regular14Grey,
                         ),
-                        RichText( 
+                        RichText(
                           text: TextSpan(
                             text: l10n.login,
                             style: AppTextStyles.bold16Primary,

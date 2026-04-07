@@ -23,10 +23,10 @@ class MainLayout extends StatelessWidget {
         // context.go(cart);
         break;
       case 2:
-      // context.go(Favorites/Wishlist);
+        // context.go(Favorites/Wishlist);
         break;
       case 3:
-      // context.go(profile);
+        // context.go(profile);
         break;
     }
   }
@@ -35,7 +35,7 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: child, 
+      body: child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex(context),
         onTap: (index) => _onItemTapped(index, context),

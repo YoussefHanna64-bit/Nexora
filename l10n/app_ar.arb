@@ -23,5 +23,8 @@
   "passwordRequired": "يرجى إدخال كلمة المرور",
   "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
   "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
-  "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين"
+  "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+  "search": "بحث",
+  "popularProducts": "المنتجات الأكثر شيوعًا",
+  "viewAll": "عرض الكل"
 }

@@ -35,7 +35,6 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const HomeView(),
         ),
       ],
-
     )
   ],
 );

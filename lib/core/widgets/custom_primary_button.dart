@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
-
 class CustomPrimaryButton extends StatelessWidget {
   final String buttonText;
   final Color? fillColor;
@@ -24,13 +23,12 @@ class CustomPrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width:width??double.infinity,
+      width: width ?? double.infinity,
       height: height,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(isLoading
-              ? AppColors.greyColor
-              : AppColors.primary),
+          backgroundColor: WidgetStateProperty.all(
+              isLoading ? AppColors.greyColor : AppColors.primary),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -40,9 +38,9 @@ class CustomPrimaryButton extends StatelessWidget {
         onPressed: isLoading ? null : onPressed,
         child: isLoading
             ? const CircularProgressIndicator(
-          color: AppColors.whiteColor,
-          strokeWidth: 2,
-        )
+                color: AppColors.whiteColor,
+                strokeWidth: 2,
+              )
             : Text(buttonText, style: AppTextStyles.bold16White),
       ),
     );

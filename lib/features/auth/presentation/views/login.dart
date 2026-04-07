@@ -111,7 +111,7 @@ class _LoginState extends State<Login> {
                     Row(children: [
                       Expanded(
                           child: Divider(
-                            color: Theme.of(context).dividerColor,
+                        color: Theme.of(context).dividerColor,
                         thickness: 2,
                         indent: 10,
                         endIndent: 9,
@@ -146,8 +146,7 @@ class _LoginState extends State<Login> {
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 0),
                         shadowColor: Colors.transparent,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.surface,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
