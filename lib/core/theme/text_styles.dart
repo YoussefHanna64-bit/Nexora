@@ -32,6 +32,12 @@ class AppTextStyles {
     color: AppColors.blackColor,
   );
 
+  static const TextStyle medium12Black =  TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: AppColors.blackColor,
+  );
+
   static const TextStyle bold14Primary =  TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w700,

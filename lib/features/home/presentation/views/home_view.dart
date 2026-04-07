@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/models/category_model.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/theme/theme_cubit.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/home/presentation/widgets/category_list.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -57,7 +59,7 @@ class _HomeViewState extends State<HomeView> {
                 padding: EdgeInsets.symmetric(
                     horizontal: w * 0.04, vertical: h * 0.02),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: h * 0.22,
@@ -70,6 +72,18 @@ class _HomeViewState extends State<HomeView> {
                               fit: BoxFit.cover),
                         ]),
                       ),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      Text(
+                        l10n.shopByCategory,
+                        style: AppTextStyles.regular18Black
+                            .copyWith(color: onSurface),
+                      ),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      CategoryList(categories: dummyCategories),
                       SizedBox(
                         height: h * 0.02,
                       ),

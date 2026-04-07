@@ -110,7 +110,6 @@ class ProductCard extends StatelessWidget {
                     style: AppTextStyles.bold14Black.copyWith(
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
-                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Row(
