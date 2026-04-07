@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
@@ -9,7 +10,9 @@ class CustomTextFormField extends StatefulWidget {
   final TextStyle? hintStyle;
   final Color? fillColor;
   final Color? cursorColor;
+  final IconData? prefixIcon;
   final bool obscureText;
+  final VoidCallback? onTap;
   final double? width;
   final double? height;
   final String? Function(String?)? validator;
@@ -18,7 +21,9 @@ class CustomTextFormField extends StatefulWidget {
     super.key,
     required this.hintText,
     required this.controller,
+    this.prefixIcon,
     this.obscureText = false,
+    this.onTap,
     this.keyboardType = TextInputType.text,
     this.hintStyle,
     this.fillColor,
@@ -61,12 +66,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         obscureText: widget.obscureText ? isSecure : false,
         keyboardType: widget.keyboardType,
         decoration: InputDecoration(
+          prefixIcon: widget.prefixIcon != null
+              ? Icon(widget.prefixIcon, color: AppColors.lightGrey, size: 24)
+              : null,
           suffixIcon: widget.obscureText
               ? IconButton(
                   icon: isSecure
-                      ? Icon(Icons.visibility_off_outlined,
+                      ? Icon(AppIcons.visibilityOff,
                           color: dividerColor, size: 24)
-                      : const Icon(Icons.visibility_outlined,
+                      : const Icon(AppIcons.visibility,
                           color: AppColors.primary, size: 24),
                   onPressed: () {
                     setState(() {
@@ -97,6 +105,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   .copyWith(color: onSurface.withAlpha(102)),
         ),
         validator: widget.validator,
+        readOnly: widget.onTap != null,
+        onTap: widget.onTap,
       ),
     );
   }

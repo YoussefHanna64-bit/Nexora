@@ -23,5 +23,8 @@
   "passwordRequired": "Please enter your password",
   "passwordTooShort": "Password must be at least 8 characters",
   "confirmPasswordRequired": "Please confirm your password",
-  "passwordsDoNotMatch": "Passwords do not match"
+  "passwordsDoNotMatch": "Passwords do not match",
+  "search": "Search",
+  "popularProducts": "Popular Products",
+  "viewAll": "View All"
 }
