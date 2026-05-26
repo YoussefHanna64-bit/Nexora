@@ -7,6 +7,7 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/search/presentation/widgets/filter.dart';
 
 class SearchView extends StatefulWidget {
   final String? initialSearchQuery;
@@ -70,7 +71,16 @@ class _SearchViewState extends State<SearchView> {
                 ),
                 child: IconButton(
                   icon: const Icon(AppIcons.tune, color: AppColors.whiteColor),
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) {
+                        return const Filter();
+                      },
+                    );
+                  },
                 ),
               ),
             ],

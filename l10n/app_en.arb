@@ -37,5 +37,10 @@
         "type": "num"
       }
     }
-  }
+  },
+  "filter": "Filter",
+  "clearAll": "Clear All",
+  "priceRange": "Price Range",
+  "categories": "Categories",
+  "applyFilters": "Apply Filters"
 }
