@@ -12,4 +12,6 @@ class AppIcons {
   static const IconData visibilityOff = Icons.visibility_off_outlined;
   static const IconData searchIcon = Icons.search;
   static const IconData add = Icons.add;
+  static const IconData tune = Icons.tune;
+  static const IconData arrowBack = Icons.arrow_back_ios_new;
 }

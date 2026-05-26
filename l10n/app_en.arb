@@ -27,5 +27,15 @@
   "search": "Search",
   "popularProducts": "Popular Products",
   "shopByCategory": "Shop by Category",
-  "viewAll": "View All"
+  "viewAll": "View All",
+  "results": "Results",
+  "countFound": "{count, plural, =0{No results found} =1{1 found} other{{count} found}}",
+  "@countFound": {
+    "description": "Displays the count with found text in a single line",
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  }
 }

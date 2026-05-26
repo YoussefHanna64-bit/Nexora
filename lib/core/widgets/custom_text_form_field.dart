@@ -16,6 +16,7 @@ class CustomTextFormField extends StatefulWidget {
   final double? width;
   final double? height;
   final String? Function(String?)? validator;
+  final bool autoFocus;
 
   const CustomTextFormField({
     super.key,
@@ -31,6 +32,7 @@ class CustomTextFormField extends StatefulWidget {
     this.width,
     this.height,
     required this.validator,
+    this.autoFocus = false,
   });
 
   @override
@@ -60,6 +62,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       height: widget.height,
       alignment: Alignment.center,
       child: TextFormField(
+        autofocus: widget.autoFocus,
         style: textStyle,
         cursorColor: AppColors.primary,
         controller: widget.controller,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nexora/core/models/category_model.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/widgets/category_card.dart';
 
 class CategoryList extends StatelessWidget {
@@ -19,7 +21,9 @@ class CategoryList extends StatelessWidget {
             return CategoryCard(
               title: category.title,
               imageUrl: category.imageUrl,
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.search, extra: category.title);
+              },
             );
           }),
     );

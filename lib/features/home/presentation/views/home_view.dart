@@ -2,9 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/models/category_model.dart';
 import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/theme/theme_cubit.dart';
@@ -39,10 +41,10 @@ class _HomeViewState extends State<HomeView> {
             hintText: l10n.search,
             controller: searchController,
             prefixIcon: AppIcons.searchIcon,
-            fillColor: Theme.of(context).colorScheme.surface,
-            cursorColor: onSurface,
             validator: (value) => null,
-            onTap: () => Placeholder(),
+            onTap: () {
+              context.push(Routes.search);
+            },
           ),
           actions: [
             IconButton(

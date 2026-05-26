@@ -5,9 +5,11 @@ import 'package:nexora/features/auth/presentation/views/login.dart';
 import 'package:nexora/features/auth/presentation/views/register.dart';
 import 'package:nexora/features/home/presentation/views/home_view.dart';
 import 'package:nexora/features/main_layout/presentation/views/main_layout.dart';
+import 'package:nexora/features/search/presentation/views/search_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>();
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -22,6 +24,14 @@ final GoRouter appRouter = GoRouter(
       path: Routes.register,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const Register(),
+    ),
+    GoRoute(
+      path: Routes.search,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        final String? query = state.extra as String?;
+        return SearchView(initialSearchQuery: query);
+      },
     ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,

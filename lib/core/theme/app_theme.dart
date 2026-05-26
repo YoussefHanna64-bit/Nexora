@@ -23,14 +23,14 @@ final ThemeData darkTheme = ThemeData(
   colorScheme: ColorScheme.dark(
     primary: AppColors.primary,
     secondary: AppColors.secondary,
-    surface: const Color(0xFF1E1E2E),
+    surface: AppColors.darkSurface,
     onSurface: AppColors.whiteColor,
     onPrimary: AppColors.whiteColor,
   ),
-  scaffoldBackgroundColor: const Color(0xFF121218),
+  scaffoldBackgroundColor: AppColors.darkBackground,
   primaryColor: AppColors.primary,
-  dividerColor: const Color(0xFF3A3A4A),
-  cardColor: const Color(0xFF1E1E2E),
+  dividerColor: AppColors.darkDivider,
+  cardColor: AppColors.darkSurface,
 );
 
 
