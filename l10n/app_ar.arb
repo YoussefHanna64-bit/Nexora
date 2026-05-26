@@ -34,5 +34,16 @@
   "clearAll": "مسح الكل",
   "priceRange": "حدود السعر",
   "categories": "الفئات",
-  "applyFilters": "تطبيق التصفية"
+  "applyFilters": "تطبيق التصفية",
+  "reviewsCount": "({count} تقييم)",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "description": "الوصف",
+  "totalPrice": "السعر الإجمالي",
+  "addToCart": "إضافة إلى السلة"
 }

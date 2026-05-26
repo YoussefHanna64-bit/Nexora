@@ -31,7 +31,6 @@
   "results": "Results",
   "countFound": "{count, plural, =0{No results found} =1{1 found} other{{count} found}}",
   "@countFound": {
-    "description": "Displays the count with found text in a single line",
     "placeholders": {
       "count": {
         "type": "num"
@@ -42,5 +41,16 @@
   "clearAll": "Clear All",
   "priceRange": "Price Range",
   "categories": "Categories",
-  "applyFilters": "Apply Filters"
+  "applyFilters": "Apply Filters",
+  "reviewsCount": "({count} reviews)",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "description": "Description",
+  "totalPrice": "Total Price",
+  "addToCart": "Add to Cart"
 }

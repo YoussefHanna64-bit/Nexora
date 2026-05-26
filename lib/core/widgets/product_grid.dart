@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/widgets/product_card.dart';
 
 class ProductGrid extends StatelessWidget {
@@ -26,8 +28,10 @@ class ProductGrid extends StatelessWidget {
           price: product.price,
           isFavorite: product.isFavorite,
           discount: product.discount,
-          imageUrl: product.imageUrl,
-          onTap: () {},
+          imageUrl: product.imageUrls[0],
+          onTap: () {
+            context.push(Routes.productDetails, extra: product);
+          },
           onFavoriteTap: () {},
           onAddTap: () {},
         );
