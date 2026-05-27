@@ -3,7 +3,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
-class ProfileMenuTile extends StatelessWidget {
+class CustomListTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final VoidCallback onTap;
@@ -11,7 +11,7 @@ class ProfileMenuTile extends StatelessWidget {
   final bool showTrailing;
   final String? trailingText;
 
-  const ProfileMenuTile({
+  const CustomListTile({
     super.key,
     required this.icon,
     required this.title,

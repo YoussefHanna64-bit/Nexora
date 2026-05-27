@@ -4,7 +4,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_switch_tile.dart';
-import 'package:nexora/features/profile/presentation/widgets/profile_menu_tile.dart';
+import 'package:nexora/core/widgets/custom_list_tile.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -42,7 +42,7 @@ class _SettingsViewState extends State<SettingsView> {
                 });
               },
             ),
-            ProfileMenuTile(
+            CustomListTile(
               icon: AppIcons.languageOutlined,
               title: l10n.language,
               trailingText: currentLanguage,
@@ -52,17 +52,17 @@ class _SettingsViewState extends State<SettingsView> {
             Text(l10n.support,
                 style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             const SizedBox(height: 16),
-            ProfileMenuTile(
+            CustomListTile(
               icon: AppIcons.helpOutline,
               title: l10n.helpCenter,
               onTap: () {},
             ),
-            ProfileMenuTile(
+            CustomListTile(
               icon: AppIcons.privacyTipOutlined,
               title: l10n.privacyPolicy,
               onTap: () {},
             ),
-            ProfileMenuTile(
+            CustomListTile(
               icon: AppIcons.infoOutline,
               title: l10n.aboutNexora,
               onTap: () {},

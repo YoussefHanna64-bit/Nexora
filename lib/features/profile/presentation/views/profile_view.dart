@@ -7,7 +7,7 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/profile_image.dart';
-import 'package:nexora/features/profile/presentation/widgets/profile_menu_tile.dart';
+import 'package:nexora/core/widgets/custom_list_tile.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -40,27 +40,27 @@ class ProfileView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 32),
-              ProfileMenuTile(
+              CustomListTile(
                 icon: AppIcons.editOutlined,
                 title: l10n.editProfile,
                 onTap: () {},
               ),
-              ProfileMenuTile(
+              CustomListTile(
                 icon: AppIcons.shoppingBagOutlined,
                 title: l10n.myOrders,
                 onTap: () {},
               ),
-              ProfileMenuTile(
+              CustomListTile(
                 icon: AppIcons.locationOnOutlined,
                 title: l10n.shippingAddresses,
                 onTap: () {},
               ),
-              ProfileMenuTile(
+              CustomListTile(
                 icon: AppIcons.paymentOutlined,
                 title: l10n.paymentMethods,
                 onTap: () {},
               ),
-              ProfileMenuTile(
+              CustomListTile(
                 icon: AppIcons.settingsOutlined,
                 title: l10n.settings,
                 onTap: () {
@@ -70,7 +70,7 @@ class ProfileView extends StatelessWidget {
               const SizedBox(height: 16),
               const Divider(indent: 50, endIndent: 50),
               const SizedBox(height: 16),
-              ProfileMenuTile(
+              CustomListTile(
                 icon: AppIcons.logout,
                 title: l10n.logOut,
                 color: AppColors.redColor,
