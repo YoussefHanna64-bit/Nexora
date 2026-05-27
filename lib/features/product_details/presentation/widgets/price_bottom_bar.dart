@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 
 class PriceBottomBar extends StatelessWidget {
@@ -16,18 +16,7 @@ class PriceBottomBar extends StatelessWidget {
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.blackColor.withAlpha(20),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            )
-          ],
-        ),
+      child: CustomBottomSheetContainer(
         child: Row(
           children: [
             Expanded(

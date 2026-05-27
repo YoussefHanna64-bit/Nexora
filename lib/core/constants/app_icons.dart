@@ -16,4 +16,5 @@ class AppIcons {
   static const IconData tune = Icons.tune;
   static const IconData arrowBack = Icons.arrow_back_ios_new;
   static const IconData star = Icons.star;
+  static const IconData delete = Icons.delete_outline;
 }

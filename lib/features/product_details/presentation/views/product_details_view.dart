@@ -5,9 +5,9 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/quantity_selector.dart';
 import 'package:nexora/features/product_details/presentation/widgets/price_bottom_bar.dart';
 import 'package:nexora/features/product_details/presentation/widgets/product_image_carousel.dart';
-import 'package:nexora/features/product_details/presentation/widgets/quantity_selector.dart';
 
 class ProductDetailsView extends StatefulWidget {
   final ProductModel product;

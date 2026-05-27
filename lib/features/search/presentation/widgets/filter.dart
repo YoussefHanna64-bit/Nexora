@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/models/category_model.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/search/presentation/widgets/category_filter_wrap.dart';
 import 'package:nexora/features/search/presentation/widgets/price_range_slider.dart';
@@ -29,15 +30,9 @@ class _FilterState extends State<Filter> {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
-    var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: w * 0.04, vertical: h * 0.02),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+    return CustomBottomSheetContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

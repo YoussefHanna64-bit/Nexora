@@ -4,6 +4,7 @@ import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/features/auth/presentation/views/login.dart';
 import 'package:nexora/features/auth/presentation/views/register.dart';
+import 'package:nexora/features/cart/presentation/views/cart_view.dart';
 import 'package:nexora/features/home/presentation/views/home_view.dart';
 import 'package:nexora/features/main_layout/presentation/views/main_layout.dart';
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
@@ -53,6 +54,11 @@ final GoRouter appRouter = GoRouter(
           path: Routes.home,
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) => const HomeView(),
+        ),
+        GoRoute(
+          path: Routes.cart,
+          parentNavigatorKey: _shellNavigatorKey,
+          builder: (context, state) => const CartView(),
         ),
       ],
     )

@@ -45,5 +45,12 @@
   },
   "description": "الوصف",
   "totalPrice": "السعر الإجمالي",
-  "addToCart": "إضافة إلى السلة"
+  "addToCart": "إضافة إلى السلة",
+  "cart": "السلة",
+  "cartEmpty": "سلة التسوق الخاصة بك فارغة!",
+  "subtotal": "المجموع الفرعي",
+  "shipping": "الشحن",
+  "free": "مجاني",
+  "total": "الإجمالي",
+  "proceedToCheckout": "المتابعة لإتمام الشراء"
 }

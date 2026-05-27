@@ -8,19 +8,20 @@ class MainLayout extends StatelessWidget {
 
   const MainLayout({super.key, required this.child});
 
-  int _selectedIndex(BuildContext context) {
+  int selectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).uri.path;
     if (location.startsWith(Routes.home)) return 0;
+    if (location.startsWith(Routes.cart)) return 1;
     return 0;
   }
 
-  void _onItemTapped(int index, BuildContext context) {
+  void onItemTapped(int index, BuildContext context) {
     switch (index) {
       case 0:
         context.go(Routes.home);
         break;
       case 1:
-        // context.go(cart);
+        context.go(Routes.cart);
         break;
       case 2:
         // context.go(Favorites/Wishlist);
@@ -37,16 +38,18 @@ class MainLayout extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex(context),
-        onTap: (index) => _onItemTapped(index, context),
+        currentIndex: selectedIndex(context),
+        onTap: (index) => onItemTapped(index, context),
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Theme.of(context).dividerColor,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(AppIcons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(AppIcons.cart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(AppIcons.favorites), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(AppIcons.profile), label: 'Profile'),
+          BottomNavigationBarItem(
+              icon: Icon(AppIcons.favorites), label: 'Favorites'),
+          BottomNavigationBarItem(
+              icon: Icon(AppIcons.profile), label: 'Profile'),
         ],
       ),
     );

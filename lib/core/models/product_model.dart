@@ -6,6 +6,7 @@ class Rating {
 }
 
 class ProductModel {
+  final String id;
   final String category;
   final String name;
   final String description;
@@ -16,6 +17,7 @@ class ProductModel {
   final List<String> imageUrls;
 
   ProductModel({
+    required this.id,
     required this.category,
     required this.name,
     required this.description,
@@ -29,6 +31,7 @@ class ProductModel {
 
 final List<ProductModel> dummyProducts = [
   ProductModel(
+      id: '1',
       category: 'Electronics',
       name: 'Premium Wireless Headphones',
       description:
@@ -43,6 +46,7 @@ final List<ProductModel> dummyProducts = [
         'https://i.imgur.com/yVeIeDa.jpeg'
       ]),
   ProductModel(
+      id: '2',
       category: 'Electronics',
       name: 'Smart Watch Series 5',
       description:
@@ -56,6 +60,7 @@ final List<ProductModel> dummyProducts = [
         'https://i.imgur.com/LGk9Jn2.jpeg'
       ]),
   ProductModel(
+      id: '3',
       category: 'Fashion',
       name: 'Urban Style Backpack',
       description:
@@ -69,6 +74,7 @@ final List<ProductModel> dummyProducts = [
         'https://i.imgur.com/BG8J0Fj.jpg'
       ]),
   ProductModel(
+      id: '4',
       category: 'Sports',
       name: 'Running Shoes Pro',
       description:
@@ -83,6 +89,7 @@ final List<ProductModel> dummyProducts = [
         'https://imgur.com/AzAY4Ed.jpeg'
       ]),
   ProductModel(
+      id: '5',
       category: 'Electronics',
       name: 'Premium Wireless Headphones',
       description:
@@ -96,6 +103,7 @@ final List<ProductModel> dummyProducts = [
         'https://i.imgur.com/yVeIeDa.jpeg'
       ]),
   ProductModel(
+      id: '6',
       category: 'Electronics',
       name: 'Smart Watch Series 5',
       description:
@@ -110,6 +118,7 @@ final List<ProductModel> dummyProducts = [
         'https://i.imgur.com/LGk9Jn2.jpeg'
       ]),
   ProductModel(
+      id: '7',
       category: 'Fashion',
       name: 'Urban Style Backpack',
       description:
@@ -123,6 +132,7 @@ final List<ProductModel> dummyProducts = [
         'https://i.imgur.com/BG8J0Fj.jpg'
       ]),
   ProductModel(
+      id: '8',
       category: 'Sports',
       name: 'Running Shoes Pro',
       description:
