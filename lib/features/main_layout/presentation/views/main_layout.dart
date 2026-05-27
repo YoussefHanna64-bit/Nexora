@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 
@@ -36,6 +37,8 @@ class MainLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: child,
@@ -45,13 +48,13 @@ class MainLayout extends StatelessWidget {
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Theme.of(context).dividerColor,
         type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(AppIcons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(AppIcons.cart), label: 'Cart'),
+        items: [
+          BottomNavigationBarItem(icon: Icon(AppIcons.home), label: l10n.home),
+          BottomNavigationBarItem(icon: Icon(AppIcons.cart), label: l10n.cart),
           BottomNavigationBarItem(
-              icon: Icon(AppIcons.favorites), label: 'Wishlist'),
+              icon: Icon(AppIcons.favorites), label: l10n.wishlist),
           BottomNavigationBarItem(
-              icon: Icon(AppIcons.profile), label: 'Profile'),
+              icon: Icon(AppIcons.profile), label: l10n.profile),
         ],
       ),
     );

@@ -52,6 +52,7 @@
   },
   "description": "Description",
   "totalPrice": "Total Price",
+  "home": "Home",
   "addToCart": "Add to Cart",
   "cart": "Cart",
   "cartEmpty": "Your cart is empty!",
