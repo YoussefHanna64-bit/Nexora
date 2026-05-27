@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
@@ -6,6 +7,7 @@ import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/quantity_selector.dart';
+import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/product_details/presentation/widgets/price_bottom_bar.dart';
 import 'package:nexora/features/product_details/presentation/widgets/product_image_carousel.dart';
 
@@ -166,7 +168,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       ),
       bottomNavigationBar: PriceBottomBar(
         totalPrice: totalPrice,
-        onPressed: () {},
+        onPressed: () {
+          context.read<CartCubit>().addToCart(
+                widget.product,
+                quantity: quantity,
+              );
+        },
       ),
     );
   }
