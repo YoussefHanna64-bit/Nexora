@@ -9,6 +9,7 @@ class ProfileMenuTile extends StatelessWidget {
   final VoidCallback onTap;
   final Color? color;
   final bool showTrailing;
+  final String? trailingText;
 
   const ProfileMenuTile({
     super.key,
@@ -17,6 +18,7 @@ class ProfileMenuTile extends StatelessWidget {
     required this.onTap,
     this.color,
     this.showTrailing = true,
+    this.trailingText,
   });
 
   @override
@@ -33,6 +35,7 @@ class ProfileMenuTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 2),
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -44,9 +47,25 @@ class ProfileMenuTile extends StatelessWidget {
         ),
         title: Text(title,
             style: AppTextStyles.bold16Black.copyWith(color: themeColor)),
-        trailing: showTrailing
-            ? const Icon(AppIcons.arrowForward,
-                size: 16, color: AppColors.greyColor)
+        trailing: showTrailing || trailingText != null
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (trailingText != null) ...[
+                    Text(
+                      trailingText!,
+                      style: AppTextStyles.regular14Grey,
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  if (showTrailing)
+                    const Icon(
+                      AppIcons.arrowForward,
+                      size: 16,
+                      color: AppColors.greyColor,
+                    ),
+                ],
+              )
             : null,
         onTap: onTap,
         splashColor: color?.withAlpha(51),

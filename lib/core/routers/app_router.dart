@@ -10,6 +10,7 @@ import 'package:nexora/features/main_layout/presentation/views/main_layout.dart'
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
 import 'package:nexora/features/profile/presentation/views/profile_view.dart';
 import 'package:nexora/features/search/presentation/views/search_view.dart';
+import 'package:nexora/features/settings/presentation/views/settings_view.dart';
 import 'package:nexora/features/wishlist/presentation/views/wishlist_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -45,6 +46,11 @@ final GoRouter appRouter = GoRouter(
         final product = state.extra as ProductModel;
         return ProductDetailsView(product: product);
       },
+    ),
+    GoRoute(
+      path: Routes.settings,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const SettingsView(),
     ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,

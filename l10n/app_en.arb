@@ -69,5 +69,12 @@
   "shippingAddresses": "Shipping Addresses",
   "paymentMethods": "Payment Methods",
   "settings": "Settings",
-  "logOut": "Log Out"
+  "logOut": "Log Out",
+  "preferences": "Preferences",
+  "darkMode": "Dark Mode",
+  "language": "Language",
+  "support": "Support",
+  "helpCenter": "Help Center",
+  "privacyPolicy": "Privacy Policy",
+  "aboutNexora": "About Nexora"
 }

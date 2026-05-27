@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  const CustomAppBar({super.key, required this.title});
+  final bool showBackButton;
+
+  const CustomAppBar(
+      {super.key, required this.title, this.showBackButton = false});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -16,6 +21,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
+      leading: showBackButton
+          ? IconButton(
+              icon: Icon(AppIcons.arrowBack, color: onSurface, size: 20),
+              onPressed: () => context.pop(),
+            )
+          : null,
       title: Text(
         title,
         style: AppTextStyles.bold20White.copyWith(

@@ -63,7 +63,9 @@ class ProfileView extends StatelessWidget {
               ProfileMenuTile(
                 icon: AppIcons.settingsOutlined,
                 title: l10n.settings,
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.settings);
+                },
               ),
               const SizedBox(height: 16),
               const Divider(indent: 50, endIndent: 50),

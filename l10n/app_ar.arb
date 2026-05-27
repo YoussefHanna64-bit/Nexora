@@ -62,5 +62,12 @@
   "shippingAddresses": "عناوين الشحن",
   "paymentMethods": "طرق الدفع",
   "settings": "الإعدادات",
-  "logOut": "تسجيل الخروج"
+  "logOut": "تسجيل الخروج",
+  "preferences": "التفضيلات",
+  "darkMode": "الوضع الداكن",
+  "language": "اللغة",
+  "support": "الدعم",
+  "helpCenter": "مركز المساعدة",
+  "privacyPolicy": "سياسة الخصوصية",
+  "aboutNexora": "عن نيكسورا"
 }

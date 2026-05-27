@@ -25,4 +25,9 @@ class AppIcons {
   static const IconData paymentOutlined = Icons.payment_outlined;
   static const IconData settingsOutlined = Icons.settings_outlined;
   static const IconData logout = Icons.logout;
+  static const IconData darkModeOutlined = Icons.dark_mode_outlined;
+  static const IconData languageOutlined = Icons.language_outlined;
+  static const IconData helpOutline = Icons.help_outline;
+  static const IconData privacyTipOutlined = Icons.privacy_tip_outlined;
+  static const IconData infoOutline = Icons.info_outline;
 }
