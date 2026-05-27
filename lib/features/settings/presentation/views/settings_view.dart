@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/localization/language_cubit.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/theme/theme_cubit.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_switch_tile.dart';
 import 'package:nexora/core/widgets/custom_list_tile.dart';
+import 'package:nexora/features/settings/presentation/widgets/language_bottom_sheet.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -14,7 +18,6 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  bool isDarkMode = false;
   String currentLanguage = 'English';
 
   @override
@@ -35,18 +38,24 @@ class _SettingsViewState extends State<SettingsView> {
             CustomSwitchTile(
               icon: AppIcons.darkModeOutlined,
               title: l10n.darkMode,
-              value: isDarkMode,
+              value: context.watch<ThemeCubit>().isDark,
               onChanged: (value) {
                 setState(() {
-                  isDarkMode = value;
+                  context.read<ThemeCubit>().toggleTheme();
                 });
               },
             ),
             CustomListTile(
               icon: AppIcons.languageOutlined,
               title: l10n.language,
-              trailingText: currentLanguage,
-              onTap: () {},
+              trailingText: context.watch<LanguageCubit>().isArabic
+                  ? 'العربية'
+                  : 'English',
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const LanguageBottomSheet());
+              },
             ),
             const SizedBox(height: 32),
             Text(l10n.support,

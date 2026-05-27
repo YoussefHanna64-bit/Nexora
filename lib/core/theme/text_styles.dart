@@ -86,6 +86,12 @@ class AppTextStyles {
     color: AppColors.greyColor,
   );
 
+  static const TextStyle bold12Black = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+
   static const TextStyle bold14Black = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w700,
