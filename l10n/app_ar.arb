@@ -52,5 +52,7 @@
   "shipping": "الشحن",
   "free": "مجاني",
   "total": "الإجمالي",
-  "proceedToCheckout": "المتابعة لإتمام الشراء"
+  "proceedToCheckout": "المتابعة لإتمام الشراء",
+  "wishlist": "المفضلة",
+  "wishlistEmpty": "قائمة المفضلة فارغة!"
 }

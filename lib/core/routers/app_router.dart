@@ -9,6 +9,7 @@ import 'package:nexora/features/home/presentation/views/home_view.dart';
 import 'package:nexora/features/main_layout/presentation/views/main_layout.dart';
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
 import 'package:nexora/features/search/presentation/views/search_view.dart';
+import 'package:nexora/features/wishlist/presentation/views/wishlist_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -59,6 +60,11 @@ final GoRouter appRouter = GoRouter(
           path: Routes.cart,
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) => const CartView(),
+        ),
+        GoRoute(
+          path: Routes.wishlist,
+          parentNavigatorKey: _shellNavigatorKey,
+          builder: (context, state) => const WishlistView(),
         ),
       ],
     )

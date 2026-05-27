@@ -59,5 +59,7 @@
   "shipping": "Shipping",
   "free": "Free",
   "total": "Total",
-  "proceedToCheckout": "Proceed to Checkout"
+  "proceedToCheckout": "Proceed to Checkout",
+  "wishlist": "Wishlist",
+  "wishlistEmpty": "Your wishlist is empty!"
 }
