@@ -61,5 +61,12 @@
   "total": "Total",
   "proceedToCheckout": "Proceed to Checkout",
   "wishlist": "Wishlist",
-  "wishlistEmpty": "Your wishlist is empty!"
+  "wishlistEmpty": "Your wishlist is empty!",
+  "profile": "Profile",
+  "editProfile": "Edit Profile",
+  "myOrders": "My Orders",
+  "shippingAddresses": "Shipping Addresses",
+  "paymentMethods": "Payment Methods",
+  "settings": "Settings",
+  "logOut": "Log Out"
 }

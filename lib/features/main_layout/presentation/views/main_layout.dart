@@ -13,6 +13,7 @@ class MainLayout extends StatelessWidget {
     if (location.startsWith(Routes.home)) return 0;
     if (location.startsWith(Routes.cart)) return 1;
     if (location.startsWith(Routes.wishlist)) return 2;
+    if (location.startsWith(Routes.profile)) return 3;
     return 0;
   }
 
@@ -28,7 +29,7 @@ class MainLayout extends StatelessWidget {
         context.go(Routes.wishlist);
         break;
       case 3:
-        // context.go(profile);
+        context.go(Routes.profile);
         break;
     }
   }

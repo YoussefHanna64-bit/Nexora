@@ -15,6 +15,14 @@ class AppIcons {
   static const IconData remove = Icons.remove;
   static const IconData tune = Icons.tune;
   static const IconData arrowBack = Icons.arrow_back_ios_new;
+  static const IconData arrowForward = Icons.arrow_forward_ios;
   static const IconData star = Icons.star;
   static const IconData delete = Icons.delete_outline;
+  static const IconData edit = Icons.edit;
+  static const IconData editOutlined = Icons.edit_outlined;
+  static const IconData locationOnOutlined = Icons.location_on_outlined;
+  static const IconData shoppingBagOutlined = Icons.shopping_bag_outlined;
+  static const IconData paymentOutlined = Icons.payment_outlined;
+  static const IconData settingsOutlined = Icons.settings_outlined;
+  static const IconData logout = Icons.logout;
 }

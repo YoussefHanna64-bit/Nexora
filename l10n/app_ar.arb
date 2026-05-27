@@ -54,5 +54,12 @@
   "total": "الإجمالي",
   "proceedToCheckout": "المتابعة لإتمام الشراء",
   "wishlist": "المفضلة",
-  "wishlistEmpty": "قائمة المفضلة فارغة!"
+  "wishlistEmpty": "قائمة المفضلة فارغة!",
+  "profile": "الحساب",
+  "editProfile": "تعديل البيانات",
+  "myOrders": "طلباتي",
+  "shippingAddresses": "عناوين الشحن",
+  "paymentMethods": "طرق الدفع",
+  "settings": "الإعدادات",
+  "logOut": "تسجيل الخروج"
 }
