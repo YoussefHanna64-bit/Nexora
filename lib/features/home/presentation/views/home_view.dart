@@ -1,15 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/models/category_model.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
-import 'package:nexora/core/theme/theme_cubit.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/home/presentation/widgets/category_list.dart';
@@ -28,7 +25,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = context.read<ThemeCubit>().isDark;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
@@ -46,15 +42,6 @@ class _HomeViewState extends State<HomeView> {
               context.push(Routes.search);
             },
           ),
-          actions: [
-            IconButton(
-              onPressed: () => context.read<ThemeCubit>().toggleTheme(),
-              icon: Icon(
-                isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                color: AppColors.primary,
-              ),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
             child: Padding(
