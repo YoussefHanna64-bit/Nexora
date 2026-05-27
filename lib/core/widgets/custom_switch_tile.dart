@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_circle_icon.dart';
 
 class CustomSwitchTile extends StatelessWidget {
   final IconData icon;
@@ -22,15 +23,7 @@ class CustomSwitchTile extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: ListTile(
         contentPadding: const EdgeInsets.only(right: 8),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            shape: BoxShape.circle,
-            border: Border.all(color: Theme.of(context).dividerColor),
-          ),
-          child: Icon(icon, color: onSurface),
-        ),
+        leading: CustomCircleIcon(icon: icon),
         title: Text(title,
             style: AppTextStyles.bold16Black.copyWith(color: onSurface)),
         trailing: Switch.adaptive(

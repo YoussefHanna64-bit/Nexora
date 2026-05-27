@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_circle_icon.dart';
 
 class CustomListTile extends StatelessWidget {
   final IconData icon;
@@ -25,26 +26,11 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeColor = color ?? Theme.of(context).colorScheme.onSurface;
 
-    final backgroundColor = color != null
-        ? color!.withAlpha(25)
-        : Theme.of(context).colorScheme.surface;
-
-    final borderColor =
-        color != null ? color!.withAlpha(76) : Theme.of(context).dividerColor;
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 2),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            shape: BoxShape.circle,
-            border: Border.all(color: borderColor),
-          ),
-          child: Icon(icon, color: themeColor),
-        ),
+        leading: CustomCircleIcon(icon: icon, color: color),
         title: Text(title,
             style: AppTextStyles.bold16Black.copyWith(color: themeColor)),
         trailing: showTrailing || trailingText != null
