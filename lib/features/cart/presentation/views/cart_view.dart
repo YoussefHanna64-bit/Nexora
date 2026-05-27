@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/models/cart_model.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/cart/presentation/widgets/cart_item_card.dart';
@@ -20,17 +21,7 @@ class _CartViewState extends State<CartView> {
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          l10n.cart,
-          style: AppTextStyles.bold20White.copyWith(
-            color: onSurface,
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: l10n.cart),
       body: dummyCart.items.isEmpty
           ? Center(
               child: Text(

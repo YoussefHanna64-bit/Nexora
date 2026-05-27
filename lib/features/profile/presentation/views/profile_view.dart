@@ -5,6 +5,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/profile_image.dart';
 import 'package:nexora/features/profile/presentation/widgets/profile_menu_tile.dart';
 
@@ -17,17 +18,7 @@ class ProfileView extends StatelessWidget {
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            l10n.profile,
-            style: AppTextStyles.bold20White.copyWith(
-              color: onSurface,
-            ),
-          ),
-        ),
+        appBar: CustomAppBar(title: l10n.profile),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
