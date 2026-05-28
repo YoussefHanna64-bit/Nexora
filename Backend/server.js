@@ -12,6 +12,8 @@ dotenv.config();
 connectDB();
 const app = express();
 
+app.set("query parser", "extended");
+
 app.use(cors());
 app.use(express.json());
 

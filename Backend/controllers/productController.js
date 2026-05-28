@@ -3,6 +3,7 @@ import Product from "../models/productModel.js";
 import Category from "../models/categoryModel.js";
 import httpStatus from "../utils/httpStatus.js";
 import AppError from "../utils/AppError.js";
+import ApiFeatures from "../utils/ApiFeatures.js";
 
 export const createProduct = asyncWrapper(async (req, res, next) => {
   const product = await Product.create({ ...req.body });
@@ -17,7 +18,16 @@ export const createProduct = asyncWrapper(async (req, res, next) => {
 });
 
 export const getAllProducts = asyncWrapper(async (req, res, next) => {
-  const products = await Product.find().populate("category");
+  const features = new ApiFeatures(
+    Product.find().populate("category"),
+    req.query,
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const products = await features.mongooseQuery;
 
   res.status(200).json({
     success: true,
