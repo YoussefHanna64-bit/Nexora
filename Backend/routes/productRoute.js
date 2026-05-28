@@ -7,13 +7,14 @@ import {
   getProductByID,
   updateProduct,
 } from "../controllers/productController.js";
+import { validateMongoId } from "../utils/validators/idValidator.js";
 
 const router = express.Router();
 
 router.post("/", createProductValidator, createProduct);
 router.get("/", getAllProducts);
-router.get("/:id", getProductByID);
-router.patch("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.get("/:id", validateMongoId, getProductByID);
+router.patch("/:id", validateMongoId, updateProduct);
+router.delete("/:id", validateMongoId, deleteProduct);
 
 export default router;
