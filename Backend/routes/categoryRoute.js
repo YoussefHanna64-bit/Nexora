@@ -8,13 +8,36 @@ import {
   updateCategory,
 } from "../controllers/categoryController.js";
 import { validateMongoId } from "../utils/validators/idValidator.js";
+import verifyToken from "../middleware/verifyToken.js";
+import authorize from "../middleware/authorize.js";
 
 const router = express.Router();
 
-router.post("/", createCategoryValidator, createCategory);
+router.post(
+  "/",
+  verifyToken,
+  authorize("admin"),
+  createCategoryValidator,
+  createCategory,
+);
+
 router.get("/", getAllCategories);
 router.get("/:id", validateMongoId, getCategoryByID);
-router.patch("/:id", validateMongoId, updateCategory);
-router.delete("/:id", validateMongoId, deleteCategory);
+
+router.patch(
+  "/:id",
+  validateMongoId,
+  verifyToken,
+  authorize("admin"),
+  updateCategory,
+);
+
+router.delete(
+  "/:id",
+  validateMongoId,
+  verifyToken,
+  authorize("admin"),
+  deleteCategory,
+);
 
 export default router;

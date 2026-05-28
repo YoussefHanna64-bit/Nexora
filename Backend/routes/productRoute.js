@@ -8,13 +8,36 @@ import {
   updateProduct,
 } from "../controllers/productController.js";
 import { validateMongoId } from "../utils/validators/idValidator.js";
+import verifyToken from "../middleware/verifyToken.js";
+import authorize from "../middleware/authorize.js";
 
 const router = express.Router();
 
-router.post("/", createProductValidator, createProduct);
+router.post(
+  "/",
+  verifyToken,
+  authorize("admin"),
+  createProductValidator,
+  createProduct,
+);
+
 router.get("/", getAllProducts);
 router.get("/:id", validateMongoId, getProductByID);
-router.patch("/:id", validateMongoId, updateProduct);
-router.delete("/:id", validateMongoId, deleteProduct);
+
+router.patch(
+  "/:id",
+  validateMongoId,
+  verifyToken,
+  authorize("admin"),
+  updateProduct,
+);
+
+router.delete(
+  "/:id",
+  validateMongoId,
+  verifyToken,
+  authorize("admin"),
+  deleteProduct,
+);
 
 export default router;
