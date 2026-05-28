@@ -5,6 +5,7 @@ import httpStatus from "./utils/httpStatus.js";
 import AppError from "./utils/AppError.js";
 import cors from "cors";
 import { errorHandler } from "./middleware/errorHandler.js";
+import authRouter from "./routes/authRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import productRoute from "./routes/productRoute.js";
 
@@ -17,6 +18,7 @@ app.set("query parser", "extended");
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/auth', authRouter);
 app.use("/api/category", categoryRoute);
 app.use("/api/products", productRoute);
 
