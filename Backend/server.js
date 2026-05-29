@@ -8,6 +8,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import authRouter from "./routes/authRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import productRoute from "./routes/productRoute.js";
+import cartRoute from "./routes/cartRoute.js";
 
 dotenv.config();
 connectDB();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use("/api/category", categoryRoute);
 app.use("/api/products", productRoute);
+app.use("/api/cart", cartRoute);
 
 app.all("*any", (req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));

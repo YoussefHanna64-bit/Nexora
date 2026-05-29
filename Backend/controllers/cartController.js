@@ -1,0 +1,182 @@
+import asyncWrapper from "../middleware/asyncWrapper.js";
+import Cart from "../models/cartModel.js";
+import Product from "../models/productModel.js";
+import AppError from "../utils/AppError.js";
+import httpStatus from "../utils/httpStatus.js";
+
+const isInStock = (product, newQuantity) => {
+  if (!product) {
+    throw new AppError("Product not found", 404);
+  }
+
+  if (newQuantity > product.stock) {
+    throw new AppError(`Sorry, only ${product.stock} items left in stock`, 400);
+  }
+};
+
+export const addProductToCart = asyncWrapper(async (req, res, next) => {
+  const productId = req.body.productId;
+  const quantity = req.body.quantity || 1;
+
+  const product = req.product;
+  let cart = await Cart.findOne({ user: req.user.id });
+
+  let newQuantity = quantity;
+  let productIndex = -1;
+
+  if (cart) {
+    productIndex = cart.cartItems.findIndex(
+      (item) => item.product.toString() === productId,
+    );
+    if (productIndex > -1) {
+      newQuantity += cart.cartItems[productIndex].quantity;
+    }
+  }
+
+  isInStock(product, newQuantity);
+
+  if (!cart) {
+    cart = await Cart.create({
+      user: req.user.id,
+      cartItems: [
+        { product: productId, price: product.price, quantity: quantity },
+      ],
+    });
+  } else {
+    if (productIndex > -1) {
+      cart.cartItems[productIndex].quantity = newQuantity;
+      cart.cartItems[productIndex].price = product.price;
+    } else {
+      cart.cartItems.push({
+        product: productId,
+        price: product.price,
+        quantity: quantity,
+      });
+    }
+    await cart.save();
+  }
+
+  res.status(200).json({
+    success: true,
+    status: httpStatus.SUCCESS,
+    message: "Product added to cart",
+    data: {
+      cart: cart,
+    },
+  });
+});
+
+export const getUserCart = asyncWrapper(async (req, res, next) => {
+  const cart = await Cart.findOne({ user: req.user.id }).populate({
+    path: "cartItems.product",
+    select: "name images price discount",
+  });
+
+  if (!cart) {
+    return next(new AppError("There is no cart for this user", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    status: httpStatus.SUCCESS,
+    results: cart.cartItems.length,
+    data: {
+      cart: cart,
+    },
+  });
+});
+
+export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
+  const { quantity } = req.body;
+
+  const cart = await Cart.findOne({ user: req.user.id });
+  if (!cart) {
+    return next(new AppError("There is no cart for this user", 404));
+  }
+
+  const productIndex = cart.cartItems.findIndex(
+    (item) => item._id.toString() === req.params.id,
+  );
+
+  if (productIndex === -1) {
+    return next(new AppError("This item doesn't exist in your cart", 404));
+  }
+
+  if (quantity <= 0) {
+    cart.cartItems.splice(productIndex, 1);
+    await cart.save();
+
+    return res.status(200).json({
+      success: true,
+      status: httpStatus.SUCCESS,
+      message: "Item removed",
+      data: {
+        cart: cart,
+      },
+    });
+  }
+
+  const { product: productId } = cart.cartItems[productIndex];
+  const product = await Product.findById(productId);
+
+  if (!product) {
+    cart.cartItems.splice(productIndex, 1);
+    await cart.save();
+
+    return next(
+      new AppError(
+        "This product is no longer available and was removed from your cart",
+        404,
+      ),
+    );
+  }
+
+  isInStock(product, quantity);
+
+  cart.cartItems[productIndex].quantity = quantity;
+  cart.cartItems[productIndex].price = product.price;
+  await cart.save();
+
+  res.status(200).json({
+    success: true,
+    status: httpStatus.SUCCESS,
+    message: "Cart updated",
+    data: {
+      cart: cart,
+    },
+  });
+});
+
+export const removeCartItem = asyncWrapper(async (req, res, next) => {
+  const cart = await Cart.findOne({ user: req.user.id });
+
+  if (!cart) {
+    return next(new AppError("There is no cart for this user", 404));
+  }
+
+  cart.cartItems = cart.cartItems.filter(
+    (item) => item._id.toString() !== req.params.id,
+  );
+
+  await cart.save();
+
+  res.status(200).json({
+    success: true,
+    status: httpStatus.SUCCESS,
+    message: "Item removed",
+    data: {
+      cart: cart,
+    },
+  });
+});
+
+export const clearCart = asyncWrapper(async (req, res, next) => {
+  await Cart.findOneAndDelete({ user: req.user.id });
+
+  res.status(200).json({
+    success: true,
+    status: httpStatus.SUCCESS,
+    message: "Cart cleared",
+    data: null,
+  });
+});
