@@ -10,20 +10,21 @@ export const toggleWishlist = asyncWrapper(async (req, res, next) => {
 
   const isWishlisted = user.wishlist.some((id) => id.equals(productId));
 
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user.id,
-    isWishlisted
-      ? { $pull: { wishlist: productId } }
-      : { $addToSet: { wishlist: productId } },
-    { returnDocument: "after" },
-  ).populate("wishlist");
+  if (isWishlisted) {
+    user.wishlist.pull(productId);
+  } else {
+    user.wishlist.addToSet(productId);
+  }
+
+  await user.save();
+  await user.populate("wishlist");
 
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
     message: isWishlisted ? WISHLIST_REMOVED : WISHLIST_ADDED,
     data: {
-      wishlist: updatedUser.wishlist,
+      wishlist: user.wishlist,
     },
   });
 });
