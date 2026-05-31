@@ -9,6 +9,7 @@ import authRouter from "./routes/authRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import productRoute from "./routes/productRoute.js";
 import cartRoute from "./routes/cartRoute.js";
+import wishlistRoute from "./routes/wishlistRoute.js";
 
 dotenv.config();
 connectDB();
@@ -19,10 +20,11 @@ app.set("query parser", "extended");
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', authRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/category", categoryRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
+app.use("/api/wishlist", wishlistRoute);
 
 app.all("*any", (req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));

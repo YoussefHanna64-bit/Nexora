@@ -25,8 +25,8 @@ export const addProductToCart = asyncWrapper(async (req, res, next) => {
   let productIndex = -1;
 
   if (cart) {
-    productIndex = cart.cartItems.findIndex(
-      (item) => item.product.toString() === productId,
+    productIndex = cart.cartItems.findIndex((item) =>
+      item.product.equals(productId),
     );
     if (productIndex > -1) {
       newQuantity += cart.cartItems[productIndex].quantity;
@@ -94,8 +94,8 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
     return next(new AppError("There is no cart for this user", 404));
   }
 
-  const productIndex = cart.cartItems.findIndex(
-    (item) => item._id.toString() === req.params.id,
+  const productIndex = cart.cartItems.findIndex((item) =>
+    item._id.equals(req.params.id),
   );
 
   if (productIndex === -1) {
@@ -155,7 +155,7 @@ export const removeCartItem = asyncWrapper(async (req, res, next) => {
   }
 
   cart.cartItems = cart.cartItems.filter(
-    (item) => item._id.toString() !== req.params.id,
+    (item) => !item._id.equals(req.params.id),
   );
 
   await cart.save();
