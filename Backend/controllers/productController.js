@@ -4,6 +4,7 @@ import Category from "../models/categoryModel.js";
 import httpStatus from "../utils/httpStatus.js";
 import AppError from "../utils/AppError.js";
 import ApiFeatures from "../utils/ApiFeatures.js";
+import { PRODUCT_NOT_FOUND } from "../utils/messages.js";
 
 export const createProduct = asyncWrapper(async (req, res, next) => {
   const product = await Product.create({ ...req.body });
@@ -43,7 +44,7 @@ export const getProductByID = asyncWrapper(async (req, res, next) => {
   const product = await Product.findById(req.params.id).populate("category");
 
   if (!product) {
-    return next(new AppError("Product not found", 404));
+    return next(new AppError(PRODUCT_NOT_FOUND, 404));
   }
 
   res.status(200).json({
@@ -62,7 +63,7 @@ export const updateProduct = asyncWrapper(async (req, res, next) => {
   }).populate("category");
 
   if (!product) {
-    return next(new AppError("Product not found", 404));
+    return next(new AppError(PRODUCT_NOT_FOUND, 404));
   }
 
   res.status(200).json({
@@ -78,7 +79,7 @@ export const deleteProduct = asyncWrapper(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 
   if (!product) {
-    return next(new AppError("Product not found", 404));
+    return next(new AppError(PRODUCT_NOT_FOUND, 404));
   }
 
   res.status(200).json({

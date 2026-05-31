@@ -1,6 +1,7 @@
 import asyncWrapper from "../middleware/asyncWrapper.js";
 import User from "../models/userModel.js";
 import httpStatus from "../utils/httpStatus.js";
+import { WISHLIST_ADDED, WISHLIST_REMOVED } from "../utils/messages.js";
 
 export const toggleWishlist = asyncWrapper(async (req, res, next) => {
   const productId = req.params.id;
@@ -20,7 +21,7 @@ export const toggleWishlist = asyncWrapper(async (req, res, next) => {
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
-    message: isWishlisted ? "Removed from wishlist" : "Added to wishlist",
+    message: isWishlisted ? WISHLIST_REMOVED : WISHLIST_ADDED,
     data: {
       wishlist: updatedUser.wishlist,
     },

@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import AppError from "../utils/AppError.js";
 import httpStatus from "../utils/httpStatus.js";
+import { INCORRECT_CREDENTIALS } from "../utils/messages.js";
 
 const genrateToken = (user) => {
   return jwt.sign(
@@ -48,7 +49,7 @@ export const login = asyncWrapper(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError("Incorrect email or password", 401));
+    return next(new AppError(INCORRECT_CREDENTIALS, 401));
   }
 
   const token = genrateToken(user);

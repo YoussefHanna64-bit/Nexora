@@ -3,14 +3,25 @@ import Cart from "../models/cartModel.js";
 import Product from "../models/productModel.js";
 import AppError from "../utils/AppError.js";
 import httpStatus from "../utils/httpStatus.js";
+import {
+  PRODUCT_NOT_FOUND,
+  CART_NOT_FOUND,
+  ITEM_NOT_IN_CART,
+  stockExceeded,
+  ITEM_ADDED_TO_CART,
+  ITEM_REMOVED,
+  ITEM_REMOVED_FROM_CART,
+  CART_UPDATED,
+  CART_CLEARED,
+} from "../utils/messages.js";
 
 const isInStock = (product, newQuantity) => {
   if (!product) {
-    throw new AppError("Product not found", 404);
+    throw new AppError(PRODUCT_NOT_FOUND, 404);
   }
 
   if (newQuantity > product.stock) {
-    throw new AppError(`Sorry, only ${product.stock} items left in stock`, 400);
+    throw new AppError(stockExceeded(product.stock), 400);
   }
 };
 
@@ -59,7 +70,7 @@ export const addProductToCart = asyncWrapper(async (req, res, next) => {
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
-    message: "Product added to cart",
+    message: ITEM_ADDED_TO_CART,
     data: {
       cart: cart,
     },
@@ -73,7 +84,7 @@ export const getUserCart = asyncWrapper(async (req, res, next) => {
   });
 
   if (!cart) {
-    return next(new AppError("There is no cart for this user", 404));
+    return next(new AppError(CART_NOT_FOUND, 404));
   }
 
   res.status(200).json({
@@ -91,7 +102,7 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
 
   const cart = await Cart.findOne({ user: req.user.id });
   if (!cart) {
-    return next(new AppError("There is no cart for this user", 404));
+    return next(new AppError(CART_NOT_FOUND, 404));
   }
 
   const productIndex = cart.cartItems.findIndex((item) =>
@@ -99,7 +110,7 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
   );
 
   if (productIndex === -1) {
-    return next(new AppError("This item doesn't exist in your cart", 404));
+    return next(new AppError(ITEM_NOT_IN_CART, 404));
   }
 
   if (quantity <= 0) {
@@ -109,7 +120,7 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
     return res.status(200).json({
       success: true,
       status: httpStatus.SUCCESS,
-      message: "Item removed",
+      message: ITEM_REMOVED,
       data: {
         cart: cart,
       },
@@ -123,12 +134,7 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
     cart.cartItems.splice(productIndex, 1);
     await cart.save();
 
-    return next(
-      new AppError(
-        "This product is no longer available and was removed from your cart",
-        404,
-      ),
-    );
+    return next(new AppError(ITEM_REMOVED_FROM_CART, 404));
   }
 
   isInStock(product, quantity);
@@ -140,7 +146,7 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
-    message: "Cart updated",
+    message: CART_UPDATED,
     data: {
       cart: cart,
     },
@@ -151,7 +157,7 @@ export const removeCartItem = asyncWrapper(async (req, res, next) => {
   const cart = await Cart.findOne({ user: req.user.id });
 
   if (!cart) {
-    return next(new AppError("There is no cart for this user", 404));
+    return next(new AppError(CART_NOT_FOUND, 404));
   }
 
   cart.cartItems = cart.cartItems.filter(
@@ -163,7 +169,7 @@ export const removeCartItem = asyncWrapper(async (req, res, next) => {
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
-    message: "Item removed",
+    message: ITEM_REMOVED,
     data: {
       cart: cart,
     },
@@ -176,7 +182,7 @@ export const clearCart = asyncWrapper(async (req, res, next) => {
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
-    message: "Cart cleared",
+    message: CART_CLEARED,
     data: null,
   });
 });

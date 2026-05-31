@@ -1,6 +1,7 @@
 import { check } from "express-validator";
 import validatorMiddleware from "../../middleware/validatorMiddleware.js";
 import Category from "../../models/categoryModel.js";
+import { CATEGORY_NOT_FOUND } from "../messages.js";
 
 export const createProductValidator = [
   check("name")
@@ -46,7 +47,7 @@ export const createProductValidator = [
     .custom(async (categoryId) => {
       const categoryExists = await Category.findById(categoryId);
       if (!categoryExists) {
-        throw new Error("Category doesn't exist");
+        throw new Error(CATEGORY_NOT_FOUND);
       }
       return true;
     }),

@@ -1,6 +1,7 @@
 import { check } from "express-validator";
 import validatorMiddleware from "../../middleware/validatorMiddleware.js";
 import Product from "../../models/productModel.js";
+import { PRODUCT_NOT_FOUND } from "../../utils/messages.js";
 
 export const addProductToCartValidator = [
   check("productId")
@@ -11,7 +12,7 @@ export const addProductToCartValidator = [
     .custom(async (val, { req }) => {
       const product = await Product.findById(val);
       if (!product) {
-        throw new Error("Product doesn't exist");
+        throw new Error(PRODUCT_NOT_FOUND);
       }
       req.product = product;
       return true;

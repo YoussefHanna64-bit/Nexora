@@ -2,6 +2,7 @@ import asyncWrapper from "../middleware/asyncWrapper.js";
 import Category from "../models/categoryModel.js";
 import httpStatus from "../utils/httpStatus.js";
 import AppError from "../utils/AppError.js";
+import { CATEGORY_NOT_FOUND } from "../utils/messages.js";
 
 export const createCategory = asyncWrapper(async (req, res, next) => {
   const category = await Category.create({ ...req.body });
@@ -32,7 +33,7 @@ export const getCategoryByID = asyncWrapper(async (req, res, next) => {
   const category = await Category.findById(req.params.id);
 
   if (!category) {
-    return next(new AppError("Category not found", 404));
+    return next(new AppError(CATEGORY_NOT_FOUND, 404));
   }
 
   res.status(200).json({
@@ -51,7 +52,7 @@ export const updateCategory = asyncWrapper(async (req, res, next) => {
   });
 
   if (!category) {
-    return next(new AppError("Category not found", 404));
+    return next(new AppError(CATEGORY_NOT_FOUND, 404));
   }
 
   res.status(200).json({
@@ -67,7 +68,7 @@ export const deleteCategory = asyncWrapper(async (req, res, next) => {
   const category = await Category.findByIdAndDelete(req.params.id);
 
   if (!category) {
-    return next(new AppError("Category not found", 404));
+    return next(new AppError(CATEGORY_NOT_FOUND, 404));
   }
 
   res.status(200).json({
