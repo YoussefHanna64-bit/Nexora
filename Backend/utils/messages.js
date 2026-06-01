@@ -19,3 +19,22 @@ export const WISHLIST_REMOVED = "Removed from wishlist";
 
 export const USER_NOT_FOUND = "User not found";
 export const INCORRECT_CREDENTIALS = "Incorrect email or password";
+
+export const ORDER_CREATED = "Order created";
+export const ORDER_NOT_FOUND = "No order found with this ID";
+export const ORDER_NOT_AUTHORIZED =
+  "You do not have permission to view this order";
+export const ORDER_ITEMS_UNAVAILABLE =
+  "One or more items in your cart became unavailable";
+export const ORDER_MARKED_DELIVERED = "Order marked as delivered";
+export const ORDER_ALREADY_DELIVERED = "This order is already delivered";
+export const ORDER_CANNOT_DELIVER = "This order can't be delivered";
+export const ORDER_SHIPPED = "Order shipped";
+export const ORDER_ALREADY_SHIPPED = "This order is already shipped";
+export const ORDER_INVALID_TRANSITION = "Invalid order status transition";
+export const ORDER_CANCELLED = "Order canceled";
+export const ORDER_CANNOT_CANCEL = "This order can't be canceled";
+export const ORDER_ALREADY_CANCELLED = "This order is already canceled";
+export const ORDER_CART_NOT_FOUND = "There is no such cart with this ID";
+export const ORDER_CART_NOT_AUTHORIZED =
+  "You are not authorized to create an order for this cart";

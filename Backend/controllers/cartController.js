@@ -84,7 +84,17 @@ export const getUserCart = asyncWrapper(async (req, res, next) => {
   });
 
   if (!cart) {
-    return next(new AppError(CART_NOT_FOUND, 404));
+    return res.status(200).json({
+      success: true,
+      status: httpStatus.SUCCESS,
+      results: 0,
+      data: {
+        cart: {
+          cartItems: [],
+          totalCartPrice: 0,
+        },
+      },
+    });
   }
 
   res.status(200).json({

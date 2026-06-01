@@ -10,6 +10,7 @@ import categoryRoute from "./routes/categoryRoute.js";
 import productRoute from "./routes/productRoute.js";
 import cartRoute from "./routes/cartRoute.js";
 import wishlistRoute from "./routes/wishlistRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 
 dotenv.config();
 connectDB();
@@ -25,6 +26,7 @@ app.use("/api/category", categoryRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/wishlist", wishlistRoute);
+app.use("/api/orders", orderRoute);
 
 app.all("*any", (req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
