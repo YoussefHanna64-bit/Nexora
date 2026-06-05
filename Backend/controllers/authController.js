@@ -5,7 +5,7 @@ import AppError from "../utils/AppError.js";
 import httpStatus from "../utils/httpStatus.js";
 import { INCORRECT_CREDENTIALS } from "../utils/messages.js";
 
-const genrateToken = (user) => {
+export const generateToken = (user) => {
   return jwt.sign(
     {
       id: user._id,
@@ -29,7 +29,7 @@ export const register = asyncWrapper(async (req, res, next) => {
     passwordConfirm,
   });
 
-  const token = genrateToken(user);
+  const token = generateToken(user);
 
   user.password = undefined;
 
@@ -52,7 +52,7 @@ export const login = asyncWrapper(async (req, res, next) => {
     return next(new AppError(INCORRECT_CREDENTIALS, 401));
   }
 
-  const token = genrateToken(user);
+  const token = generateToken(user);
 
   user.password = undefined;
 

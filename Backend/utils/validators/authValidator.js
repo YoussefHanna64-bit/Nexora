@@ -33,7 +33,7 @@ export const registerValidator = [
     .withMessage("Password confirmation is required")
     .custom((val, { req }) => {
       if (val !== req.body.password) {
-        throw new Error("Passwords don't match!");
+        throw new Error("Passwords don't match");
       }
       return true;
     }),

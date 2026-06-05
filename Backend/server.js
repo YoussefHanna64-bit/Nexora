@@ -6,6 +6,7 @@ import AppError from "./utils/AppError.js";
 import cors from "cors";
 import { errorHandler } from "./middleware/errorHandler.js";
 import authRouter from "./routes/authRoute.js";
+import userRouter from "./routes/userRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import productRoute from "./routes/productRoute.js";
 import cartRoute from "./routes/cartRoute.js";
@@ -22,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 app.use("/api/category", categoryRoute);
 app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
