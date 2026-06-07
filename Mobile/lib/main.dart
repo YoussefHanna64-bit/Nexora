@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:nexora/core/di/dependency_injection.dart';
 import 'package:nexora/core/localization/language_cubit.dart';
 import 'package:nexora/core/routers/app_router.dart';
 import 'package:nexora/core/theme/app_theme.dart';
@@ -17,6 +18,8 @@ void main() async {
     storageDirectory: HydratedStorageDirectory(
         (await getApplicationDocumentsDirectory()).path),
   );
+
+  setupGetIt();
 
   runApp(MultiBlocProvider(
     providers: [

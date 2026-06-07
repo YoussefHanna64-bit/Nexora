@@ -44,6 +44,7 @@ dependencies:
   hydrated_bloc:
   path_provider:
   flutter_secure_storage: ^10.0.0
+  get_it:
 
 dev_dependencies:
   flutter_test:
