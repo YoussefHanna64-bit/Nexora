@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
@@ -8,6 +9,7 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/profile_image.dart';
 import 'package:nexora/core/widgets/custom_list_tile.dart';
+import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -75,8 +77,12 @@ class ProfileView extends StatelessWidget {
                 title: l10n.logOut,
                 color: AppColors.redColor,
                 showTrailing: false,
-                onTap: () {
-                  context.go(Routes.login);
+                onTap: () async {
+                  await context.read<AuthCubit>().logout();
+
+                  if (context.mounted) {
+                    context.go(Routes.login);
+                  }
                 },
               ),
             ],

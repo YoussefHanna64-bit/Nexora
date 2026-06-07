@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nexora/core/services/secure_storage.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
 import 'auth_state.dart';
 
@@ -45,5 +46,11 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSuccess(user: user));
       },
     );
+  }
+
+  Future<void> logout() async {
+    await SecureStorage.deleteToken();
+
+    emit(AuthInitial());
   }
 }
