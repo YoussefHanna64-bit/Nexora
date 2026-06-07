@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
@@ -8,6 +9,8 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
+import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
+import 'package:nexora/features/auth/presentation/manager/auth_state.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -25,6 +28,15 @@ class _RegisterState extends State<Register> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
@@ -32,146 +44,176 @@ class _RegisterState extends State<Register> {
     var h = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Form(
-        key: formKey,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: w * 0.04, vertical: h * 0.02),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      l10n.createAccount,
-                      style: AppTextStyles.extraBold28Black
-                          .copyWith(color: onSurface),
-                    ),
-                    Text(
-                      l10n.signUpSubtitle,
-                      style: AppTextStyles.regular14Grey,
-                    ),
-                    SizedBox(
-                      height: h * 0.02,
-                    ),
-                    CustomTextFormField(
-                      hintText: l10n.fullName,
-                      controller: nameController,
-                      validator: (value) => Validators.username(context, value),
-                    ),
-                    SizedBox(
-                      height: h * 0.02,
-                    ),
-                    CustomTextFormField(
-                      hintText: l10n.email,
-                      controller: emailController,
-                      validator: (value) => Validators.email(context, value),
-                    ),
-                    SizedBox(
-                      height: h * 0.02,
-                    ),
-                    CustomTextFormField(
-                        hintText: l10n.password,
-                        controller: passwordController,
-                        validator: (value) =>
-                            Validators.password(context, value),
-                        obscureText: true),
-                    SizedBox(
-                      height: h * 0.02,
-                    ),
-                    CustomTextFormField(
-                        hintText: l10n.confirmPassword,
-                        controller: confirmPasswordController,
-                        validator: (value) => Validators.confirmPassword(
-                            context, value, passwordController.text),
-                        obscureText: true),
-                    SizedBox(
-                      height: h * 0.04,
-                    ),
-                    CustomPrimaryButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {}
-                        },
-                        buttonText: l10n.signUp,
-                        isLoading: false),
-                    SizedBox(
-                      height: h * 0.02,
-                    ),
-                    Row(children: [
-                      Expanded(
-                          child: Divider(
-                        color: Theme.of(context).dividerColor,
-                        thickness: 2,
-                        indent: 10,
-                        endIndent: 9,
-                      )),
+      body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
+        if (state is AuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else if (state is AuthSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content:
+                  Text('Welcome, ${state.user["fullname"].split(" ").first}!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          context.go(Routes.home);
+        }
+      }, builder: (context, state) {
+        return Form(
+          key: formKey,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: w * 0.04, vertical: h * 0.02),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Text(
-                        l10n.or,
-                        style: AppTextStyles.regular14Grey,
-                      ),
-                      Expanded(
-                          child: Divider(
-                        color: Theme.of(context).dividerColor,
-                        thickness: 2,
-                        indent: 10,
-                        endIndent: 14,
-                      )),
-                    ]),
-                    SizedBox(
-                      height: h * 0.04,
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        AppIcons.google,
-                        height: 20,
-                        width: 20,
-                      ),
-                      label: Text(
-                        l10n.signInWithGoogle,
-                        style: AppTextStyles.regular14Black
+                        l10n.createAccount,
+                        style: AppTextStyles.extraBold28Black
                             .copyWith(color: onSurface),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 0),
-                        shadowColor: Colors.transparent,
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        side: BorderSide(
-                          color: Theme.of(context).dividerColor,
-                          width: 1,
-                        ),
+                      Text(
+                        l10n.signUpSubtitle,
+                        style: AppTextStyles.regular14Grey,
                       ),
-                    ),
-                    SizedBox(
-                      height: h * 0.04,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      CustomTextFormField(
+                        hintText: l10n.fullName,
+                        controller: nameController,
+                        validator: (value) =>
+                            Validators.username(context, value),
+                      ),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      CustomTextFormField(
+                        hintText: l10n.email,
+                        controller: emailController,
+                        validator: (value) => Validators.email(context, value),
+                      ),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      CustomTextFormField(
+                          hintText: l10n.password,
+                          controller: passwordController,
+                          validator: (value) =>
+                              Validators.password(context, value),
+                          obscureText: true),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      CustomTextFormField(
+                          hintText: l10n.confirmPassword,
+                          controller: confirmPasswordController,
+                          validator: (value) => Validators.confirmPassword(
+                              context, value, passwordController.text),
+                          obscureText: true),
+                      SizedBox(
+                        height: h * 0.04,
+                      ),
+                      CustomPrimaryButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              context.read<AuthCubit>().register(
+                                    fullname: nameController.text.trim(),
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                    passwordConfirm:
+                                        confirmPasswordController.text.trim(),
+                                  );
+                            }
+                          },
+                          buttonText: l10n.signUp,
+                          isLoading: state is AuthLoading),
+                      SizedBox(
+                        height: h * 0.02,
+                      ),
+                      Row(children: [
+                        Expanded(
+                            child: Divider(
+                          color: Theme.of(context).dividerColor,
+                          thickness: 2,
+                          indent: 10,
+                          endIndent: 9,
+                        )),
                         Text(
-                          l10n.alreadyHaveAccount,
+                          l10n.or,
                           style: AppTextStyles.regular14Grey,
                         ),
-                        RichText(
-                          text: TextSpan(
-                            text: l10n.login,
-                            style: AppTextStyles.bold16Primary,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                context.go(Routes.login);
-                              },
+                        Expanded(
+                            child: Divider(
+                          color: Theme.of(context).dividerColor,
+                          thickness: 2,
+                          indent: 10,
+                          endIndent: 14,
+                        )),
+                      ]),
+                      SizedBox(
+                        height: h * 0.04,
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: Image.asset(
+                          AppIcons.google,
+                          height: 20,
+                          width: 20,
+                        ),
+                        label: Text(
+                          l10n.signInWithGoogle,
+                          style: AppTextStyles.regular14Black
+                              .copyWith(color: onSurface),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(double.infinity, 0),
+                          shadowColor: Colors.transparent,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surface,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          side: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                )),
+                      ),
+                      SizedBox(
+                        height: h * 0.04,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            l10n.alreadyHaveAccount,
+                            style: AppTextStyles.regular14Grey,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              text: l10n.login,
+                              style: AppTextStyles.bold16Primary,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  context.go(Routes.login);
+                                },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )),
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
