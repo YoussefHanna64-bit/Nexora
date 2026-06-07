@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/routers/routes.dart';
+import 'package:nexora/core/services/secure_storage.dart';
 import 'package:nexora/features/auth/presentation/views/login.dart';
 import 'package:nexora/features/auth/presentation/views/register.dart';
 import 'package:nexora/features/cart/presentation/views/cart_view.dart';
@@ -19,7 +20,24 @@ final GlobalKey<NavigatorState> _shellNavigatorKey =
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: Routes.login,
+  initialLocation: Routes.home,
+  redirect: (context, state) async {
+    final String? token = await SecureStorage.getToken();
+    final bool isLoggedIn = token != null;
+
+    final bool isGoingToAuth = state.matchedLocation == Routes.login ||
+        state.matchedLocation == Routes.register;
+
+    if (!isLoggedIn && !isGoingToAuth) {
+      return Routes.login;
+    }
+
+    if (isLoggedIn && isGoingToAuth) {
+      return Routes.home;
+    }
+
+    return null;
+  },
   routes: [
     GoRoute(
       path: Routes.login,

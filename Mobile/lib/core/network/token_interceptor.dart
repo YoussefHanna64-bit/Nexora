@@ -18,6 +18,7 @@ class TokenInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response?.statusCode == 401) {
       print("Unauthorized");
+      SecureStorage.deleteToken();
     }
 
     super.onError(err, handler);
