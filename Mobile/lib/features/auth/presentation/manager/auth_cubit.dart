@@ -11,9 +11,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String email, required String password}) async {
     emit(AuthLoading());
 
-    final response = await authRepo.login(email: email, password: password);
+    final result = await authRepo.login(email: email, password: password);
 
-    response.fold(
+    result.fold(
       (failure) {
         emit(AuthError(message: failure.message));
       },
@@ -31,14 +31,14 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
 
-    final response = await authRepo.register(
+    final result = await authRepo.register(
       fullname: fullname,
       email: email,
       password: password,
       passwordConfirm: passwordConfirm,
     );
 
-    response.fold(
+    result.fold(
       (failure) {
         emit(AuthError(message: failure.message));
       },
