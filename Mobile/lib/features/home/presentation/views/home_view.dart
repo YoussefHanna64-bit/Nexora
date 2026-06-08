@@ -72,7 +72,7 @@ class _HomeViewState extends State<HomeView> {
                       SizedBox(
                         height: h * 0.02,
                       ),
-                      CategoryList(categories: dummyCategories),
+                      // CategoryList(categories: dummyCategories),
                       SizedBox(
                         height: h * 0.02,
                       ),

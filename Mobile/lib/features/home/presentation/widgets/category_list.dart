@@ -5,7 +5,7 @@ import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/widgets/category_card.dart';
 
 class CategoryList extends StatelessWidget {
-  final List<CategoryModel> categories;
+  final List<Category> categories;
   const CategoryList({super.key, required this.categories});
 
   @override
@@ -19,10 +19,10 @@ class CategoryList extends StatelessWidget {
           itemBuilder: (context, index) {
             final category = categories[index];
             return CategoryCard(
-              title: category.title,
-              imageUrl: category.imageUrl,
+              title: category.name,
+              imageUrl: category.image,
               onTap: () {
-                context.push(Routes.search, extra: category.title);
+                context.push(Routes.search, extra: category.name);
               },
             );
           }),

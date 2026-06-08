@@ -63,19 +63,19 @@ class _FilterState extends State<Filter> {
           Text(l10n.categories,
               style: AppTextStyles.bold14Black.copyWith(color: onSurface)),
           SizedBox(height: h * 0.02),
-          CategoryFilterWrap(
-            selectedCategories: selectedCategories,
-            categories: dummyCategories,
-            onCategorySelected: (category, isSelected) {
-              setState(() {
-                if (isSelected) {
-                  selectedCategories.add(category);
-                } else {
-                  selectedCategories.remove(category);
-                }
-              });
-            },
-          ),
+          // CategoryFilterWrap(
+          //   selectedCategories: selectedCategories,
+          //   categories: dummyCategories,
+          //   onCategorySelected: (category, isSelected) {
+          //     setState(() {
+          //       if (isSelected) {
+          //         selectedCategories.add(category);
+          //       } else {
+          //         selectedCategories.remove(category);
+          //       }
+          //     });
+          //   },
+          // ),
           SizedBox(height: h * 0.02),
           CustomPrimaryButton(
             buttonText: l10n.applyFilters,
