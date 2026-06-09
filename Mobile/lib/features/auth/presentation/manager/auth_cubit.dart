@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nexora/core/services/secure_storage.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
-import 'auth_state.dart';
+import 'package:nexora/features/auth/presentation/manager/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepo authRepo;

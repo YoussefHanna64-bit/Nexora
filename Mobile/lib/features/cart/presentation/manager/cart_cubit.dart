@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/models/cart_model.dart';
-import 'cart_state.dart';
+import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartInitial());
