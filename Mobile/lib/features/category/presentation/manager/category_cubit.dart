@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
-import 'package:nexora/features/category/manager/category_state.dart';
+import 'package:nexora/features/category/presentation/manager/category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
   final CategoryRepo categoryRepo;
