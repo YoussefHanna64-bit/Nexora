@@ -22,13 +22,6 @@ class CartModel {
 
 final CartModel dummyCart = CartModel(
   items: [
-    CartItemModel(product: dummyProducts[0], quantity: 1),
-    CartItemModel(product: dummyProducts[1], quantity: 2),
-    CartItemModel(product: dummyProducts[2], quantity: 1),
-    CartItemModel(product: dummyProducts[3], quantity: 1),
   ],
-  totalPrice: dummyProducts[0].price * 1 +
-      dummyProducts[1].price * 2 +
-      dummyProducts[2].price * 1 +
-      dummyProducts[3].price * 1,
+  totalPrice: 0
 );

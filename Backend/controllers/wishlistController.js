@@ -17,7 +17,13 @@ export const toggleWishlist = asyncWrapper(async (req, res, next) => {
   }
 
   await user.save();
-  await user.populate("wishlist");
+  await user.populate({
+    path: "wishlist",
+    populate: {
+      path: "category",
+      model: "Category",
+    },
+  });
 
   res.status(200).json({
     success: true,
@@ -30,7 +36,13 @@ export const toggleWishlist = asyncWrapper(async (req, res, next) => {
 });
 
 export const getUserWishlist = asyncWrapper(async (req, res, next) => {
-  const user = await User.findById(req.user.id).populate("wishlist");
+  const user = await User.findById(req.user.id).populate({
+    path: "wishlist",
+    populate: {
+      path: "category",
+      model: "Category",
+    },
+  });
 
   res.status(200).json({
     success: true,
