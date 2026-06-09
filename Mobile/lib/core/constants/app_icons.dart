@@ -31,4 +31,5 @@ class AppIcons {
   static const IconData privacyTipOutlined = Icons.privacy_tip_outlined;
   static const IconData infoOutline = Icons.info_outline;
   static const IconData check = Icons.check;
+  static const IconData brokenImage = Icons.broken_image;
 }

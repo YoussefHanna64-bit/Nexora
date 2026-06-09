@@ -46,7 +46,9 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   get_it:
   dartz:
-
+  skeletonizer:
+  cached_network_image:
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -18,14 +21,15 @@ class CategoryCard extends StatelessWidget {
         onTap: onTap,
         child: Column(
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl),
-                  fit: BoxFit.cover,
-                ),
+            CachedNetworkImage(
+              width: 50,
+              height: 50,
+              imageUrl: imageUrl,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => Container(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                child: const Icon(AppIcons.brokenImage,
+                    size: 20, color: AppColors.greyColor),
               ),
             ),
             const SizedBox(height: 8),
