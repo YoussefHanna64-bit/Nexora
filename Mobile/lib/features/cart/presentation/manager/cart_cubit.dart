@@ -47,4 +47,8 @@ class CartCubit extends Cubit<CartState> {
             totalPrice: items.fold(0,
                 (sum, item) => sum + (item.product.price * item.quantity)))));
   }
+
+  void clearCart() {
+    emit(CartInitial());
+  }
 }

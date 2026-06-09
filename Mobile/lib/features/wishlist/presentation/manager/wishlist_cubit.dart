@@ -7,6 +7,15 @@ class WishlistCubit extends Cubit<WishlistState> {
 
   WishlistCubit(this.wishlistRepo) : super(WishlistInitial());
 
+  bool isInWishlist(String productId) {
+    if (state is WishlistSuccess) {
+      return (state as WishlistSuccess)
+          .wishlist
+          .any((item) => item.id == productId);
+    }
+    return false;
+  }
+
   Future<void> getWishlist() async {
     emit(WishlistLoading());
 
@@ -33,5 +42,9 @@ class WishlistCubit extends Cubit<WishlistState> {
         emit(WishlistSuccess(wishlist: wishlist));
       },
     );
+  }
+
+  void clearWishlist() {
+    emit(WishlistInitial());
   }
 }

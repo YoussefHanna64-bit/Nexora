@@ -10,6 +10,8 @@ import 'package:nexora/core/widgets/quantity_selector.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/product_details/presentation/widgets/price_bottom_bar.dart';
 import 'package:nexora/features/product_details/presentation/widgets/product_image_carousel.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 
 class ProductDetailsView extends StatefulWidget {
   final ProductModel product;
@@ -69,9 +71,24 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 color: Theme.of(context).cardColor.withAlpha(204),
                 shape: BoxShape.circle,
               ),
-              child: IconButton(
-                icon: Icon(AppIcons.favoritesBorder, color: onSurface),
-                onPressed: () {},
+              child: BlocBuilder<WishlistCubit, WishlistState>(
+                builder: (context, state) {
+                  final isFavorite = context
+                      .read<WishlistCubit>()
+                      .isInWishlist(widget.product.id);
+
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : AppIcons.favoritesBorder,
+                      color: isFavorite ? Colors.red : onSurface,
+                    ),
+                    onPressed: () {
+                      context
+                          .read<WishlistCubit>()
+                          .toggleItem(widget.product.id);
+                    },
+                  );
+                },
               ),
             ),
           ),

@@ -5,6 +5,8 @@ import 'package:nexora/features/auth/data/repositories/api_auth_repo_impl.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
 import 'package:nexora/features/category/data/repositories/api_category_repo_impl.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
+import 'package:nexora/features/wishlist/data/repositories/api_wishlist_repo_impl.dart';
+import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
 
 final getIt = GetIt.instance;
 
@@ -21,5 +23,9 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<CategoryRepo>(
     () => ApiCategoryRepoImpl(getIt<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<WishlistRepo>(
+    () => ApiWishlistRepoImpl(getIt<ApiService>()),
   );
 }

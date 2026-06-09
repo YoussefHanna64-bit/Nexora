@@ -7,6 +7,8 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/widgets/product_card.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 
 class ProductGrid extends StatelessWidget {
   final List<ProductModel> products;
@@ -46,21 +48,28 @@ class ProductGrid extends StatelessWidget {
         itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index];
-          return ProductCard(
-            category: product.category,
-            name: product.name,
-            price: product.price,
-            isFavorite: product.isFavorite,
-            discount: product.discount,
-            imageUrl: product.imageUrls[0],
-            onTap: () {
-              context.push(Routes.productDetails, extra: product);
-            },
-            onFavoriteTap: () {},
-            onAddTap: () {
-              context.read<CartCubit>().addToCart(product);
-            },
-          );
+          return BlocSelector<WishlistCubit, WishlistState, bool>(
+              selector: (state) {
+            return context.read<WishlistCubit>().isInWishlist(product.id);
+          }, builder: (context, isFavorite) {
+            return ProductCard(
+              category: product.category,
+              name: product.name,
+              price: product.price,
+              isFavorite: isFavorite,
+              discount: product.discount,
+              imageUrl: product.imageUrls[0],
+              onTap: () {
+                context.push(Routes.productDetails, extra: product);
+              },
+              onFavoriteTap: () {
+                context.read<WishlistCubit>().toggleItem(product.id);
+              },
+              onAddTap: () {
+                context.read<CartCubit>().addToCart(product);
+              },
+            );
+          });
         },
       ),
     );
