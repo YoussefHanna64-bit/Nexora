@@ -10,8 +10,8 @@ import 'package:nexora/core/theme/app_theme.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
 import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
-import 'package:nexora/features/home/domain/repositories/category_repo.dart';
-import 'package:nexora/features/home/presentation/manager/category_cubit/category_cubit.dart';
+import 'package:nexora/features/category/domain/repositories/category_repo.dart';
+import 'package:nexora/features/category/manager/category_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'core/theme/theme_cubit.dart';
 

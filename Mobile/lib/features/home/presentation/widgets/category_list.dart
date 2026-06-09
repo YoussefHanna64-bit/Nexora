@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:nexora/core/models/category_model.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/widgets/category_card.dart';
-import 'package:nexora/features/home/presentation/manager/category_cubit/category_cubit.dart';
-import 'package:nexora/features/home/presentation/manager/category_cubit/category_state.dart';
+import 'package:nexora/features/category/manager/category_cubit.dart';
+import 'package:nexora/features/category/manager/category_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CategoryList extends StatelessWidget {

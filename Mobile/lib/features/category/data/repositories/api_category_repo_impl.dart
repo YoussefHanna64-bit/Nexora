@@ -4,7 +4,7 @@ import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/core/models/category_model.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
-import 'package:nexora/features/home/domain/repositories/category_repo.dart';
+import 'package:nexora/features/category/domain/repositories/category_repo.dart';
 
 class ApiCategoryRepoImpl implements CategoryRepo {
   final ApiService apiService;
