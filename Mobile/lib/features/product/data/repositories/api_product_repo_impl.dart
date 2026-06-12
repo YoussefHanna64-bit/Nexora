@@ -12,9 +12,11 @@ class ApiProductRepoImpl implements ProductRepo {
   ApiProductRepoImpl(this.apiService);
 
   @override
-  Future<Either<Failure, List<Product>>> getAllProducts() async {
+  Future<Either<Failure, List<Product>>> getAllProducts(
+      {Map<String, dynamic>? queryParameters}) async {
     try {
-      final response = await apiService.get(EndPoints.products);
+      final response = await apiService.get(EndPoints.products,
+          queryParameters: queryParameters);
 
       List<Product> products = [];
       for (var item in response.data['data']['products']) {

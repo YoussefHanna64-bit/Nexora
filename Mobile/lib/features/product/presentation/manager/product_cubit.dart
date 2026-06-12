@@ -7,10 +7,11 @@ class ProductCubit extends Cubit<ProductState> {
 
   ProductCubit(this.productRepo) : super(ProductInitial());
 
-  Future<void> fetchProducts() async {
+  Future<void> fetchProducts({Map<String, dynamic>? queryParameters}) async {
     emit(ProductLoading());
 
-    final result = await productRepo.getAllProducts();
+    final result =
+        await productRepo.getAllProducts(queryParameters: queryParameters);
 
     result.fold(
       (failure) {

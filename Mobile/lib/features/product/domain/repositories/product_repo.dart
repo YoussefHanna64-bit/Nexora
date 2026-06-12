@@ -3,5 +3,6 @@ import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/core/models/product_model.dart';
 
 abstract class ProductRepo {
-  Future<Either<Failure, List<Product>>> getAllProducts();
+  Future<Either<Failure, List<Product>>> getAllProducts(
+      {Map<String, dynamic>? queryParameters});
 }
