@@ -12,8 +12,6 @@ import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
-import 'package:nexora/features/product/domain/repositories/product_repo.dart';
-import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:path_provider/path_provider.dart';
@@ -42,10 +40,6 @@ void main() async {
       BlocProvider<WishlistCubit>(
           create: (context) =>
               WishlistCubit(getIt<WishlistRepo>())..getWishlist()),
-      BlocProvider<ProductCubit>(
-        create: (context) =>
-            ProductCubit(getIt<ProductRepo>())..fetchProducts(),
-      ),
     ],
     child: const MyApp(),
   ));

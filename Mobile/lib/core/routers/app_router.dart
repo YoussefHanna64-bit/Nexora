@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexora/core/di/dependency_injection.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/services/secure_storage.dart';
@@ -8,6 +10,8 @@ import 'package:nexora/features/auth/presentation/views/register.dart';
 import 'package:nexora/features/cart/presentation/views/cart_view.dart';
 import 'package:nexora/features/home/presentation/views/home_view.dart';
 import 'package:nexora/features/main_layout/presentation/views/main_layout.dart';
+import 'package:nexora/features/product/domain/repositories/product_repo.dart';
+import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
 import 'package:nexora/features/profile/presentation/views/profile_view.dart';
 import 'package:nexora/features/search/presentation/views/search_view.dart';
@@ -79,7 +83,16 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: Routes.home,
           parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) => const HomeView(),
+          builder: (context, state) {
+            return BlocProvider<ProductCubit>(
+              create: (context) => ProductCubit(getIt<ProductRepo>())
+                ..fetchProducts(queryParameters: {
+                  'sort': '-sold',
+                  'limit': 6,
+                }),
+              child: const HomeView(),
+            );
+          },
         ),
         GoRoute(
           path: Routes.cart,
