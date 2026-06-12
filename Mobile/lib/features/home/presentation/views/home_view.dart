@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
@@ -9,6 +10,9 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/home/presentation/widgets/category_list.dart';
+import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
+import 'package:nexora/features/product/presentation/manager/product_state.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -95,7 +99,25 @@ class _HomeViewState extends State<HomeView> {
                       SizedBox(
                         height: h * 0.02,
                       ),
-                      ProductGrid(products: dummyProducts),
+                      BlocBuilder<ProductCubit, ProductState>(
+                        builder: (context, state) {
+                          if (state is ProductError) {
+                            return Center(child: Text(state.message));
+                          }
+
+                          final bool isLoading = state is ProductLoading ||
+                              state is ProductInitial;
+
+                          final displayProducts = isLoading
+                              ? dummyProducts
+                              : (state as ProductSuccess).products;
+
+                          return Skeletonizer(
+                            enabled: isLoading,
+                            child: ProductGrid(products: displayProducts),
+                          );
+                        },
+                      ),
                     ]))));
   }
 }

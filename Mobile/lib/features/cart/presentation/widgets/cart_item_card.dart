@@ -8,7 +8,7 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/quantity_selector.dart';
 
 class CartItemCard extends StatelessWidget {
-  final ProductModel product;
+  final Product product;
   final int quantity;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
@@ -53,7 +53,7 @@ class CartItemCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    product.imageUrls.first,
+                    product.images.first,
                     height: 80,
                     width: 80,
                     fit: BoxFit.cover,
@@ -73,7 +73,7 @@ class CartItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        product.category,
+                        product.categoryName,
                         style: AppTextStyles.regular14Grey,
                       ),
                       const SizedBox(height: 12),

@@ -12,8 +12,7 @@ class WishlistView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final wishList =
-        dummyProducts.where((product) => product.isFavorite).toList();
+    final wishList = dummyProducts.toList();
 
     return Scaffold(
       appBar: CustomAppBar(title: l10n.wishlist),

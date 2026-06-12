@@ -1,7 +1,7 @@
 import 'package:nexora/core/models/product_model.dart';
 
 class CartItemModel {
-  final ProductModel product;
+  final Product product;
   int quantity;
 
   CartItemModel({
@@ -20,8 +20,4 @@ class CartModel {
   });
 }
 
-final CartModel dummyCart = CartModel(
-  items: [
-  ],
-  totalPrice: 0
-);
+final CartModel dummyCart = CartModel(items: [], totalPrice: 0);

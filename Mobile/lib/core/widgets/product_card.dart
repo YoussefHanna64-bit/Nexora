@@ -6,11 +6,11 @@ import 'package:nexora/core/theme/text_styles.dart';
 class ProductCard extends StatelessWidget {
   final String category;
   final String name;
-  final double price;
+  final num price;
   final String imageUrl;
   final VoidCallback onTap;
   final bool isFavorite;
-  final double? discount;
+  final num? discount;
   final VoidCallback? onFavoriteTap;
   final VoidCallback? onAddTap;
 

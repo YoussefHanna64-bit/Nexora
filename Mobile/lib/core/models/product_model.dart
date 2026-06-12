@@ -51,49 +51,83 @@ class Product {
   }
 }
 
-class Rating {
-  final double rate;
-  final int count;
-
-  Rating({required this.rate, required this.count});
-}
-
-class ProductModel {
-  final String id;
-  final String category;
-  final String name;
-  final String description;
-  final Rating rating;
-  final double price;
-  final bool isFavorite;
-  final double? discount;
-  final List<String> imageUrls;
-
-  ProductModel({
-    required this.id,
-    required this.category,
-    required this.name,
-    required this.description,
-    required this.rating,
-    required this.price,
-    this.isFavorite = false,
-    this.discount,
-    required this.imageUrls,
-  });
-}
-
-final List<ProductModel> dummyProducts = [
-  ProductModel(
+final List<Product> dummyProducts = [
+  Product(
       id: '1',
-      category: 'Electronics',
       name: 'Premium Wireless Headphones',
+      brand: 'Nexora',
       description:
           'Experience unparalleled sound quality with our Premium Wireless Headphones. Featuring advanced noise-cancellation technology, a comfortable over-ear design, and up to 30 hours of battery life, these headphones are perfect for music lovers and professionals alike.',
-      rating: Rating(rate: 4.8, count: 124),
       price: 299.99,
-      isFavorite: true,
       discount: 20.0,
-      imageUrls: [
+      stock: 50,
+      sold: 120,
+      ratingRate: 4.8,
+      ratingCount: 320,
+      categoryId: 'audio',
+      categoryName: 'Audio',
+      thumbnail: 'https://i.imgur.com/yVeIeDa.jpeg',
+      images: [
+        'https://i.imgur.com/yVeIeDa.jpeg',
+        'https://i.imgur.com/yVeIeDa.jpeg',
+        'https://i.imgur.com/yVeIeDa.jpeg'
+      ]),
+  Product(
+      id: '1',
+      name: 'Premium Wireless Headphones',
+      brand: 'Nexora',
+      description:
+          'Experience unparalleled sound quality with our Premium Wireless Headphones. Featuring advanced noise-cancellation technology, a comfortable over-ear design, and up to 30 hours of battery life, these headphones are perfect for music lovers and professionals alike.',
+      price: 299.99,
+      discount: 20.0,
+      stock: 50,
+      sold: 120,
+      ratingRate: 4.8,
+      ratingCount: 320,
+      categoryId: 'audio',
+      categoryName: 'Audio',
+      thumbnail: 'https://i.imgur.com/yVeIeDa.jpeg',
+      images: [
+        'https://i.imgur.com/yVeIeDa.jpeg',
+        'https://i.imgur.com/yVeIeDa.jpeg',
+        'https://i.imgur.com/yVeIeDa.jpeg'
+      ]),
+  Product(
+      id: '1',
+      name: 'Premium Wireless Headphones',
+      brand: 'Nexora',
+      description:
+          'Experience unparalleled sound quality with our Premium Wireless Headphones. Featuring advanced noise-cancellation technology, a comfortable over-ear design, and up to 30 hours of battery life, these headphones are perfect for music lovers and professionals alike.',
+      price: 299.99,
+      discount: 20.0,
+      stock: 50,
+      sold: 120,
+      ratingRate: 4.8,
+      ratingCount: 320,
+      categoryId: 'audio',
+      categoryName: 'Audio',
+      thumbnail: 'https://i.imgur.com/yVeIeDa.jpeg',
+      images: [
+        'https://i.imgur.com/yVeIeDa.jpeg',
+        'https://i.imgur.com/yVeIeDa.jpeg',
+        'https://i.imgur.com/yVeIeDa.jpeg'
+      ]),
+  Product(
+      id: '1',
+      name: 'Premium Wireless Headphones',
+      brand: 'Nexora',
+      description:
+          'Experience unparalleled sound quality with our Premium Wireless Headphones. Featuring advanced noise-cancellation technology, a comfortable over-ear design, and up to 30 hours of battery life, these headphones are perfect for music lovers and professionals alike.',
+      price: 299.99,
+      discount: 20.0,
+      stock: 50,
+      sold: 120,
+      ratingRate: 4.8,
+      ratingCount: 320,
+      categoryId: 'audio',
+      categoryName: 'Audio',
+      thumbnail: 'https://i.imgur.com/yVeIeDa.jpeg',
+      images: [
         'https://i.imgur.com/yVeIeDa.jpeg',
         'https://i.imgur.com/yVeIeDa.jpeg',
         'https://i.imgur.com/yVeIeDa.jpeg'

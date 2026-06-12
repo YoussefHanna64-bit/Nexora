@@ -11,7 +11,7 @@ import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dar
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 
 class ProductGrid extends StatelessWidget {
-  final List<ProductModel> products;
+  final List<Product> products;
   const ProductGrid({super.key, required this.products});
 
   @override
@@ -53,12 +53,12 @@ class ProductGrid extends StatelessWidget {
             return context.read<WishlistCubit>().isInWishlist(product.id);
           }, builder: (context, isFavorite) {
             return ProductCard(
-              category: product.category,
+              category: product.categoryName,
               name: product.name,
               price: product.price,
               isFavorite: isFavorite,
               discount: product.discount,
-              imageUrl: product.imageUrls[0],
+              imageUrl: product.thumbnail,
               onTap: () {
                 context.push(Routes.productDetails, extra: product);
               },

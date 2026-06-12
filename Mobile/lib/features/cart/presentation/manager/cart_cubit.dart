@@ -8,7 +8,7 @@ class CartCubit extends Cubit<CartState> {
 
   final List<CartItemModel> items = [];
 
-  void addToCart(ProductModel product, {int quantity = 1}) {
+  void addToCart(Product product, {int quantity = 1}) {
     final itemIndex = items.indexWhere((item) => item.product.id == product.id);
 
     if (itemIndex >= 0) {

@@ -14,7 +14,7 @@ import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dar
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 
 class ProductDetailsView extends StatefulWidget {
-  final ProductModel product;
+  final Product product;
   const ProductDetailsView({super.key, required this.product});
 
   @override
@@ -41,8 +41,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     final h = MediaQuery.of(context).size.height;
 
     final priceBeforeDiscount =
-        widget.product.price / (1 - (widget.product.discount ?? 0) / 100);
-    final totalPrice = widget.product.price * quantity;
+        widget.product.price / (1 - (widget.product.discount) / 100);
+    final totalPrice = (widget.product.price * quantity).toDouble();
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -100,7 +100,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           children: [
             SizedBox(
               height: h * 0.45,
-              child: ProductImageCarousel(images: widget.product.imageUrls),
+              child: ProductImageCarousel(images: widget.product.images),
             ),
             Container(
               transform: Matrix4.translationValues(0, -20, 0),
@@ -114,7 +114,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.product.category.toUpperCase(),
+                    widget.product.categoryName.toUpperCase(),
                     style: AppTextStyles.bold12Primary.copyWith(
                       letterSpacing: 1.5,
                     ),
@@ -132,11 +132,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       const Icon(AppIcons.star,
                           color: AppColors.goldColor, size: 20),
                       const SizedBox(width: 4),
-                      Text(widget.product.rating.rate.toString(),
+                      Text(widget.product.ratingRate.toString(),
                           style: AppTextStyles.bold14Black
                               .copyWith(color: onSurface)),
                       const SizedBox(width: 8),
-                      Text(l10n.reviewsCount(widget.product.rating.count),
+                      Text(l10n.reviewsCount(widget.product.ratingCount),
                           style: AppTextStyles.regular14Grey),
                     ],
                   ),
@@ -147,7 +147,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (widget.product.discount != null)
+                          if (widget.product.discount != 0)
                             Text(
                               '\$${priceBeforeDiscount.toStringAsFixed(2)}',
                               style: AppTextStyles.regular14Grey.copyWith(

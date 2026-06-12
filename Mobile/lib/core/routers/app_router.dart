@@ -61,7 +61,7 @@ final GoRouter appRouter = GoRouter(
       path: Routes.productDetails,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
-        final product = state.extra as ProductModel;
+        final product = state.extra as Product;
         return ProductDetailsView(product: product);
       },
     ),
