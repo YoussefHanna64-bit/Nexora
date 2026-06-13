@@ -58,7 +58,10 @@ final GoRouter appRouter = GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
         final String? query = state.extra as String?;
-        return SearchView(initialSearchQuery: query);
+        return BlocProvider(
+          create: (context) => ProductCubit(getIt<ProductRepo>()),
+          child: SearchView(initialSearchQuery: query),
+        );
       },
     ),
     GoRoute(

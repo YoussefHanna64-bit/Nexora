@@ -13,6 +13,7 @@ class CustomTextFormField extends StatefulWidget {
   final IconData? prefixIcon;
   final bool obscureText;
   final VoidCallback? onTap;
+  final ValueChanged<String>? onChanged;
   final double? width;
   final double? height;
   final String? Function(String?)? validator;
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatefulWidget {
     this.prefixIcon,
     this.obscureText = false,
     this.onTap,
+    this.onChanged,
     this.keyboardType = TextInputType.text,
     this.hintStyle,
     this.fillColor,
@@ -62,6 +64,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       height: widget.height,
       alignment: Alignment.center,
       child: TextFormField(
+        onChanged: widget.onChanged,
         autofocus: widget.autoFocus,
         style: textStyle,
         cursorColor: AppColors.primary,

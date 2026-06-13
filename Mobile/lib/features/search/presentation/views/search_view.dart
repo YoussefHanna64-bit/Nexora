@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
@@ -7,7 +9,10 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
+import 'package:nexora/features/product/presentation/manager/product_state.dart';
 import 'package:nexora/features/search/presentation/widgets/filter.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchView extends StatefulWidget {
   final String? initialSearchQuery;
@@ -21,17 +26,36 @@ class SearchView extends StatefulWidget {
 class _SearchViewState extends State<SearchView> {
   late TextEditingController searchController;
 
+  Map<String, dynamic> activeFilters = {};
+
+  Timer? debounce;
+
   @override
   void initState() {
     super.initState();
     searchController =
         TextEditingController(text: widget.initialSearchQuery ?? '');
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => search());
   }
 
   @override
   void dispose() {
+    debounce?.cancel();
     searchController.dispose();
     super.dispose();
+  }
+
+  void search() {
+    final Map<String, dynamic> queryParameters = {...activeFilters};
+
+    if (searchController.text.trim().isNotEmpty) {
+      queryParameters['name'] = searchController.text.trim();
+    }
+
+    context
+        .read<ProductCubit>()
+        .fetchProducts(queryParameters: queryParameters);
   }
 
   @override
@@ -60,7 +84,14 @@ class _SearchViewState extends State<SearchView> {
                   hintText: l10n.search,
                   controller: searchController,
                   validator: (value) => null,
-                  autoFocus: true,
+                  autoFocus: widget.initialSearchQuery == null ||
+                      widget.initialSearchQuery!.isEmpty,
+                  onChanged: (value) {
+                    debounce?.cancel();
+                    debounce = Timer(const Duration(milliseconds: 500), () {
+                      search();
+                    });
+                  },
                 ),
               ),
               SizedBox(width: w * 0.02),
@@ -87,29 +118,48 @@ class _SearchViewState extends State<SearchView> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: w * 0.04, vertical: h * 0.02),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
+        if (state is ProductError) {
+          return Center(
+              child: Text(state.message,
+                  style: const TextStyle(color: Colors.red)));
+        }
+
+        final bool isLoading =
+            state is ProductLoading || state is ProductInitial;
+
+        final displayProducts =
+            (state is ProductSuccess) ? state.products : dummyProducts;
+
+        return SingleChildScrollView(
+          padding:
+              EdgeInsets.symmetric(horizontal: w * 0.04, vertical: h * 0.02),
+          child: Skeletonizer(
+            enabled: isLoading,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  l10n.results,
-                  style: AppTextStyles.bold14Black.copyWith(color: onSurface),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      l10n.results,
+                      style:
+                          AppTextStyles.bold14Black.copyWith(color: onSurface),
+                    ),
+                    Text(
+                      l10n.countFound(displayProducts.length),
+                      style: AppTextStyles.regular14Grey,
+                    ),
+                  ],
                 ),
-                Text(
-                  l10n.countFound(dummyProducts.length),
-                  style: AppTextStyles.regular14Grey,
-                ),
+                SizedBox(height: h * 0.02),
+                ProductGrid(products: displayProducts),
               ],
             ),
-            SizedBox(height: h * 0.02),
-            ProductGrid(products: dummyProducts),
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
