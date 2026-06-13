@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 class ApiFeatures {
   constructor(mongooseQuery, queryString) {
     this.mongooseQuery = mongooseQuery;
@@ -7,13 +9,39 @@ class ApiFeatures {
   filter() {
     const queryObj = { ...this.queryString };
 
-    const excludedFields = ["page", "sort", "limit", "fields"];
+    const excludedFields = ["page", "sort", "limit", "fields", "keyword"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
     this.mongooseQuery = this.mongooseQuery.find(JSON.parse(queryStr));
+
+    return this;
+  }
+
+  async search(fields) {
+    if (this.queryString.keyword) {
+      const keyword = this.queryString.keyword;
+
+      const queryArray = fields.map((field) => ({
+        [field]: { $regex: keyword, $options: "i" },
+      }));
+
+      const matchingCategories = await mongoose
+        .model("Category")
+        .find({
+          name: { $regex: keyword, $options: "i" },
+        })
+        .select("_id");
+
+      if (matchingCategories.length > 0) {
+        const categoryIds = matchingCategories.map((c) => c._id);
+        queryArray.push({ category: { $in: categoryIds } });
+      }
+
+      this.mongooseQuery = this.mongooseQuery.find({ $or: queryArray });
+    }
 
     return this;
   }

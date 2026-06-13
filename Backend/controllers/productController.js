@@ -19,14 +19,14 @@ export const createProduct = asyncWrapper(async (req, res, next) => {
 });
 
 export const getAllProducts = asyncWrapper(async (req, res, next) => {
-  const features = new ApiFeatures(
+  let features = new ApiFeatures(
     Product.find().populate("category"),
     req.query,
-  )
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+  ).filter();
+
+  features = await features.search(["name", "brand"]);
+
+  features.sort().limitFields().paginate();
 
   const products = await features.mongooseQuery;
 

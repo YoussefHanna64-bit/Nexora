@@ -19,12 +19,12 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  RangeValues currentPriceRange = const RangeValues(10, 500);
+  RangeValues currentPriceRange = const RangeValues(10, 2000);
   final List<String> selectedCategories = [];
 
   void clearFilters() {
     setState(() {
-      currentPriceRange = const RangeValues(10, 500);
+      currentPriceRange = const RangeValues(10, 2000);
       selectedCategories.clear();
     });
   }

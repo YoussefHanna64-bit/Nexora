@@ -50,7 +50,7 @@ class _SearchViewState extends State<SearchView> {
     final Map<String, dynamic> queryParameters = {...activeFilters};
 
     if (searchController.text.trim().isNotEmpty) {
-      queryParameters['name'] = searchController.text.trim();
+      queryParameters['keyword'] = searchController.text.trim();
     }
 
     context
