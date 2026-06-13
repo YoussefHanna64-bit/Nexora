@@ -102,8 +102,9 @@ class _SearchViewState extends State<SearchView> {
                 ),
                 child: IconButton(
                   icon: const Icon(AppIcons.tune, color: AppColors.whiteColor),
-                  onPressed: () {
-                    showModalBottomSheet(
+                  onPressed: () async {
+                    final Map<String, dynamic>? filters =
+                        await showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
@@ -111,6 +112,13 @@ class _SearchViewState extends State<SearchView> {
                         return const Filter();
                       },
                     );
+
+                    if (filters != null) {
+                      setState(() {
+                        activeFilters = filters;
+                      });
+                      search();
+                    }
                   },
                 ),
               ),

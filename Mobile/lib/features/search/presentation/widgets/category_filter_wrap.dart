@@ -5,7 +5,7 @@ import 'package:nexora/core/theme/colors.dart';
 class CategoryFilterWrap extends StatelessWidget {
   final List<String> selectedCategories;
   final List<Category> categories;
-  final Function(String category, bool isSelected) onCategorySelected;
+  final Function(Category category, bool isSelected) onCategorySelected;
 
   const CategoryFilterWrap(
       {super.key,
@@ -21,12 +21,12 @@ class CategoryFilterWrap extends StatelessWidget {
       spacing: 8.0,
       runSpacing: 8.0,
       children: categories.map((category) {
-        final isSelected = selectedCategories.contains(category.name);
+        final isSelected = selectedCategories.contains(category.id);
 
         return FilterChip(
           label: Text(category.name),
           labelStyle: TextStyle(
-            color: isSelected ? Colors.white : onSurface,
+            color: isSelected ? AppColors.whiteColor : onSurface,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
           selectedColor: AppColors.primary,
@@ -41,7 +41,7 @@ class CategoryFilterWrap extends StatelessWidget {
             ),
           ),
           onSelected: (bool selected) {
-            onCategorySelected(category.name, selected);
+            onCategorySelected(category, selected);
           },
         );
       }).toList(),

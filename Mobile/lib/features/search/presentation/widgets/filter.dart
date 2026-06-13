@@ -57,7 +57,7 @@ class _FilterState extends State<Filter> {
               style: AppTextStyles.bold14Black.copyWith(color: onSurface)),
           SizedBox(height: h * 0.02),
           PriceRangeSlider(
-            max: 1000,
+            max: 2000,
             currentRange: currentPriceRange,
             onChanged: (values) {
               setState(() => currentPriceRange = values);
@@ -99,9 +99,9 @@ class _FilterState extends State<Filter> {
                           setState(() {
                             if (isSelected) {
                               selectedCategories.clear();
-                              selectedCategories.add(category);
+                              selectedCategories.add(category.id);
                             } else {
-                              selectedCategories.remove(category);
+                              selectedCategories.remove(category.id);
                             }
                           });
                         },
@@ -113,7 +113,16 @@ class _FilterState extends State<Filter> {
           CustomPrimaryButton(
             buttonText: l10n.applyFilters,
             onPressed: () {
-              Navigator.pop(context);
+              Map<String, dynamic> filters = {
+                'price[gte]': currentPriceRange.start.toInt(),
+                'price[lte]': currentPriceRange.end.toInt(),
+              };
+
+              if (selectedCategories.isNotEmpty) {
+                filters['category'] = selectedCategories.first;
+              }
+
+              Navigator.pop(context, filters);
             },
           ),
         ],
