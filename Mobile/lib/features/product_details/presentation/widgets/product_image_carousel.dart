@@ -27,7 +27,7 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
           itemBuilder: (context, index) {
             return Image.network(
               widget.images[index],
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
               width: double.infinity,
             );
           },
