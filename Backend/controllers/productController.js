@@ -30,10 +30,14 @@ export const getAllProducts = asyncWrapper(async (req, res, next) => {
 
   const products = await features.mongooseQuery;
 
+  const maxPrice = (await Product.findOne().sort("-price").select("-_id price"))
+    .price;
+
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
     results: products.length,
+    maxPrice: maxPrice,
     data: {
       products: products,
     },
