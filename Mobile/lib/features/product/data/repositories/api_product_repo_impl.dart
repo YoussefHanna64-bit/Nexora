@@ -12,7 +12,7 @@ class ApiProductRepoImpl implements ProductRepo {
   ApiProductRepoImpl(this.apiService);
 
   @override
-  Future<Either<Failure, List<Product>>> getAllProducts(
+  Future<Either<Failure, Map<String, dynamic>>> getAllProducts(
       {Map<String, dynamic>? queryParameters}) async {
     try {
       final response = await apiService.get(EndPoints.products,
@@ -22,8 +22,12 @@ class ApiProductRepoImpl implements ProductRepo {
       for (var item in response.data['data']['products']) {
         products.add(Product.fromJson(item));
       }
+      double maxPrice = response.data['maxPrice'].toDouble();
 
-      return Right(products);
+      return Right({
+        'products': products,
+        'maxPrice': maxPrice,
+      });
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));

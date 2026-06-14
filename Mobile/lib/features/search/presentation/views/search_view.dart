@@ -111,8 +111,15 @@ class _SearchViewState extends State<SearchView> {
                         (activeFilters['price[lte]'] as num).toDouble(),
                       );
                     }
-                    
+
                     String? savedCategoryId = activeFilters['category'];
+
+                    double maxPrice = 10000;
+
+                    final currentState = context.read<ProductCubit>().state;
+                    if (currentState is ProductSuccess) {
+                      maxPrice = currentState.maxPrice;
+                    }
 
                     final Map<String, dynamic>? filters =
                         await showModalBottomSheet(
@@ -123,6 +130,7 @@ class _SearchViewState extends State<SearchView> {
                         return Filter(
                           initialPriceRange: savedPriceRange,
                           initialCategoryId: savedCategoryId,
+                          maxPrice: maxPrice,
                         );
                       },
                     );

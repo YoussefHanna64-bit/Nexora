@@ -18,7 +18,8 @@ class ProductCubit extends Cubit<ProductState> {
         emit(ProductError(message: failure.message));
       },
       (products) {
-        emit(ProductSuccess(products: products));
+        emit(ProductSuccess(
+            products: products['products'], maxPrice: products['maxPrice']));
       },
     );
   }
