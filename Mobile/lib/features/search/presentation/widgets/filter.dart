@@ -132,8 +132,8 @@ class _FilterState extends State<Filter> {
             buttonText: l10n.applyFilters,
             onPressed: () {
               Map<String, dynamic> filters = {
-                'price[gte]': currentPriceRange.start.toInt(),
-                'price[lte]': currentPriceRange.end.toInt(),
+                'price[gte]': currentPriceRange.start,
+                'price[lte]': currentPriceRange.end,
               };
 
               if (selectedCategories.isNotEmpty) {
