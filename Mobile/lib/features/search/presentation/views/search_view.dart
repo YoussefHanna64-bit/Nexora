@@ -103,13 +103,27 @@ class _SearchViewState extends State<SearchView> {
                 child: IconButton(
                   icon: const Icon(AppIcons.tune, color: AppColors.whiteColor),
                   onPressed: () async {
+                    RangeValues? savedPriceRange;
+                    if (activeFilters.containsKey('price[gte]') &&
+                        activeFilters.containsKey('price[lte]')) {
+                      savedPriceRange = RangeValues(
+                        (activeFilters['price[gte]'] as num).toDouble(),
+                        (activeFilters['price[lte]'] as num).toDouble(),
+                      );
+                    }
+                    
+                    String? savedCategoryId = activeFilters['category'];
+
                     final Map<String, dynamic>? filters =
                         await showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
                       builder: (context) {
-                        return const Filter();
+                        return Filter(
+                          initialPriceRange: savedPriceRange,
+                          initialCategoryId: savedCategoryId,
+                        );
                       },
                     );
 

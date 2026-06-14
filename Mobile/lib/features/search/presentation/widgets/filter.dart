@@ -12,19 +12,37 @@ import 'package:nexora/features/search/presentation/widgets/price_range_slider.d
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Filter extends StatefulWidget {
-  const Filter({super.key});
+  final RangeValues? initialPriceRange;
+  final String? initialCategoryId;
+  final double maxPrice;
+  const Filter(
+      {super.key,
+      this.initialPriceRange,
+      this.initialCategoryId,
+      this.maxPrice = 2000});
 
   @override
   State<Filter> createState() => _FilterState();
 }
 
 class _FilterState extends State<Filter> {
-  RangeValues currentPriceRange = const RangeValues(10, 2000);
+  late RangeValues currentPriceRange;
   final List<String> selectedCategories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    currentPriceRange =
+        widget.initialPriceRange ?? RangeValues(10, widget.maxPrice);
+
+    if (widget.initialCategoryId != null) {
+      selectedCategories.add(widget.initialCategoryId!);
+    }
+  }
 
   void clearFilters() {
     setState(() {
-      currentPriceRange = const RangeValues(10, 2000);
+      currentPriceRange = RangeValues(10, widget.maxPrice);
       selectedCategories.clear();
     });
   }
@@ -57,7 +75,7 @@ class _FilterState extends State<Filter> {
               style: AppTextStyles.bold14Black.copyWith(color: onSurface)),
           SizedBox(height: h * 0.02),
           PriceRangeSlider(
-            max: 2000,
+            max: widget.maxPrice,
             currentRange: currentPriceRange,
             onChanged: (values) {
               setState(() => currentPriceRange = values);
