@@ -7,7 +7,7 @@ class CartInitial extends CartState {}
 class CartLoading extends CartState {}
 
 class CartUpdated extends CartState {
-  final CartModel cart;
+  final Cart cart;
   final String? successMessage;
 
   CartUpdated({required this.cart, this.successMessage});

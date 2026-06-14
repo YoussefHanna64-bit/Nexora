@@ -6,7 +6,7 @@ import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartInitial());
 
-  final List<CartItemModel> items = [];
+  final List<CartItem> items = [];
 
   void addToCart(Product product, {int quantity = 1}) {
     final itemIndex = items.indexWhere((item) => item.product.id == product.id);
@@ -14,7 +14,11 @@ class CartCubit extends Cubit<CartState> {
     if (itemIndex >= 0) {
       items[itemIndex].quantity += quantity;
     } else {
-      items.add(CartItemModel(product: product, quantity: quantity));
+      items.add(CartItem(
+          id: product.id,
+          product: product,
+          quantity: quantity,
+          price: product.price));
     }
 
     emitUpdatedState("Item added to cart");
@@ -41,11 +45,13 @@ class CartCubit extends Cubit<CartState> {
 
   void emitUpdatedState([String? successMessage]) {
     emit(CartUpdated(
-        successMessage: successMessage,
-        cart: CartModel(
-            items: List.from(items),
-            totalPrice: items.fold(0,
-                (sum, item) => sum + (item.product.price * item.quantity)))));
+      successMessage: successMessage,
+      cart: Cart(
+        items: List.from(items),
+        totalPrice:
+            items.fold(0, (sum, item) => sum + (item.price * item.quantity)),
+      ),
+    ));
   }
 
   void clearCart() {
