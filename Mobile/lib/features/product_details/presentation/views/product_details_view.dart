@@ -114,7 +114,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.product.categoryName.toUpperCase(),
+                    widget.product.brand.toUpperCase(),
                     style: AppTextStyles.bold12Primary.copyWith(
                       letterSpacing: 1.5,
                     ),

@@ -4,7 +4,7 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
 class ProductCard extends StatelessWidget {
-  final String category;
+  final String brand;
   final String name;
   final num price;
   final String imageUrl;
@@ -16,7 +16,7 @@ class ProductCard extends StatelessWidget {
 
   const ProductCard({
     super.key,
-    required this.category,
+    required this.brand,
     required this.name,
     required this.price,
     required this.imageUrl,
@@ -99,7 +99,7 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    category.toUpperCase(),
+                    brand.toUpperCase(),
                     style: AppTextStyles.bold10White.copyWith(
                       color: AppColors.greyColor,
                       letterSpacing: 0.5,

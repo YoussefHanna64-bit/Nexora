@@ -54,7 +54,7 @@ class ProductGrid extends StatelessWidget {
             return context.read<WishlistCubit>().isInWishlist(product.id);
           }, builder: (context, isFavorite) {
             return ProductCard(
-              category: product.categoryName,
+              brand: product.brand,
               name: product.name,
               price: product.price,
               isFavorite: isFavorite,
