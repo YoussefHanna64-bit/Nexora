@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class WishlistView extends StatelessWidget {
   const WishlistView({super.key});
@@ -12,25 +17,44 @@ class WishlistView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final wishList = dummyProducts.toList();
-
     return Scaffold(
       appBar: CustomAppBar(title: l10n.wishlist),
-      body: wishList.isEmpty
-          ? Center(
-              child: Text(
-                l10n.wishlistEmpty,
-                style: AppTextStyles.regular14Grey,
-              ),
-            )
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  ProductGrid(products: wishList),
-                ],
-              ),
+      body:
+          BlocBuilder<WishlistCubit, WishlistState>(builder: (context, state) {
+        if (state is WishlistError) {
+          return Center(
+            child: Text(state.message,
+                style: AppTextStyles.regular18Black
+                    .copyWith(color: AppColors.redColor)),
+          );
+        }
+        final bool isLoading =
+            state is WishlistLoading || state is WishlistInitial;
+
+        final wishList =
+            isLoading ? dummyProducts : (state as WishlistSuccess).wishlist;
+
+        if (wishList.isEmpty) {
+          return Center(
+            child: Text(
+              l10n.wishlistEmpty,
+              style: AppTextStyles.regular14Grey,
             ),
+          );
+        }
+
+        return Skeletonizer(
+          enabled: isLoading,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                ProductGrid(products: wishList),
+              ],
+            ),
+          ),
+        );
+      }),
     );
   }
 }
