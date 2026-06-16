@@ -38,10 +38,9 @@ void main() async {
           create: (context) =>
               CategoryCubit(getIt<CategoryRepo>())..fetchCategories()),
       BlocProvider<CartCubit>(
-          create: (context) => CartCubit(getIt<CartRepo>())..fetchCart()),
+          create: (context) => CartCubit(getIt<CartRepo>())),
       BlocProvider<WishlistCubit>(
-          create: (context) =>
-              WishlistCubit(getIt<WishlistRepo>())..getWishlist()),
+          create: (context) => WishlistCubit(getIt<WishlistRepo>())),
     ],
     child: const MyApp(),
   ));

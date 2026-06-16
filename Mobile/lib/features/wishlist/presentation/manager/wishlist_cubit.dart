@@ -16,7 +16,7 @@ class WishlistCubit extends Cubit<WishlistState> {
     return false;
   }
 
-  Future<void> getWishlist() async {
+  Future<void> fetchWishlist() async {
     emit(WishlistLoading());
 
     final result = await wishlistRepo.getUserWishlist();

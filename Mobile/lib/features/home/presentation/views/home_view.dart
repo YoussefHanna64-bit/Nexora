@@ -9,9 +9,13 @@ import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
+import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/home/presentation/widgets/category_list.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/product/presentation/manager/product_state.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeView extends StatefulWidget {
@@ -24,6 +28,27 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final TextEditingController searchController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      if (!mounted) {
+        return;
+      }
+
+      final cartState = context.read<CartCubit>().state;
+      if (cartState is CartInitial || cartState is CartError) {
+        context.read<CartCubit>().fetchCart();
+      }
+
+      final wishlistState = context.read<WishlistCubit>().state;
+      if (wishlistState is WishlistInitial || wishlistState is WishlistError) {
+        context.read<WishlistCubit>().fetchWishlist();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

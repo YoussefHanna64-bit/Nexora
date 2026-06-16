@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
+import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
@@ -46,7 +47,7 @@ class _LoginState extends State<Login> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: AppColors.redColor,
             ),
           );
         } else if (state is AuthSuccess) {
@@ -54,7 +55,7 @@ class _LoginState extends State<Login> {
             SnackBar(
               content: Text(
                   'Welcome back, ${state.user["fullname"].split(" ").first}!'),
-              backgroundColor: Colors.green,
+              backgroundColor: AppColors.primary,
             ),
           );
           context.go(Routes.home);
