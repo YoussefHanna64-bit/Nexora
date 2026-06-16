@@ -18,19 +18,20 @@ class ProductGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CartCubit, CartState>(
       listenWhen: (previous, current) =>
-          current is CartUpdated || current is CartError,
+          current is CartActionSuccess || current is CartActionError,
       listener: (context, state) {
-        if (state is CartUpdated && state.successMessage != null) {
+        if (state is CartActionSuccess) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.successMessage!),
+              content: Text(state.successMessage),
+              backgroundColor: AppColors.primary,
             ),
           );
-        } else if (state is CartError) {
+        } else if (state is CartActionError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.message),
+              content: Text(state.errorMessage),
               backgroundColor: AppColors.redColor,
             ),
           );
@@ -66,7 +67,7 @@ class ProductGrid extends StatelessWidget {
                 context.read<WishlistCubit>().toggleItem(product.id);
               },
               onAddTap: () {
-                context.read<CartCubit>().addToCart(product);
+                context.read<CartCubit>().addToCart(product.id);
               },
             );
           });

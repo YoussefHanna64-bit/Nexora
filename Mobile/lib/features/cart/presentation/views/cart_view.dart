@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nexora/core/models/cart_model.dart';
+import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
@@ -8,6 +10,7 @@ import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/cart/presentation/widgets/cart_item_card.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -23,24 +26,65 @@ class _CartViewState extends State<CartView> {
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return Scaffold(
-        appBar: CustomAppBar(title: l10n.cart),
-        body: BlocBuilder<CartCubit, CartState>(
-            buildWhen: (previous, current) =>
-                current is CartUpdated || current is CartInitial,
-            builder: (context, state) {
-              final cartItems = state is CartUpdated ? state.cart.items : [];
-              final totalPrice =
-                  state is CartUpdated ? state.cart.totalPrice : 0.0;
+      appBar: CustomAppBar(title: l10n.cart),
+      body: BlocConsumer<CartCubit, CartState>(
+          listenWhen: (previous, current) =>
+              current is CartActionSuccess || current is CartActionError,
+          listener: (context, state) {
+            if (state is CartActionSuccess) {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.successMessage),
+                  backgroundColor: AppColors.primary,
+                ),
+              );
+            } else if (state is CartActionError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage),
+                  backgroundColor: AppColors.redColor,
+                ),
+              );
+            }
+          },
+          buildWhen: (previous, current) =>
+              current is CartLoading ||
+              current is CartSuccess ||
+              current is CartError ||
+              current is CartInitial,
+          builder: (context, state) {
+            if (state is CartError) {
+              return Center(
+                child: Text(
+                  state.message,
+                  style: AppTextStyles.regular18Black
+                      .copyWith(color: AppColors.redColor),
+                ),
+              );
+            }
 
-              if (cartItems.isEmpty) {
-                return Center(
-                  child:
-                      Text(l10n.cartEmpty, style: AppTextStyles.regular14Grey),
-                );
-              }
-              return Column(
-                children: [
-                  Expanded(
+            final bool isLoading = state is CartLoading || state is CartInitial;
+
+            final cartItems =
+                isLoading ? dummyCart.items : (state as CartSuccess).cart.items;
+
+            final totalPrice =
+                isLoading ? 0.0 : (state as CartSuccess).cart.totalPrice;
+
+            if (!isLoading && cartItems.isEmpty) {
+              return Center(
+                child: Text(l10n.cartEmpty,
+                    style: AppTextStyles.regular14Grey,
+                    textAlign: TextAlign.center),
+              );
+            }
+
+            return Column(
+              children: [
+                Expanded(
+                  child: Skeletonizer(
+                    enabled: isLoading,
                     child: ListView.separated(
                       padding: const EdgeInsets.all(16),
                       itemCount: cartItems.length + 1,
@@ -92,57 +136,66 @@ class _CartViewState extends State<CartView> {
                         return CartItemCard(
                           product: product,
                           quantity: quantity,
-                          onIncrement: () {
-                            setState(() {
-                              context
-                                  .read<CartCubit>()
-                                  .incrementQuantity(cartItem.product.id);
-                            });
-                          },
-                          onDecrement: () {
-                            if (quantity > 1) {
-                              setState(() {
-                                context
-                                    .read<CartCubit>()
-                                    .decrementQuantity(cartItem.product.id);
-                              });
-                            }
-                          },
-                          onRemove: () {
-                            setState(() {
-                              context
-                                  .read<CartCubit>()
-                                  .removeFromCart(cartItem.product.id);
-                            });
-                          },
+                          onIncrement: isLoading
+                              ? () {}
+                              : () {
+                                  context.read<CartCubit>().updateQuantity(
+                                      cartItem.id, quantity + 1);
+                                },
+                          onDecrement: isLoading
+                              ? () {}
+                              : () {
+                                  if (quantity > 1) {
+                                    context.read<CartCubit>().updateQuantity(
+                                        cartItem.id, quantity - 1);
+                                  }
+                                },
+                          onRemove: isLoading
+                              ? () {}
+                              : () {
+                                  context
+                                      .read<CartCubit>()
+                                      .removeCartItem(cartItem.id);
+                                },
                         );
                       },
                     ),
                   ),
-                  CustomBottomSheetContainer(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(l10n.total,
-                                style: AppTextStyles.bold18Black
-                                    .copyWith(color: onSurface)),
-                            Text('\$${totalPrice.toStringAsFixed(2)}',
-                                style: AppTextStyles.extraBold24Black
-                                    .copyWith(color: onSurface)),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        CustomPrimaryButton(
-                          buttonText: l10n.proceedToCheckout,
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            }));
+                ),
+              ],
+            );
+          }),
+      bottomNavigationBar:
+          BlocBuilder<CartCubit, CartState>(builder: (context, state) {
+        if (state is CartSuccess && state.cart.items.isNotEmpty) {
+          final totalPrice = state.cart.totalPrice;
+
+          return CustomBottomSheetContainer(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(l10n.total,
+                        style: AppTextStyles.bold18Black
+                            .copyWith(color: onSurface)),
+                    Text('\$${totalPrice.toStringAsFixed(2)}',
+                        style: AppTextStyles.extraBold24Black
+                            .copyWith(color: onSurface)),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                CustomPrimaryButton(
+                  buttonText: l10n.proceedToCheckout,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      }),
+    );
   }
 }

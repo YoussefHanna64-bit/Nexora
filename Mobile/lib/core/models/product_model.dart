@@ -43,8 +43,8 @@ class Product {
       sold: json['sold'] ?? 0,
       ratingRate: json['rating']?['rate'] ?? 0,
       ratingCount: json['rating']?['count'] ?? 0,
-      categoryId: json['category']['_id'] ?? '',
-      categoryName: json['category']['name'] ?? 'Unknown Category',
+      categoryId: json['category']?['_id'] ?? '',
+      categoryName: json['category']?['name'] ?? 'Unknown Category',
       thumbnail: json['thumbnail'] ?? '',
       images: json['images'] != null ? List<String>.from(json['images']) : [],
     );

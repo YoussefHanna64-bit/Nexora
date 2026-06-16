@@ -67,6 +67,11 @@ export const addProductToCart = asyncWrapper(async (req, res, next) => {
     await cart.save();
   }
 
+  await cart.populate({
+    path: "cartItems.product",
+    select: "name thumbnail price brand",
+  });
+
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
@@ -80,7 +85,7 @@ export const addProductToCart = asyncWrapper(async (req, res, next) => {
 export const getUserCart = asyncWrapper(async (req, res, next) => {
   const cart = await Cart.findOne({ user: req.user.id }).populate({
     path: "cartItems.product",
-    select: "name images price discount",
+    select: "name thumbnail price brand",
   });
 
   if (!cart) {
@@ -127,6 +132,11 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
     cart.cartItems.splice(productIndex, 1);
     await cart.save();
 
+    await cart.populate({
+      path: "cartItems.product",
+      select: "name thumbnail price brand",
+    });
+
     return res.status(200).json({
       success: true,
       status: httpStatus.SUCCESS,
@@ -151,7 +161,13 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
 
   cart.cartItems[productIndex].quantity = quantity;
   cart.cartItems[productIndex].price = product.price;
+
   await cart.save();
+
+  await cart.populate({
+    path: "cartItems.product",
+    select: "name thumbnail price brand",
+  });
 
   res.status(200).json({
     success: true,
@@ -175,6 +191,11 @@ export const removeCartItem = asyncWrapper(async (req, res, next) => {
   );
 
   await cart.save();
+
+  await cart.populate({
+    path: "cartItems.product",
+    select: "name thumbnail price brand",
+  });
 
   res.status(200).json({
     success: true,

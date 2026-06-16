@@ -187,7 +187,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         totalPrice: totalPrice,
         onPressed: () {
           context.read<CartCubit>().addToCart(
-                widget.product,
+                widget.product.id,
                 quantity: quantity,
               );
         },

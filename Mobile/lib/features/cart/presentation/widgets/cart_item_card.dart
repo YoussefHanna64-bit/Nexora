@@ -53,7 +53,7 @@ class CartItemCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    product.images.first,
+                    product.thumbnail,
                     height: 80,
                     width: 80,
                     fit: BoxFit.cover,
@@ -73,7 +73,7 @@ class CartItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        product.categoryName,
+                        product.brand,
                         style: AppTextStyles.regular14Grey,
                       ),
                       const SizedBox(height: 12),

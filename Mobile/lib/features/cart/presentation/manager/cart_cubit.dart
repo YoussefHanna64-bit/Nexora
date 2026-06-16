@@ -1,57 +1,81 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nexora/core/models/product_model.dart';
-import 'package:nexora/core/models/cart_model.dart';
+import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
-  CartCubit() : super(CartInitial());
+  final CartRepo cartRepo;
+  CartCubit(this.cartRepo) : super(CartInitial());
 
-  final List<CartItem> items = [];
+  Future<void> fetchCart() async {
+    emit(CartLoading());
 
-  void addToCart(Product product, {int quantity = 1}) {
-    final itemIndex = items.indexWhere((item) => item.product.id == product.id);
-
-    if (itemIndex >= 0) {
-      items[itemIndex].quantity += quantity;
-    } else {
-      items.add(CartItem(
-          id: product.id,
-          product: product,
-          quantity: quantity,
-          price: product.price));
-    }
-
-    emitUpdatedState("Item added to cart");
+    final result = await cartRepo.getUserCart();
+    result.fold(
+      (failure) {
+        emit(CartError(message: failure.message));
+      },
+      (cart) {
+        emit(CartSuccess(cart: cart));
+      },
+    );
   }
 
-  void removeFromCart(String productId) {
-    items.removeWhere((item) => item.product.id == productId);
-    emitUpdatedState();
+  Future<void> addToCart(String productId, {int quantity = 1}) async {
+    final currentCart =
+        state is CartSuccess ? (state as CartSuccess).cart : null;
+
+    final result = await cartRepo.addProductToCart(productId, quantity);
+
+    result.fold(
+      (failure) {
+        if (currentCart != null) {
+          emit(CartActionError(
+              cart: currentCart, errorMessage: failure.message));
+        } else {
+          emit(CartError(message: failure.message));
+        }
+      },
+      (updatedCart) {
+        emit(CartActionSuccess(
+          cart: updatedCart,
+          successMessage: "Item added to cart",
+        ));
+      },
+    );
   }
 
-  void incrementQuantity(String productId) {
-    final item = items.firstWhere((item) => item.product.id == productId);
-    item.quantity++;
-    emitUpdatedState();
+  Future<void> updateQuantity(String cartItemId, int newQuantity) async {
+    final currentCart = (state as CartSuccess).cart;
+
+    final result =
+        await cartRepo.updateCartItemQuantity(cartItemId, newQuantity);
+
+    result.fold(
+      (failure) {
+        emit(CartActionError(cart: currentCart, errorMessage: failure.message));
+      },
+      (updatedCart) {
+        emit(CartSuccess(cart: updatedCart));
+      },
+    );
   }
 
-  void decrementQuantity(String productId) {
-    final item = items.firstWhere((item) => item.product.id == productId);
-    if (item.quantity > 1) {
-      item.quantity--;
-      emitUpdatedState();
-    }
-  }
+  Future<void> removeCartItem(String cartItemId) async {
+    final currentCart = (state as CartSuccess).cart;
 
-  void emitUpdatedState([String? successMessage]) {
-    emit(CartUpdated(
-      successMessage: successMessage,
-      cart: Cart(
-        items: List.from(items),
-        totalPrice:
-            items.fold(0, (sum, item) => sum + (item.price * item.quantity)),
-      ),
-    ));
+    final result = await cartRepo.removeCartItem(cartItemId);
+
+    result.fold(
+      (failure) {
+        emit(CartActionError(cart: currentCart, errorMessage: failure.message));
+      },
+      (updatedCart) {
+        emit(CartActionSuccess(
+          cart: updatedCart,
+          successMessage: "Item removed",
+        ));
+      },
+    );
   }
 
   void clearCart() {

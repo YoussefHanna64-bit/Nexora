@@ -9,6 +9,7 @@ import 'package:nexora/core/routers/app_router.dart';
 import 'package:nexora/core/theme/app_theme.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
 import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
+import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
@@ -36,7 +37,8 @@ void main() async {
       BlocProvider<CategoryCubit>(
           create: (context) =>
               CategoryCubit(getIt<CategoryRepo>())..fetchCategories()),
-      BlocProvider<CartCubit>(create: (context) => CartCubit()),
+      BlocProvider<CartCubit>(
+          create: (context) => CartCubit(getIt<CartRepo>())..fetchCart()),
       BlocProvider<WishlistCubit>(
           create: (context) =>
               WishlistCubit(getIt<WishlistRepo>())..getWishlist()),
