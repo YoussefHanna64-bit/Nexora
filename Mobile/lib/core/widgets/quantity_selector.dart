@@ -6,16 +6,20 @@ class QuantitySelector extends StatelessWidget {
   final int quantity;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
+  final VoidCallback? onRemove;
 
-  const QuantitySelector(
-      {super.key,
-      required this.quantity,
-      required this.onIncrement,
-      required this.onDecrement});
+  const QuantitySelector({
+    super.key,
+    required this.quantity,
+    required this.onIncrement,
+    required this.onDecrement,
+    this.onRemove,
+  });
 
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
+    final isDeleteMode = quantity == 1 && onRemove != null;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -28,8 +32,13 @@ class QuantitySelector extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-            onTap: onDecrement,
-            child: const Icon(AppIcons.remove, size: 20),
+            onTap: isDeleteMode
+                ? onRemove
+                : quantity > 1
+                    ? onDecrement
+                    : null,
+            child: Icon(isDeleteMode ? AppIcons.delete : AppIcons.remove,
+                size: 20),
           ),
           SizedBox(width: w * 0.04),
           Text(

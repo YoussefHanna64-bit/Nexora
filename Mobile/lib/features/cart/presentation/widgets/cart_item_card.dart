@@ -88,6 +88,7 @@ class CartItemCard extends StatelessWidget {
                             quantity: quantity,
                             onIncrement: onIncrement,
                             onDecrement: onDecrement,
+                            onRemove: onRemove,
                           ),
                         ],
                       ),

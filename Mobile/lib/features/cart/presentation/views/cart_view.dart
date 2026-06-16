@@ -145,10 +145,8 @@ class _CartViewState extends State<CartView> {
                           onDecrement: isLoading
                               ? () {}
                               : () {
-                                  if (quantity > 1) {
-                                    context.read<CartCubit>().updateQuantity(
-                                        cartItem.id, quantity - 1);
-                                  }
+                                  context.read<CartCubit>().updateQuantity(
+                                      cartItem.id, quantity - 1);
                                 },
                           onRemove: isLoading
                               ? () {}
