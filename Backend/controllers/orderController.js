@@ -23,9 +23,11 @@ import {
 } from "../utils/messages.js";
 import { updateOrderStatusValidator } from "../utils/validators/orderValidator.js";
 
-export const createCashOrder = asyncWrapper(async (req, res, next) => {
+export const createOrder = asyncWrapper(async (req, res, next) => {
+  const { shippingAddress, paymentMethodType = "cash" } = req.body;
+
   const cart = await Cart.findOne({ user: req.user.id });
-  if (!cart) {
+  if (!cart || cart.cartItems.length === 0) {
     return next(new AppError(ORDER_CART_NOT_FOUND, 404));
   }
 
@@ -61,6 +63,8 @@ export const createCashOrder = asyncWrapper(async (req, res, next) => {
     0,
   );
 
+  const isCardPayment = paymentMethodType === "card";
+
   const session = await mongoose.startSession();
   let order;
   try {
@@ -70,9 +74,11 @@ export const createCashOrder = asyncWrapper(async (req, res, next) => {
           {
             user: req.user.id,
             cartItems: orderItems,
-            shippingAddress: req.body.shippingAddress,
+            shippingAddress,
             totalOrderPrice,
-            paymentMethodType: "cash",
+            paymentMethodType: paymentMethodType,
+            isPaid: isCardPayment,
+            paidAt: isCardPayment ? Date.now() : undefined,
           },
         ],
         { session },
@@ -101,7 +107,7 @@ export const createCashOrder = asyncWrapper(async (req, res, next) => {
 
   const populatedOrder = await Order.findById(order[0]._id).populate({
     path: "cartItems.product",
-    select: "name images price",
+    select: "name thumbnail price",
   });
 
   res.status(201).json({
@@ -117,7 +123,7 @@ export const createCashOrder = asyncWrapper(async (req, res, next) => {
 export const getAllOrders = asyncWrapper(async (req, res, next) => {
   const query = Order.find()
     .populate({ path: "user", select: "fullname email" })
-    .populate({ path: "cartItems.product", select: "name price" });
+    .populate({ path: "cartItems.product", select: "name thumbnail price" });
 
   const features = new ApiFeatures(query, req.query)
     .filter()
@@ -155,7 +161,7 @@ export const getOrderByID = asyncWrapper(async (req, res, next) => {
     .populate({ path: "user", select: "fullname email" })
     .populate({
       path: "cartItems.product",
-      select: "name images price",
+      select: "name thumbnail price",
     });
 
   if (!order) {

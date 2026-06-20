@@ -3,7 +3,7 @@ import verifyToken from "../middleware/verifyToken.js";
 import authorize from "../middleware/authorize.js";
 import { validateMongoId } from "../utils/validators/idValidator.js";
 import {
-  createCashOrder,
+  createOrder,
   cancelOrder,
   getAllOrders,
   getUserOrders,
@@ -19,7 +19,7 @@ const router = express.Router();
 
 router.use(verifyToken);
 
-router.post("/", authorize("user"), createCashOrderValidator, createCashOrder);
+router.post("/", authorize("user"), createCashOrderValidator, createOrder);
 
 router.get("/", authorize("admin"), getAllOrders);
 

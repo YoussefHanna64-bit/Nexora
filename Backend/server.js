@@ -12,6 +12,7 @@ import productRoute from "./routes/productRoute.js";
 import cartRoute from "./routes/cartRoute.js";
 import wishlistRoute from "./routes/wishlistRoute.js";
 import orderRoute from "./routes/orderRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
 
 dotenv.config();
 connectDB();
@@ -29,6 +30,7 @@ app.use("/api/products", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/wishlist", wishlistRoute);
 app.use("/api/orders", orderRoute);
+app.use("/api/payments", paymentRoute);
 
 app.all("*any", (req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
