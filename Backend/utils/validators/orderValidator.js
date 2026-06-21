@@ -1,7 +1,7 @@
 import { check } from "express-validator";
 import validatorMiddleware from "../../middleware/validatorMiddleware.js";
 
-export const createCashOrderValidator = [
+export const createOrderValidator = [
   check("shippingAddress")
     .notEmpty()
     .withMessage("Shipping address is required")
@@ -30,6 +30,11 @@ export const createCashOrderValidator = [
     .withMessage("Phone number is required")
     .isMobilePhone(["ar-EG"])
     .withMessage("Phone number must be a valid mobile number"),
+
+  check("paymentMethodType")
+    .optional()
+    .isIn(["cash", "card"])
+    .withMessage("Payment method must be either cash or card"),
 
   validatorMiddleware,
 ];

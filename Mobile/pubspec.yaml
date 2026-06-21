@@ -48,6 +48,7 @@ dependencies:
   dartz:
   skeletonizer:
   cached_network_image:
+  flutter_stripe: ^11.5.0
   
 dev_dependencies:
   flutter_test:

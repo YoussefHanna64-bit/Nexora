@@ -11,7 +11,7 @@ import {
   updateOrderStatus,
 } from "../controllers/orderController.js";
 import {
-  createCashOrderValidator,
+  createOrderValidator,
   updateOrderStatusValidator,
 } from "../utils/validators/orderValidator.js";
 
@@ -19,7 +19,7 @@ const router = express.Router();
 
 router.use(verifyToken);
 
-router.post("/", authorize("user"), createCashOrderValidator, createOrder);
+router.post("/", authorize("user"), createOrderValidator, createOrder);
 
 router.get("/", authorize("admin"), getAllOrders);
 
