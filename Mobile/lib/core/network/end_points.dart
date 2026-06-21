@@ -6,4 +6,7 @@ class EndPoints {
   static const String categories = "/categories";
   static const String cart = "/cart";
   static const String wishlist = "/wishlist";
+  static const String orders = "/orders";
+  static const String myOrders = "/orders/my-orders";
+  static const String paymentIntent = "/payments/payment-intent";
 }

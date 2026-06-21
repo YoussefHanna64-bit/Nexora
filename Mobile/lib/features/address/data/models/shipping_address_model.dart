@@ -18,4 +18,23 @@ class ShippingAddressModel extends ShippingAddress {
       phone: json['phone'] ?? '',
     );
   }
+  factory ShippingAddressModel.fromEntity(ShippingAddress entity) {
+    return ShippingAddressModel(
+      street: entity.street,
+      apartment: entity.apartment,
+      city: entity.city,
+      postalCode: entity.postalCode,
+      phone: entity.phone,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "street": street,
+      "apartment": apartment,
+      "city": city,
+      "postalCode": postalCode,
+      "phone": phone,
+    };
+  }
 }

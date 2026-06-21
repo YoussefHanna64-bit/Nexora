@@ -144,7 +144,9 @@ export const getAllOrders = asyncWrapper(async (req, res, next) => {
 });
 
 export const getUserOrders = asyncWrapper(async (req, res, next) => {
-  const orders = await Order.find({ user: req.user.id }).sort("-createdAt");
+  const orders = await Order.find({ user: req.user.id })
+    .sort("-createdAt")
+    .populate({ path: "cartItems.product", select: "name thumbnail price" });
 
   res.status(200).json({
     success: true,
