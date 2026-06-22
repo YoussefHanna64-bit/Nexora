@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/routers/routes.dart';
@@ -16,15 +17,26 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return BlocListener<CartCubit, CartState>(
       listenWhen: (previous, current) =>
           current is CartActionSuccess || current is CartActionError,
       listener: (context, state) {
         if (state is CartActionSuccess) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          String translatedMessage = "";
+
+          if (state.successMessage == "itemAddedToCart") {
+            translatedMessage = l10n.itemAddedToCart;
+          } else if (state.successMessage == "itemRemoved") {
+            translatedMessage = l10n.itemRemoved;
+          } else {
+            translatedMessage = state.successMessage;
+          }
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.successMessage),
+              content: Text(translatedMessage),
               backgroundColor: AppColors.primary,
             ),
           );

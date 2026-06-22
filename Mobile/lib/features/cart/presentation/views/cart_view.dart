@@ -35,9 +35,18 @@ class _CartViewState extends State<CartView> {
           listener: (context, state) {
             if (state is CartActionSuccess) {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              String translatedMessage = "";
+
+              if (state.successMessage == "itemAddedToCart") {
+                translatedMessage = l10n.itemAddedToCart;
+              } else if (state.successMessage == "itemRemoved") {
+                translatedMessage = l10n.itemRemoved;
+              } else {
+                translatedMessage = state.successMessage;
+              }
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.successMessage),
+                  content: Text(translatedMessage),
                   backgroundColor: AppColors.primary,
                 ),
               );

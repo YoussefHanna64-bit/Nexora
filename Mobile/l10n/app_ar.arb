@@ -60,7 +60,9 @@
   "editProfile": "تعديل البيانات",
   "myOrders": "طلباتي",
   "shippingAddresses": "عناوين الشحن",
+  "shippingAddress": "عنوان الشحن",
   "paymentMethods": "طرق الدفع",
+  "paymentMethod": "طريقة الدفع",
   "settings": "الإعدادات",
   "logOut": "تسجيل الخروج",
   "preferences": "التفضيلات",
@@ -69,5 +71,14 @@
   "support": "الدعم",
   "helpCenter": "مركز المساعدة",
   "privacyPolicy": "سياسة الخصوصية",
-  "aboutNexora": "عن نيكسورا"
+  "aboutNexora": "عن نيكسورا",
+  "checkout": "إتمام الشراء",
+  "change": "تغيير",
+  "creditDebitCard": "بطاقة ائتمان / خصم",
+  "stripeSubtitle": "ادفع بأمان عبر Stripe",
+  "cashOnDelivery": "الدفع عند الاستلام",
+  "codSubtitle": "الدفع عند وصول طلبك",
+  "placeOrder": "تأكيد الطلب",
+  "itemAddedToCart": "تمت إضافة المنتج إلى السلة",
+  "itemRemoved": "تم حذف المنتج"
 }

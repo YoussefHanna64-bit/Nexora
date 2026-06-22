@@ -38,7 +38,7 @@ class CartCubit extends Cubit<CartState> {
       (updatedCart) {
         emit(CartActionSuccess(
           cart: updatedCart,
-          successMessage: "Item added to cart",
+          successMessage: "itemAddedToCart",
         ));
       },
     );
@@ -72,7 +72,7 @@ class CartCubit extends Cubit<CartState> {
       (updatedCart) {
         emit(CartActionSuccess(
           cart: updatedCart,
-          successMessage: "Item removed",
+          successMessage: "itemRemoved",
         ));
       },
     );

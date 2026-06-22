@@ -67,7 +67,9 @@
   "editProfile": "Edit Profile",
   "myOrders": "My Orders",
   "shippingAddresses": "Shipping Addresses",
+  "shippingAddress": "Shipping Address",
   "paymentMethods": "Payment Methods",
+  "paymentMethod": "Payment Method",
   "settings": "Settings",
   "logOut": "Log Out",
   "preferences": "Preferences",
@@ -76,5 +78,14 @@
   "support": "Support",
   "helpCenter": "Help Center",
   "privacyPolicy": "Privacy Policy",
-  "aboutNexora": "About Nexora"
+  "aboutNexora": "About Nexora",
+  "checkout": "Checkout",
+  "change": "Change",
+  "creditDebitCard": "Credit/Debit Card",
+  "stripeSubtitle": "Pay securely with Stripe",
+  "cashOnDelivery": "Cash on Delivery",
+  "codSubtitle": "Pay when your order arrives",
+  "placeOrder": "Place Order",
+  "itemAddedToCart": "Item added to cart",
+  "itemRemoved": "Item removed"
 }

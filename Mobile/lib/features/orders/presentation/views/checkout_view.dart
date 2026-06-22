@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
@@ -25,11 +26,12 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: "Checkout",
+      appBar: CustomAppBar(
+        title: l10n.checkout,
         showBackButton: true,
       ),
       body: BlocConsumer<CheckoutCubit, CheckoutState>(
@@ -57,24 +59,24 @@ class _CheckoutViewState extends State<CheckoutView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Shipping Address",
+                    Text(l10n.shippingAddress,
                         style: AppTextStyles.bold18Black
                             .copyWith(color: onSurface)),
                     TextButton(
                       onPressed: () {},
-                      child: const Text("Change"),
+                      child: Text(l10n.change),
                     ),
                   ],
                 ),
                 ShippingAddressCard(address: currentAddress),
                 const SizedBox(height: 32),
-                Text("Payment Method",
+                Text(l10n.paymentMethod,
                     style:
                         AppTextStyles.bold18Black.copyWith(color: onSurface)),
                 const SizedBox(height: 12),
                 PaymentMethodTile(
-                  title: "Credit/Debit Card",
-                  subtitle: "Pay securely with Stripe",
+                  title: l10n.creditDebitCard,
+                  subtitle: l10n.stripeSubtitle,
                   icon: Icons.credit_card,
                   value: "card",
                   groupValue: selectedPaymentMethod,
@@ -83,8 +85,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                 ),
                 const SizedBox(height: 8),
                 PaymentMethodTile(
-                  title: "Cash on Delivery",
-                  subtitle: "Pay when your order arrives",
+                  title: l10n.cashOnDelivery,
+                  subtitle: l10n.codSubtitle,
                   icon: Icons.money,
                   value: "cash",
                   groupValue: selectedPaymentMethod,
@@ -93,7 +95,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 ),
                 const Spacer(),
                 CustomPrimaryButton(
-                  buttonText: "Place Order",
+                  buttonText: l10n.placeOrder,
                   onPressed: () {
                     context.read<CheckoutCubit>().processCheckout(
                           shippingAddress: currentAddress,
