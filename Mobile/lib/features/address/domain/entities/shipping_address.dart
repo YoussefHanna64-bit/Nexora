@@ -13,3 +13,11 @@ class ShippingAddress {
     required this.phone,
   });
 }
+
+ShippingAddress currentAddress = ShippingAddress(
+  street: "Grove ST",
+  apartment: "Grove",
+  city: "Alex",
+  postalCode: "21500",
+  phone: "01234567891",
+);

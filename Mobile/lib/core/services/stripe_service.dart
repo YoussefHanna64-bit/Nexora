@@ -1,10 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:nexora/core/constants/api_keys.dart';
 import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/features/orders/domain/services/payment_service.dart';
 
 class StripeService implements PaymentService {
+  StripeService() {
+    Stripe.publishableKey = ApiKeys.stripePublishableKey;
+  }
+
   @override
   Future<Either<Failure, void>> processPayment(String clientSecret) async {
     try {

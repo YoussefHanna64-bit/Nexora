@@ -14,6 +14,12 @@ class AppTextStyles {
     color: AppColors.blackColor,
   );
 
+  static const TextStyle regular12Grey = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.greyColor,
+  );
+
   static const TextStyle regular14Grey = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,

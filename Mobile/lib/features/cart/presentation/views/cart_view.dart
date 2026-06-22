@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nexora/core/models/cart_model.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
@@ -186,7 +188,9 @@ class _CartViewState extends State<CartView> {
                 const SizedBox(height: 16),
                 CustomPrimaryButton(
                   buttonText: l10n.proceedToCheckout,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(Routes.checkout);
+                  },
                 ),
               ],
             ),
