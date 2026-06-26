@@ -6,6 +6,7 @@ class Routes {
   static const String productDetails = "/productDetails";
   static const String cart = "/cart";
   static const String checkout = "/checkout";
+  static const String orderSuccess = "/orderSuccess";
   static const String wishlist = "/wishlist";
   static const String profile = "/profile";
   static const String settings = "/settings";

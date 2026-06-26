@@ -10,9 +10,11 @@ import 'package:nexora/features/auth/presentation/views/register.dart';
 import 'package:nexora/features/cart/presentation/views/cart_view.dart';
 import 'package:nexora/features/home/presentation/views/home_view.dart';
 import 'package:nexora/features/main_layout/presentation/views/main_layout.dart';
+import 'package:nexora/features/orders/domain/entities/order.dart';
 import 'package:nexora/features/orders/domain/usecases/place_order_use_case.dart';
 import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cubit.dart';
 import 'package:nexora/features/orders/presentation/views/checkout_view.dart';
+import 'package:nexora/features/orders/presentation/views/order_success_view.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
@@ -83,6 +85,14 @@ final GoRouter appRouter = GoRouter(
           create: (context) => CheckoutCubit(getIt<PlaceOrderUseCase>()),
           child: const CheckoutView(),
         );
+      },
+    ),
+    GoRoute(
+      path: Routes.orderSuccess,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        final order = state.extra as Order?;
+        return OrderSuccessView(order: order);
       },
     ),
     GoRoute(

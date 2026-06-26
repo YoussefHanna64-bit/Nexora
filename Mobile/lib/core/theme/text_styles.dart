@@ -116,6 +116,12 @@ class AppTextStyles {
     color: AppColors.blackColor,
   );
 
+  static const TextStyle bold24Black = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+
   static const TextStyle extraBold24Primary = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w800,

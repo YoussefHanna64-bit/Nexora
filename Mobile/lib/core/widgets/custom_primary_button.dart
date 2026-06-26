@@ -9,6 +9,7 @@ class CustomPrimaryButton extends StatelessWidget {
   final double? width;
   final double? height;
   final bool isLoading;
+  final bool isOutlined;
 
   const CustomPrimaryButton({
     super.key,
@@ -18,31 +19,49 @@ class CustomPrimaryButton extends StatelessWidget {
     this.height,
     required this.onPressed,
     this.isLoading = false,
+    this.isOutlined = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final loadingWidget = CircularProgressIndicator(
+      color: isOutlined ? AppColors.primary : AppColors.whiteColor,
+      strokeWidth: 2,
+    );
+
+    final textWidget = Text(
+      buttonText,
+      style: isOutlined
+          ? AppTextStyles.bold16White.copyWith(color: AppColors.primary)
+          : AppTextStyles.bold16White,
+    );
+
     return SizedBox(
-      width: width ?? double.infinity,
+      width: width,
       height: height,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(
-              isLoading ? AppColors.greyColor : AppColors.primary),
-          shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+      child: isOutlined
+          ? OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: AppColors.primary, width: 1.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              onPressed: isLoading ? null : onPressed,
+              child: isLoading ? loadingWidget : textWidget,
+            )
+          : ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isLoading
+                    ? AppColors.greyColor
+                    : (fillColor ?? AppColors.primary),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              onPressed: isLoading ? null : onPressed,
+              child: isLoading ? loadingWidget : textWidget,
             ),
-          ),
-        ),
-        onPressed: isLoading ? null : onPressed,
-        child: isLoading
-            ? const CircularProgressIndicator(
-                color: AppColors.whiteColor,
-                strokeWidth: 2,
-              )
-            : Text(buttonText, style: AppTextStyles.bold16White),
-      ),
     );
   }
 }

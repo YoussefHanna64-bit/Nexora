@@ -45,7 +45,7 @@ class _CheckoutViewState extends State<CheckoutView> {
           } else if (state is CheckoutSuccess) {
             context.read<CartCubit>().fetchCart();
 
-            context.go(Routes.home);
+            context.go(Routes.orderSuccess, extra: state.order);
           }
         },
         builder: (context, state) {
