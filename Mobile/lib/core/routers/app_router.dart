@@ -11,11 +11,9 @@ import 'package:nexora/features/cart/presentation/views/cart_view.dart';
 import 'package:nexora/features/home/presentation/views/home_view.dart';
 import 'package:nexora/features/main_layout/presentation/views/main_layout.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
-import 'package:nexora/features/orders/domain/usecases/place_order_use_case.dart';
 import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cubit.dart';
 import 'package:nexora/features/orders/presentation/views/checkout_view.dart';
 import 'package:nexora/features/orders/presentation/views/order_success_view.dart';
-import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
 import 'package:nexora/features/profile/presentation/views/profile_view.dart';
@@ -64,7 +62,7 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final String? query = state.extra as String?;
         return BlocProvider(
-          create: (context) => ProductCubit(getIt<ProductRepo>()),
+          create: (context) => getIt<ProductCubit>(),
           child: SearchView(initialSearchQuery: query),
         );
       },
@@ -82,7 +80,7 @@ final GoRouter appRouter = GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
         return BlocProvider(
-          create: (context) => CheckoutCubit(getIt<PlaceOrderUseCase>()),
+          create: (context) => getIt<CheckoutCubit>(),
           child: const CheckoutView(),
         );
       },
@@ -111,7 +109,7 @@ final GoRouter appRouter = GoRouter(
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) {
             return BlocProvider<ProductCubit>(
-              create: (context) => ProductCubit(getIt<ProductRepo>())
+              create: (context) => getIt<ProductCubit>()
                 ..fetchProducts(queryParameters: {
                   'sort': '-sold',
                   'limit': 6,

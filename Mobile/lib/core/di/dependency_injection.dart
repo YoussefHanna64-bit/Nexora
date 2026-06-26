@@ -13,8 +13,11 @@ import 'package:nexora/features/orders/data/repositories/order_repo_impl.dart';
 import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
 import 'package:nexora/features/orders/domain/services/payment_service.dart';
 import 'package:nexora/features/orders/domain/usecases/place_order_use_case.dart';
+import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cubit.dart';
+import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
 import 'package:nexora/features/product/data/repositories/api_product_repo_impl.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
+import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/wishlist/data/repositories/api_wishlist_repo_impl.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
 
@@ -43,6 +46,10 @@ void setupGetIt() {
     () => ApiProductRepoImpl(getIt<ApiService>()),
   );
 
+  getIt.registerFactory<ProductCubit>(
+    () => ProductCubit(getIt<ProductRepo>()),
+  );
+
   getIt.registerLazySingleton<CartRepo>(
     () => ApiCartRepoImpl(getIt<ApiService>()),
   );
@@ -61,5 +68,13 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<PlaceOrderUseCase>(
     () => PlaceOrderUseCase(getIt<OrderRepo>(), getIt<PaymentService>()),
+  );
+
+  getIt.registerFactory<CheckoutCubit>(
+    () => CheckoutCubit(getIt<PlaceOrderUseCase>()),
+  );
+
+  getIt.registerFactory<OrderHistoryCubit>(
+    () => OrderHistoryCubit(getIt<OrderRepo>()),
   );
 }
