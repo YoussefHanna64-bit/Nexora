@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
+import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
@@ -11,6 +14,7 @@ class OrderSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return PopScope(
@@ -26,32 +30,32 @@ class OrderSuccessView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: Colors.green.withAlpha(26),
+                    color: AppColors.greenColor.withAlpha(26),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
-                    Icons.check_circle_outline_rounded,
-                    color: Colors.green,
+                    AppIcons.checkCircle,
+                    color: AppColors.greenColor,
                     size: 100,
                   ),
                 ),
                 const SizedBox(height: 32),
                 Text(
                   order?.id != null
-                      ? "Order #${order!.id} Confirmed!"
-                      : "Order Confirmed!",
+                      ? l10n.orderConfirmedWithId(order!.id)
+                      : l10n.orderConfirmed,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.bold24Black.copyWith(color: onSurface),
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  "Thank you for your purchase. We have received your order and will begin processing it shortly.",
+                  l10n.thankYouForYourPurchase,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.regular14Grey,
                 ),
                 const Spacer(),
                 CustomPrimaryButton(
-                  buttonText: "Continue Shopping",
+                  buttonText: l10n.continueShopping,
                   onPressed: () {
                     context.go(Routes.home);
                   },
@@ -59,7 +63,7 @@ class OrderSuccessView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CustomPrimaryButton(
-                  buttonText: "Track My Order",
+                  buttonText: l10n.trackMyOrder,
                   onPressed: () {
                     context.go(Routes.home);
                   },

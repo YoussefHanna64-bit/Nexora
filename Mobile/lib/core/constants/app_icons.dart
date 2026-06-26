@@ -32,4 +32,5 @@ class AppIcons {
   static const IconData infoOutline = Icons.info_outline;
   static const IconData check = Icons.check;
   static const IconData brokenImage = Icons.broken_image;
+  static const IconData checkCircle = Icons.check_circle_outline_rounded;
 }

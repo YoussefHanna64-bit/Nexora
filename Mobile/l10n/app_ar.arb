@@ -80,5 +80,17 @@
   "codSubtitle": "الدفع عند وصول طلبك",
   "placeOrder": "تأكيد الطلب",
   "itemAddedToCart": "تمت إضافة المنتج إلى السلة",
-  "itemRemoved": "تم حذف المنتج"
+  "itemRemoved": "تم حذف المنتج",
+  "orderConfirmed": "تم تأكيد الطلب!",
+  "orderConfirmedWithId": "تم تأكيد الطلب #{id}!",
+  "@orderConfirmedWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "thankYouForYourPurchase": "شكراً لك على الشراء. لقد استلمنا طلبك وسنبدأ في معالجته قريباً.",
+  "continueShopping": "متابعة التسوق",
+  "trackMyOrder": "تتبع طلبي"
 }

@@ -87,5 +87,17 @@
   "codSubtitle": "Pay when your order arrives",
   "placeOrder": "Place Order",
   "itemAddedToCart": "Item added to cart",
-  "itemRemoved": "Item removed"
+  "itemRemoved": "Item removed",
+  "orderConfirmed": "Order Confirmed!",
+  "orderConfirmedWithId": "Order #{id} Confirmed!",
+  "@orderConfirmedWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "thankYouForYourPurchase": "Thank you for your purchase. We have received your order and will begin processing it shortly.",
+  "continueShopping": "Continue Shopping",
+  "trackMyOrder": "Track My Order"
 }
