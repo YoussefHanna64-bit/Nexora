@@ -33,4 +33,6 @@ class AppIcons {
   static const IconData check = Icons.check;
   static const IconData brokenImage = Icons.broken_image;
   static const IconData checkCircle = Icons.check_circle_outline_rounded;
+  static const IconData creditCard = Icons.credit_card;
+  static const IconData money = Icons.money;
 }

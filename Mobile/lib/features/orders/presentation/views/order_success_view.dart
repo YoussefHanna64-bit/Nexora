@@ -65,7 +65,7 @@ class OrderSuccessView extends StatelessWidget {
                 CustomPrimaryButton(
                   buttonText: l10n.trackMyOrder,
                   onPressed: () {
-                    context.go(Routes.home);
+                    context.push(Routes.myOrders);
                   },
                   isOutlined: true,
                   height: 56,

@@ -92,5 +92,29 @@
   },
   "thankYouForYourPurchase": "شكراً لك على الشراء. لقد استلمنا طلبك وسنبدأ في معالجته قريباً.",
   "continueShopping": "متابعة التسوق",
-  "trackMyOrder": "تتبع طلبي"
+  "trackMyOrder": "تتبع طلبي",
+  "noOrdersYet": "ليس لديك أي طلبات بعد",
+  "orderIdShort": "طلب #{id}...",
+  "@orderIdShort": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "itemsCount": "{count, plural, =1{منتج واحد} =2{منتجان} few{{count} منتجات} many{{count} منتجاً} other{{count} منتج}}",
+  "@itemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "card": "بطاقة",
+  "cash": "نقداً",
+  "statusPending": "قيد الانتظار",
+  "statusShipped": "تم الشحن",
+  "statusDelivered": "تم التوصيل",
+  "statusCanceled": "ملغي",
+  "statusUnknown": "غير معروف"
 }

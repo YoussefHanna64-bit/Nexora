@@ -10,4 +10,5 @@ class Routes {
   static const String wishlist = "/wishlist";
   static const String profile = "/profile";
   static const String settings = "/settings";
+  static const String myOrders = "/myOrders";
 }

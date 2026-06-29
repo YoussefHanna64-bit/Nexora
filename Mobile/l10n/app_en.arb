@@ -99,5 +99,29 @@
   },
   "thankYouForYourPurchase": "Thank you for your purchase. We have received your order and will begin processing it shortly.",
   "continueShopping": "Continue Shopping",
-  "trackMyOrder": "Track My Order"
+  "trackMyOrder": "Track My Order",
+    "noOrdersYet": "You have no orders yet",
+  "orderIdShort": "Order #{id}...",
+  "@orderIdShort": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "itemsCount": "{count, plural, =1{1 Item} other{{count} Items}}",
+  "@itemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "card": "Card",
+  "cash": "Cash", 
+  "statusPending": "Pending",
+  "statusShipped": "Shipped",
+  "statusDelivered": "Delivered",
+  "statusCanceled": "Canceled",
+  "statusUnknown": "Unknown"
 }

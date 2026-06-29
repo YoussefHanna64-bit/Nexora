@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
@@ -77,7 +78,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 PaymentMethodTile(
                   title: l10n.creditDebitCard,
                   subtitle: l10n.stripeSubtitle,
-                  icon: Icons.credit_card,
+                  icon: AppIcons.creditCard,
                   value: "card",
                   groupValue: selectedPaymentMethod,
                   onChanged: (val) =>
@@ -87,7 +88,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 PaymentMethodTile(
                   title: l10n.cashOnDelivery,
                   subtitle: l10n.codSubtitle,
-                  icon: Icons.money,
+                  icon: AppIcons.money,
                   value: "cash",
                   groupValue: selectedPaymentMethod,
                   onChanged: (val) =>
