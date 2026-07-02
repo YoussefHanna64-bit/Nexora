@@ -16,7 +16,8 @@ export const toggleWishlist = asyncWrapper(async (req, res, next) => {
     user.wishlist.addToSet(productId);
   }
 
-  await user.save({ validateBeforeSave: false });
+  await user.save();
+
   await user.populate({
     path: "wishlist",
     populate: {

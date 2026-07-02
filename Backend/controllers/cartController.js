@@ -180,22 +180,18 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
 });
 
 export const removeCartItem = asyncWrapper(async (req, res, next) => {
-  const cart = await Cart.findOne({ user: req.user.id });
+  const cart = await Cart.findOneAndUpdate(
+    { user: req.user.id },
+    { $pull: { cartItems: { _id: req.params.id } } },
+    { returnDocument: "after" },
+  ).populate({
+    path: "cartItems.product",
+    select: "name thumbnail price brand",
+  });
 
   if (!cart) {
     return next(new AppError(CART_NOT_FOUND, 404));
   }
-
-  cart.cartItems = cart.cartItems.filter(
-    (item) => !item._id.equals(req.params.id),
-  );
-
-  await cart.save();
-
-  await cart.populate({
-    path: "cartItems.product",
-    select: "name thumbnail price brand",
-  });
 
   res.status(200).json({
     success: true,

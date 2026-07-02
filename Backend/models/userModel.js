@@ -1,6 +1,35 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+const addressSchema = new mongoose.Schema({
+  street: {
+    type: String,
+    required: [true, "Street address is required"],
+  },
+  apartment: { type: String },
+  city: {
+    type: String,
+    required: [true, "City is required"],
+  },
+  postalCode: {
+    type: String,
+    required: [true, "Postal code is required"],
+  },
+  phone: {
+    type: String,
+    required: [true, "Phone number is required"],
+  },
+  isDefault: {
+    type: Boolean,
+    default: false,
+  },
+  label: {
+    type: String,
+    enum: ["Home", "Work", "Other"],
+    default: "Home",
+  },
+});
+
 const userSchema = new mongoose.Schema(
   {
     fullname: {
@@ -26,6 +55,7 @@ const userSchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
+    addresses: [addressSchema],
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -34,7 +64,6 @@ const userSchema = new mongoose.Schema(
     },
     passwordConfirm: {
       type: String,
-      required: [true, "Password confirmation is required"],
     },
   },
   {

@@ -46,3 +46,8 @@ export const PASSWORD_UPDATED = "Password updated";
 export const ACCOUNT_DELETE_PERMISSION =
   "You don't have permission to delete this account";
 export const ACCOUNT_DELETED = "Account deleted";
+
+export const ADDRESS_ADDED = "Address added";
+export const ADDRESS_NOT_FOUND = "No address found with that ID";
+export const ADDRESS_UPDATED = "Address updated";
+export const ADDRESS_DELETED = "Address deleted";

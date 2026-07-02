@@ -14,12 +14,23 @@ import {
   updatePasswordValidator,
   updateUserValidator,
 } from "../utils/validators/userValidator.js";
+import {
+  addAddressValidator,
+  updateAddressValidator,
+} from "../utils/validators/addressValidator.js";
+import {
+  addAddress,
+  deleteAddress,
+  getAddresses,
+  updateAddress,
+} from "../controllers/addressController.js";
 
 const router = express.Router();
 
 router.use(verifyToken);
 
 router.get("/me", authorize("user", "admin"), getUser);
+
 router.patch(
   "/updateUser",
   authorize("user", "admin"),
@@ -33,6 +44,31 @@ router.patch(
   updatePasswordValidator,
   updatePassword,
 );
+
+router.get("/addresses", authorize("user", "admin"), getAddresses);
+
+router.post(
+  "/addresses",
+  authorize("user", "admin"),
+  addAddressValidator,
+  addAddress,
+);
+
+router.patch(
+  "/addresses/:id",
+  authorize("user", "admin"),
+  validateMongoId,
+  updateAddressValidator,
+  updateAddress,
+);
+
+router.delete(
+  "/addresses/:id",
+  authorize("user", "admin"),
+  validateMongoId,
+  deleteAddress,
+);
+
 router.delete("/", authorize("user", "admin"), deleteUser);
 
 router.use(authorize("admin"));
