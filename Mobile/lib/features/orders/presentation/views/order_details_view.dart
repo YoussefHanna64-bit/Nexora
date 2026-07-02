@@ -24,6 +24,7 @@ class OrderDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
 
     final bool canCancel =
         order.status == "pending" || order.status == "processing";
@@ -31,28 +32,31 @@ class OrderDetailsView extends StatelessWidget {
     final bool isCanceled = order.status == "canceled";
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Order Details"),
+      appBar: CustomAppBar(title: l10n.orderDetails),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Order ID: #${order.id}", style: AppTextStyles.bold16Black),
+            Text(l10n.orderIdFull(order.id),
+                style: AppTextStyles.bold16Black.copyWith(color: onSurface)),
             const SizedBox(height: 4),
             Text(
-              "Placed on ${DateFormat("dd MMM yyyy, hh:mm a", context.read<LanguageCubit>().state.languageCode).format(order.createdAt)}",
+              l10n.placedOn(DateFormat("dd MMM yyyy, hh:mm a",
+                      context.read<LanguageCubit>().state.languageCode)
+                  .format(order.createdAt)),
               style: AppTextStyles.regular14Grey,
             ),
             const SizedBox(height: 12),
             OrderStatusBadge(status: order.status),
             const Divider(height: 32),
-            Text("Items", style: AppTextStyles.bold18Black),
+            Text(l10n.items, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             ...order.cartItems.map((item) => OrderProductTile(
                   item: item,
                   isDelivered: isDelivered,
                 )),
             const Divider(height: 32),
-            Text(l10n.paymentMethod, style: AppTextStyles.bold18Black),
+            Text(l10n.paymentMethod, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             const SizedBox(height: 12),
             Row(
               children: [
@@ -67,32 +71,32 @@ class OrderDetailsView extends StatelessWidget {
                   order.paymentMethodType == "card"
                       ? l10n.creditDebitCard
                       : l10n.cashOnDelivery,
-                  style: AppTextStyles.bold14Black,
+                  style: AppTextStyles.bold14Black.copyWith(color: onSurface),
                 ),
               ],
             ),
             const SizedBox(height: 24),
-            Text("Order Summary", style: AppTextStyles.bold18Black),
+            Text(l10n.orderSummary, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             const SizedBox(height: 12),
             OrderSummaryCard(
               subtotal: order.totalOrderPrice,
               total: order.totalOrderPrice,
             ),
             const SizedBox(height: 24),
-            Text(l10n.shippingAddress, style: AppTextStyles.bold18Black),
+            Text(l10n.shippingAddress, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             const SizedBox(height: 12),
             ShippingAddressCard(address: order.shippingAddress),
             const SizedBox(height: 48),
             if (canCancel)
               CustomPrimaryButton(
-                buttonText: "Cancel Order",
+                buttonText: l10n.cancelOrder,
                 outlineColor: AppColors.redColor,
                 isOutlined: true,
                 onPressed: () => _cancelConfirmation(context),
               )
             else if (isCanceled)
-              const Center(
-                child: Text("This order has been canceled",
+              Center(
+                child: Text(l10n.orderHasBeenCanceled,
                     style: TextStyle(color: AppColors.redColor)),
               )
           ],
@@ -102,23 +106,23 @@ class OrderDetailsView extends StatelessWidget {
   }
 
   void _cancelConfirmation(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Cancel Order?"),
-        content: const Text(
-            "Are you sure you want to cancel this order? This action can't be undone"),
+        title: Text(l10n.cancelOrderQuestion),
+        content: Text(l10n.cancelOrderConfirmationText),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text("No, Keep It")),
+              child: Text(l10n.noKeepIt)),
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 context.read<OrderHistoryCubit>().cancelOrder(order.id);
                 context.pop();
               },
-              child: const Text("Yes, Cancel",
+              child: Text(l10n.yesCancel,
                   style: TextStyle(color: AppColors.redColor))),
         ],
       ),

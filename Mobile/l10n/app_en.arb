@@ -100,7 +100,7 @@
   "thankYouForYourPurchase": "Thank you for your purchase. We have received your order and will begin processing it shortly.",
   "continueShopping": "Continue Shopping",
   "trackMyOrder": "Track My Order",
-    "noOrdersYet": "You have no orders yet",
+  "noOrdersYet": "You have no orders yet",
   "orderIdShort": "Order #{id}...",
   "@orderIdShort": {
     "placeholders": {
@@ -123,5 +123,43 @@
   "statusShipped": "Shipped",
   "statusDelivered": "Delivered",
   "statusCanceled": "Canceled",
-  "statusUnknown": "Unknown"
+  "statusUnknown": "Unknown",
+  "qtyAndPrice": "Qty: {quantity} • ${price}",
+  "@qtyAndPrice": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      },
+      "price": {
+        "type": "num"
+      }
+    }
+  },
+  "ratingFeatureComingSoon": "Rating feature coming soon",
+  "leaveReview": "Leave a Review",
+  "orderDetails": "Order Details",
+  "orderIdFull": "Order ID: #{id}",
+  "@orderIdFull": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "placedOn": "Placed on {date}",
+  "@placedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "items": "Items",
+  "orderSummary": "Order Summary",
+  "cancelOrder": "Cancel Order",
+  "orderHasBeenCanceled": "This order has been canceled",
+  "cancelOrderQuestion": "Cancel Order?",
+  "cancelOrderConfirmationText": "Are you sure you want to cancel this order? This action can't be undone",
+  "noKeepIt": "No, Keep It",
+  "yesCancel": "Yes, Cancel"
 }

@@ -116,5 +116,43 @@
   "statusShipped": "تم الشحن",
   "statusDelivered": "تم التوصيل",
   "statusCanceled": "ملغي",
-  "statusUnknown": "غير معروف"
+  "statusUnknown": "غير معروف",
+  "qtyAndPrice": "الكمية: {quantity} • ${price}",
+  "@qtyAndPrice": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      },
+      "price": {
+        "type": "num"
+      }
+    }
+  },
+  "ratingFeatureComingSoon": "ميزة التقييم قريباً",
+  "leaveReview": "اترك تقييماً",
+  "orderDetails": "تفاصيل الطلب",
+  "orderIdFull": "رقم الطلب: #{id}",
+  "@orderIdFull": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "placedOn": "تم الطلب في {date}",
+  "@placedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "items": "المنتجات",
+  "orderSummary": "ملخص الطلب",
+  "cancelOrder": "إلغاء الطلب",
+  "orderHasBeenCanceled": "تم إلغاء هذا الطلب",
+  "cancelOrderQuestion": "هل تريد إلغاء الطلب؟",
+  "cancelOrderConfirmationText": "هل أنت متأكد أنك تريد إلغاء هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء",
+  "noKeepIt": "لا، احتفظ به",
+  "yesCancel": "نعم، إلغاء"
 }
