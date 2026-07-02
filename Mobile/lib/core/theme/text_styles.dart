@@ -50,6 +50,12 @@ class AppTextStyles {
     color: AppColors.blackColor,
   );
 
+  static const TextStyle bold12Amber = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    color: AppColors.goldColor,
+  );
+
   static const TextStyle bold12Primary = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w700,

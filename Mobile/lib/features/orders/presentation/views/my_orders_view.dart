@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -51,9 +53,11 @@ class MyOrdersView extends StatelessWidget {
                 final order = orders[index];
                 return OrderListItem(
                   order: order,
-                  onTap: isLoading ? () {} : () {
-
-                  },
+                  onTap: isLoading
+                      ? () {}
+                      : () {
+                          context.push(Routes.orderDetails, extra: order);
+                        },
                 );
               },
             ),

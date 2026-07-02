@@ -9,6 +9,7 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
+import 'package:nexora/core/widgets/order_summary_card.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/cart/presentation/widgets/cart_item_card.dart';
@@ -103,40 +104,9 @@ class _CartViewState extends State<CartView> {
                           const SizedBox(height: 16),
                       itemBuilder: (context, index) {
                         if (index == cartItems.length) {
-                          return Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                  color: Theme.of(context).dividerColor),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(l10n.subtotal,
-                                        style: AppTextStyles.regular14Grey),
-                                    Text('\$${totalPrice.toStringAsFixed(2)}',
-                                        style: AppTextStyles.bold14Black
-                                            .copyWith(color: onSurface)),
-                                  ],
-                                ),
-                                const SizedBox(height: 12),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(l10n.shipping,
-                                        style: AppTextStyles.regular14Grey),
-                                    Text(l10n.free,
-                                        style: AppTextStyles.bold16Primary),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          return OrderSummaryCard(
+                            subtotal: totalPrice,
+                            shippingFee: 0,
                           );
                         }
 
@@ -189,7 +159,7 @@ class _CartViewState extends State<CartView> {
                     Text(l10n.total,
                         style: AppTextStyles.bold18Black
                             .copyWith(color: onSurface)),
-                    Text('\$${totalPrice.toStringAsFixed(2)}',
+                    Text("\$${totalPrice.toStringAsFixed(2)}",
                         style: AppTextStyles.extraBold24Black
                             .copyWith(color: onSurface)),
                   ],

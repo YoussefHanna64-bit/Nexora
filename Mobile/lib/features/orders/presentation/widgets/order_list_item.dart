@@ -77,7 +77,7 @@ class OrderListItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text("\$${order.totalOrderPrice}",
+                  Text("\$${order.totalOrderPrice.toStringAsFixed(2)}",
                       style: AppTextStyles.bold16Primary),
                 ],
               ),

@@ -1,0 +1,127 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/localization/language_cubit.dart';
+import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_app_bar.dart';
+import 'package:nexora/core/widgets/custom_primary_button.dart';
+import 'package:nexora/core/widgets/order_summary_card.dart';
+import 'package:nexora/features/orders/domain/entities/order.dart';
+import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
+import 'package:nexora/features/orders/presentation/widgets/order_product_tile.dart';
+import 'package:nexora/features/orders/presentation/widgets/order_status_badge.dart';
+import 'package:nexora/features/orders/presentation/widgets/shipping_address_card.dart';
+
+class OrderDetailsView extends StatelessWidget {
+  final Order order;
+
+  const OrderDetailsView({super.key, required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    final bool canCancel =
+        order.status == "pending" || order.status == "processing";
+    final bool isDelivered = order.status == "delivered";
+    final bool isCanceled = order.status == "canceled";
+
+    return Scaffold(
+      appBar: CustomAppBar(title: "Order Details"),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Order ID: #${order.id}", style: AppTextStyles.bold16Black),
+            const SizedBox(height: 4),
+            Text(
+              "Placed on ${DateFormat("dd MMM yyyy, hh:mm a", context.read<LanguageCubit>().state.languageCode).format(order.createdAt)}",
+              style: AppTextStyles.regular14Grey,
+            ),
+            const SizedBox(height: 12),
+            OrderStatusBadge(status: order.status),
+            const Divider(height: 32),
+            Text("Items", style: AppTextStyles.bold18Black),
+            ...order.cartItems.map((item) => OrderProductTile(
+                  item: item,
+                  isDelivered: isDelivered,
+                )),
+            const Divider(height: 32),
+            Text(l10n.paymentMethod, style: AppTextStyles.bold18Black),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Icon(
+                  order.paymentMethodType == "card"
+                      ? AppIcons.creditCard
+                      : AppIcons.money,
+                  color: AppColors.primary,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  order.paymentMethodType == "card"
+                      ? l10n.creditDebitCard
+                      : l10n.cashOnDelivery,
+                  style: AppTextStyles.bold14Black,
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Text("Order Summary", style: AppTextStyles.bold18Black),
+            const SizedBox(height: 12),
+            OrderSummaryCard(
+              subtotal: order.totalOrderPrice,
+              total: order.totalOrderPrice,
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.shippingAddress, style: AppTextStyles.bold18Black),
+            const SizedBox(height: 12),
+            ShippingAddressCard(address: order.shippingAddress),
+            const SizedBox(height: 48),
+            if (canCancel)
+              CustomPrimaryButton(
+                buttonText: "Cancel Order",
+                outlineColor: AppColors.redColor,
+                isOutlined: true,
+                onPressed: () => _cancelConfirmation(context),
+              )
+            else if (isCanceled)
+              const Center(
+                child: Text("This order has been canceled",
+                    style: TextStyle(color: AppColors.redColor)),
+              )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _cancelConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Cancel Order?"),
+        content: const Text(
+            "Are you sure you want to cancel this order? This action can't be undone"),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("No, Keep It")),
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                context.read<OrderHistoryCubit>().cancelOrder(order.id);
+                context.pop();
+              },
+              child: const Text("Yes, Cancel",
+                  style: TextStyle(color: AppColors.redColor))),
+        ],
+      ),
+    );
+  }
+}

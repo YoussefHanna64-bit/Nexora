@@ -15,6 +15,7 @@ import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cu
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
 import 'package:nexora/features/orders/presentation/views/checkout_view.dart';
 import 'package:nexora/features/orders/presentation/views/my_orders_view.dart';
+import 'package:nexora/features/orders/presentation/views/order_details_view.dart';
 import 'package:nexora/features/orders/presentation/views/order_success_view.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
@@ -107,6 +108,18 @@ final GoRouter appRouter = GoRouter(
         return BlocProvider(
           create: (context) => getIt<OrderHistoryCubit>()..fetchOrders(),
           child: const MyOrdersView(),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.orderDetails,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        final order = state.extra as Order;
+
+        return BlocProvider.value(
+          value: getIt<OrderHistoryCubit>(),
+          child: OrderDetailsView(order: order),
         );
       },
     ),
