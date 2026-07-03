@@ -2,6 +2,7 @@ import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
 
 abstract class AddressRemoteDataSource {
+  Future<Map<String, dynamic>> getAddresses();
   Future<Map<String, dynamic>> addAddress(Map<String, dynamic> addressData);
   Future<Map<String, dynamic>> updateAddress(
       String addrId, Map<String, dynamic> addressData);
@@ -12,6 +13,12 @@ class AddressRemoteDataSourceImpl implements AddressRemoteDataSource {
   final ApiService apiService;
 
   AddressRemoteDataSourceImpl(this.apiService);
+
+  @override
+  Future<Map<String, dynamic>> getAddresses() async {
+    final response = await apiService.get(EndPoints.addresses);
+    return response.data;
+  }
 
   @override
   Future<Map<String, dynamic>> addAddress(

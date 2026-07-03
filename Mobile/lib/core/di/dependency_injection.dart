@@ -5,6 +5,8 @@ import 'package:nexora/core/services/stripe_service.dart';
 import 'package:nexora/features/address/data/datasources/address_remote_data_source.dart';
 import 'package:nexora/features/address/data/repositories/address_repo_impl.dart';
 import 'package:nexora/features/address/domain/repositories/address_repo.dart';
+import 'package:nexora/features/address/domain/usecases/get_addresses_use_case.dart';
+import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
 import 'package:nexora/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:nexora/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
@@ -130,6 +132,10 @@ void setupGetIt() {
     () => AddressRepoImpl(getIt<AddressRemoteDataSource>()),
   );
 
+  getIt.registerLazySingleton<GetAddressesUseCase>(
+    () => GetAddressesUseCase(getIt<AddressRepo>()),
+  );
+
   getIt.registerLazySingleton<AddAddressUseCase>(
     () => AddAddressUseCase(getIt<AddressRepo>()),
   );
@@ -140,6 +146,15 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<RemoveAddressUseCase>(
     () => RemoveAddressUseCase(getIt<AddressRepo>()),
+  );
+
+  getIt.registerFactory<AddressCubit>(
+    () => AddressCubit(
+      getIt<GetAddressesUseCase>(),
+      getIt<AddAddressUseCase>(),
+      getIt<UpdateAddressUseCase>(),
+      getIt<RemoveAddressUseCase>(),
+    ),
   );
 
   getIt.registerLazySingleton<ProfileRemoteDataSource>(

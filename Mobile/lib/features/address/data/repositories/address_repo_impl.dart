@@ -12,6 +12,23 @@ class AddressRepoImpl implements AddressRepo {
   AddressRepoImpl(this.remoteDataSource);
 
   @override
+  Future<Either<Failure, List<ShippingAddress>>> getAddresses() async {
+    try {
+      final json = await remoteDataSource.getAddresses();
+
+      final addresses =
+          json["data"]["addresses"].map(ShippingAddressModel.fromJson).toList();
+
+      return Right(addresses);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<ShippingAddress>>> addAddress(
       ShippingAddress address) async {
     try {
