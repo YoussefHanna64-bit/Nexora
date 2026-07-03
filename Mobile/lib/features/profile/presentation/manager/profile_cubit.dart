@@ -3,7 +3,7 @@ import 'package:nexora/features/profile/domain/usecases/delete_account_use_case.
 import 'package:nexora/features/profile/domain/usecases/get_user_profile_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/update_password_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/update_profile_use_case.dart';
-import 'package:nexora/features/profile/presentation/manager/profile/profile_state.dart';
+import 'package:nexora/features/profile/presentation/manager/profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final GetUserProfileUseCase getUserProfileUseCase;

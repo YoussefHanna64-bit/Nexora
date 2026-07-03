@@ -2,6 +2,9 @@ import 'package:get_it/get_it.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/token_interceptor.dart';
 import 'package:nexora/core/services/stripe_service.dart';
+import 'package:nexora/features/address/data/datasources/address_remote_data_source.dart';
+import 'package:nexora/features/address/data/repositories/address_repo_impl.dart';
+import 'package:nexora/features/address/domain/repositories/address_repo.dart';
 import 'package:nexora/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:nexora/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
@@ -26,14 +29,14 @@ import 'package:nexora/features/product/presentation/manager/product_cubit.dart'
 import 'package:nexora/features/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:nexora/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nexora/features/profile/domain/repositories/profile_repo.dart';
-import 'package:nexora/features/profile/domain/usecases/add_address_use_case.dart';
+import 'package:nexora/features/address/domain/usecases/add_address_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/delete_account_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/get_user_profile_use_case.dart';
-import 'package:nexora/features/profile/domain/usecases/remove_address_use_case.dart';
-import 'package:nexora/features/profile/domain/usecases/update_address_use_case.dart';
+import 'package:nexora/features/address/domain/usecases/remove_address_use_case.dart';
+import 'package:nexora/features/address/domain/usecases/update_address_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/update_password_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/update_profile_use_case.dart';
-import 'package:nexora/features/profile/presentation/manager/profile/profile_cubit.dart';
+import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:nexora/features/wishlist/data/repositories/api_wishlist_repo_impl.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
@@ -119,6 +122,26 @@ void setupGetIt() {
     () => OrderHistoryCubit(getIt<OrderRepo>()),
   );
 
+  getIt.registerLazySingleton<AddressRemoteDataSource>(
+    () => AddressRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<AddressRepo>(
+    () => AddressRepoImpl(getIt<AddressRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<AddAddressUseCase>(
+    () => AddAddressUseCase(getIt<AddressRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateAddressUseCase>(
+    () => UpdateAddressUseCase(getIt<AddressRepo>()),
+  );
+
+  getIt.registerLazySingleton<RemoveAddressUseCase>(
+    () => RemoveAddressUseCase(getIt<AddressRepo>()),
+  );
+
   getIt.registerLazySingleton<ProfileRemoteDataSource>(
     () => ProfileRemoteDataSourceImpl(getIt<ApiService>()),
   );
@@ -141,18 +164,6 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<DeleteAccountUseCase>(
     () => DeleteAccountUseCase(getIt<ProfileRepo>()),
-  );
-
-  getIt.registerLazySingleton<AddAddressUseCase>(
-    () => AddAddressUseCase(getIt<ProfileRepo>()),
-  );
-
-  getIt.registerLazySingleton<UpdateAddressUseCase>(
-    () => UpdateAddressUseCase(getIt<ProfileRepo>()),
-  );
-
-  getIt.registerLazySingleton<RemoveAddressUseCase>(
-    () => RemoveAddressUseCase(getIt<ProfileRepo>()),
   );
 
   getIt.registerFactory<ProfileCubit>(

@@ -11,7 +11,7 @@ import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
-import 'package:nexora/features/profile/presentation/manager/profile/profile_cubit.dart';
+import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'core/theme/theme_cubit.dart';
