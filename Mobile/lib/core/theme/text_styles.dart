@@ -56,6 +56,12 @@ class AppTextStyles {
     color: AppColors.goldColor,
   );
 
+  static const TextStyle bold10Green = TextStyle(
+    fontSize: 10,
+    fontWeight: FontWeight.w700,
+    color: AppColors.greenColor,
+  );
+
   static const TextStyle bold12Primary = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w700,

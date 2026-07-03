@@ -16,8 +16,11 @@ class AddressRepoImpl implements AddressRepo {
     try {
       final json = await remoteDataSource.getAddresses();
 
-      final addresses =
-          json["data"]["addresses"].map(ShippingAddressModel.fromJson).toList();
+      final List<ShippingAddressModel> addresses =
+          (json["data"]["addresses"] as List)
+              .map<ShippingAddressModel>((addr) =>
+                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
+              .toList();
 
       return Right(addresses);
     } catch (e) {
@@ -35,8 +38,11 @@ class AddressRepoImpl implements AddressRepo {
       final addressModel = ShippingAddressModel.fromEntity(address);
       final json = await remoteDataSource.addAddress(addressModel.toJson());
 
-      final addresses =
-          json["data"]["addresses"].map(ShippingAddressModel.fromJson).toList();
+      final List<ShippingAddressModel> addresses =
+          (json["data"]["addresses"] as List)
+              .map<ShippingAddressModel>((addr) =>
+                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
+              .toList();
 
       return Right(addresses);
     } catch (e) {
@@ -55,8 +61,11 @@ class AddressRepoImpl implements AddressRepo {
       final json =
           await remoteDataSource.updateAddress(addrId, addressModel.toJson());
 
-      final addresses =
-          json["data"]["addresses"].map(ShippingAddressModel.fromJson).toList();
+      final List<ShippingAddressModel> addresses =
+          (json["data"]["addresses"] as List)
+              .map<ShippingAddressModel>((addr) =>
+                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
+              .toList();
 
       return Right(addresses);
     } catch (e) {
@@ -73,8 +82,11 @@ class AddressRepoImpl implements AddressRepo {
     try {
       final json = await remoteDataSource.removeAddress(addrId);
 
-      final addresses =
-          json["data"]["addresses"].map(ShippingAddressModel.fromJson).toList();
+      final List<ShippingAddressModel> addresses =
+          (json["data"]["addresses"] as List)
+              .map<ShippingAddressModel>((addr) =>
+                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
+              .toList();
 
       return Right(addresses);
     } catch (e) {

@@ -19,7 +19,7 @@ class MyOrdersView extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-        appBar: CustomAppBar(title: l10n.myOrders),
+        appBar: CustomAppBar(title: l10n.myOrders, showBackButton: true),
         body: BlocBuilder<OrderHistoryCubit, OrderHistoryState>(
             builder: (context, state) {
           if (state is OrderHistoryError) {

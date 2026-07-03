@@ -13,7 +13,7 @@ import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cubit.dart';
 import 'package:nexora/features/orders/presentation/manager/checkout/checkout_state.dart';
 import 'package:nexora/features/orders/presentation/widgets/payment_method_tile.dart';
-import 'package:nexora/features/orders/presentation/widgets/shipping_address_card.dart';
+import 'package:nexora/features/address/presentation/widgets/shipping_address_card.dart';
 
 class CheckoutView extends StatefulWidget {
   const CheckoutView({super.key});
@@ -69,7 +69,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                     ),
                   ],
                 ),
-                ShippingAddressCard(address: currentAddress),
+                ShippingAddressCard(address: ShippingAddress.mockAddresses.first),
                 const SizedBox(height: 32),
                 Text(l10n.paymentMethod,
                     style:
@@ -99,7 +99,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   buttonText: l10n.placeOrder,
                   onPressed: () {
                     context.read<CheckoutCubit>().processCheckout(
-                          shippingAddress: currentAddress,
+                          shippingAddress: ShippingAddress.mockAddresses.first,
                           paymentMethodType: selectedPaymentMethod,
                         );
                   },

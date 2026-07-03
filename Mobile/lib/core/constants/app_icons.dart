@@ -17,7 +17,8 @@ class AppIcons {
   static const IconData arrowBack = Icons.arrow_back_ios_new;
   static const IconData arrowForward = Icons.arrow_forward_ios;
   static const IconData star = Icons.star;
-  static const IconData delete = Icons.delete_outline;
+  static const IconData delete = Icons.delete;
+  static const IconData deleteOutlined = Icons.delete_outline;
   static const IconData edit = Icons.edit;
   static const IconData editOutlined = Icons.edit_outlined;
   static const IconData locationOnOutlined = Icons.location_on_outlined;
@@ -35,4 +36,8 @@ class AppIcons {
   static const IconData checkCircle = Icons.check_circle_outline_rounded;
   static const IconData creditCard = Icons.credit_card;
   static const IconData money = Icons.money;
+  static const IconData homeOutlined = Icons.home_outlined;
+  static const IconData workOutlined = Icons.work_outline;
+  static const IconData locationOffOutlined = Icons.location_off_outlined;
+  static const IconData moreVert = Icons.more_vert;
 }

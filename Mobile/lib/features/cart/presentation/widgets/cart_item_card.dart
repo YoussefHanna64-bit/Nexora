@@ -37,8 +37,8 @@ class CartItemCard extends StatelessWidget {
           color: AppColors.redColor,
           borderRadius: BorderRadius.circular(16),
         ),
-        child:
-            const Icon(AppIcons.delete, color: AppColors.whiteColor, size: 30),
+        child: const Icon(AppIcons.deleteOutlined,
+            color: AppColors.whiteColor, size: 30),
       ),
       child: GestureDetector(
           child: Container(

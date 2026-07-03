@@ -37,8 +37,8 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   @override
   Future<List<Map<String, dynamic>>> getUserOrders() async {
     final response = await apiService.get(EndPoints.myOrders);
-    final orders = response.data["data"]["orders"] as List;
-    return orders.cast<Map<String, dynamic>>();
+    final List<dynamic> ordersList = response.data["data"]["orders"];
+    return ordersList.map((or) => or as Map<String, dynamic>).toList();
   }
 
   @override

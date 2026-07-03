@@ -14,7 +14,7 @@ import 'package:nexora/features/orders/domain/entities/order.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
 import 'package:nexora/features/orders/presentation/widgets/order_product_tile.dart';
 import 'package:nexora/features/orders/presentation/widgets/order_status_badge.dart';
-import 'package:nexora/features/orders/presentation/widgets/shipping_address_card.dart';
+import 'package:nexora/features/address/presentation/widgets/shipping_address_card.dart';
 
 class OrderDetailsView extends StatelessWidget {
   final Order order;
@@ -32,7 +32,7 @@ class OrderDetailsView extends StatelessWidget {
     final bool isCanceled = order.status == "canceled";
 
     return Scaffold(
-      appBar: CustomAppBar(title: l10n.orderDetails),
+      appBar: CustomAppBar(title: l10n.orderDetails, showBackButton: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -50,13 +50,15 @@ class OrderDetailsView extends StatelessWidget {
             const SizedBox(height: 12),
             OrderStatusBadge(status: order.status),
             const Divider(height: 32),
-            Text(l10n.items, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
+            Text(l10n.items,
+                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             ...order.cartItems.map((item) => OrderProductTile(
                   item: item,
                   isDelivered: isDelivered,
                 )),
             const Divider(height: 32),
-            Text(l10n.paymentMethod, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
+            Text(l10n.paymentMethod,
+                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             const SizedBox(height: 12),
             Row(
               children: [
@@ -76,14 +78,16 @@ class OrderDetailsView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 24),
-            Text(l10n.orderSummary, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
+            Text(l10n.orderSummary,
+                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             const SizedBox(height: 12),
             OrderSummaryCard(
               subtotal: order.totalOrderPrice,
               total: order.totalOrderPrice,
             ),
             const SizedBox(height: 24),
-            Text(l10n.shippingAddress, style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
+            Text(l10n.shippingAddress,
+                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
             const SizedBox(height: 12),
             ShippingAddressCard(address: order.shippingAddress),
             const SizedBox(height: 48),

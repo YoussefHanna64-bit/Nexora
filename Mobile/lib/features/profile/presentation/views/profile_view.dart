@@ -59,7 +59,9 @@ class ProfileView extends StatelessWidget {
               CustomListTile(
                 icon: AppIcons.locationOnOutlined,
                 title: l10n.shippingAddresses,
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.shippingAddresses);
+                },
               ),
               CustomListTile(
                 icon: AppIcons.paymentOutlined,

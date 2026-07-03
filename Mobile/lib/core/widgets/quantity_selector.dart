@@ -37,7 +37,8 @@ class QuantitySelector extends StatelessWidget {
                 : quantity > 1
                     ? onDecrement
                     : null,
-            child: Icon(isDeleteMode ? AppIcons.delete : AppIcons.remove,
+            child: Icon(
+                isDeleteMode ? AppIcons.deleteOutlined : AppIcons.remove,
                 size: 20),
           ),
           SizedBox(width: w * 0.04),
