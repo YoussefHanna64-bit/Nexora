@@ -23,6 +23,16 @@ import 'package:nexora/features/orders/presentation/manager/order_history/order_
 import 'package:nexora/features/product/data/repositories/api_product_repo_impl.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
+import 'package:nexora/features/profile/data/datasources/profile_remote_data_source.dart';
+import 'package:nexora/features/profile/data/repositories/profile_repo_impl.dart';
+import 'package:nexora/features/profile/domain/repositories/profile_repo.dart';
+import 'package:nexora/features/profile/domain/usecases/add_address_use_case.dart';
+import 'package:nexora/features/profile/domain/usecases/delete_account_use_case.dart';
+import 'package:nexora/features/profile/domain/usecases/get_user_profile_use_case.dart';
+import 'package:nexora/features/profile/domain/usecases/remove_address_use_case.dart';
+import 'package:nexora/features/profile/domain/usecases/update_address_use_case.dart';
+import 'package:nexora/features/profile/domain/usecases/update_password_use_case.dart';
+import 'package:nexora/features/profile/domain/usecases/update_profile_use_case.dart';
 import 'package:nexora/features/wishlist/data/repositories/api_wishlist_repo_impl.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
@@ -106,5 +116,41 @@ void setupGetIt() {
 
   getIt.registerFactory<OrderHistoryCubit>(
     () => OrderHistoryCubit(getIt<OrderRepo>()),
+  );
+
+  getIt.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<ProfileRepo>(
+    () => ProfileRepoImpl(getIt<ProfileRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetUserProfileUseCase>(
+    () => GetUserProfileUseCase(getIt<ProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateProfileUseCase>(
+    () => UpdateProfileUseCase(getIt<ProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdatePasswordUseCase>(
+    () => UpdatePasswordUseCase(getIt<ProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<DeleteAccountUseCase>(
+    () => DeleteAccountUseCase(getIt<ProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<AddAddressUseCase>(
+    () => AddAddressUseCase(getIt<ProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateAddressUseCase>(
+    () => UpdateAddressUseCase(getIt<ProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<RemoveAddressUseCase>(
+    () => RemoveAddressUseCase(getIt<ProfileRepo>()),
   );
 }
