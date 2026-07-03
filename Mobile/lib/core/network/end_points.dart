@@ -9,4 +9,9 @@ class EndPoints {
   static const String orders = "/orders";
   static const String myOrders = "/orders/my-orders";
   static const String paymentIntent = "/payments/payment-intent";
+  static const String users = "/users";
+  static const String me = "$users/me";
+  static const String updateUser = "$users/updateUser";
+  static const String updatePassword = "$users/updatePassword";
+  static const String addresses = "$users/addresses";
 }
