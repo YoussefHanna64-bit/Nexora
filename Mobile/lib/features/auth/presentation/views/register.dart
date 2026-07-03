@@ -56,7 +56,7 @@ class _RegisterState extends State<Register> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content:
-                  Text('Welcome, ${state.user["fullname"].split(" ").first}!'),
+                  Text("Welcome, ${state.user.fullname.split(" ").first}!"),
               backgroundColor: Colors.green,
             ),
           );

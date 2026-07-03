@@ -1,17 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nexora/core/services/secure_storage.dart';
-import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
+import 'package:nexora/features/auth/domain/usecases/login_use_case.dart';
+import 'package:nexora/features/auth/domain/usecases/register_use_case.dart';
 import 'package:nexora/features/auth/presentation/manager/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthRepo authRepo;
+  final LoginUseCase loginUseCase;
+  final RegisterUseCase registerUseCase;
 
-  AuthCubit(this.authRepo) : super(AuthInitial());
+  AuthCubit(this.loginUseCase, this.registerUseCase) : super(AuthInitial());
 
   Future<void> login({required String email, required String password}) async {
     emit(AuthLoading());
 
-    final result = await authRepo.login(email: email, password: password);
+    final result = await loginUseCase(email: email, password: password);
 
     result.fold(
       (failure) {
@@ -31,7 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
 
-    final result = await authRepo.register(
+    final result = await registerUseCase(
       fullname: fullname,
       email: email,
       password: password,

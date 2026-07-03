@@ -1,3 +1,5 @@
+import 'package:nexora/features/auth/domain/entities/user.dart';
+
 abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
@@ -5,7 +7,7 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthSuccess extends AuthState {
-  final Map<String, dynamic> user;
+  final User user;
 
   AuthSuccess({required this.user});
 }
