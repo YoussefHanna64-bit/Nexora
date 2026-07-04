@@ -11,6 +11,7 @@ class CustomPrimaryButton extends StatelessWidget {
   final double? height;
   final bool isLoading;
   final bool isOutlined;
+  final IconData? icon;
 
   const CustomPrimaryButton({
     super.key,
@@ -22,6 +23,7 @@ class CustomPrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.isOutlined = false,
+    this.icon,
   });
 
   @override
@@ -40,6 +42,31 @@ class CustomPrimaryButton extends StatelessWidget {
           : AppTextStyles.bold16White,
     );
 
+    Widget buttonContent() {
+      if (isLoading) {
+        return loadingWidget;
+      }
+
+      if (icon != null) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 20,
+              color: isOutlined
+                  ? outlineColor ?? AppColors.primary
+                  : AppColors.whiteColor,
+            ),
+            const SizedBox(width: 8),
+            textWidget,
+          ],
+        );
+      }
+      return textWidget;
+    }
+
     return SizedBox(
       width: width,
       height: height,
@@ -51,9 +78,10 @@ class CustomPrimaryButton extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
               ),
               onPressed: isLoading ? null : onPressed,
-              child: isLoading ? loadingWidget : textWidget,
+              child: buttonContent(),
             )
           : ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -63,9 +91,10 @@ class CustomPrimaryButton extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
               ),
               onPressed: isLoading ? null : onPressed,
-              child: isLoading ? loadingWidget : textWidget,
+              child: buttonContent(),
             ),
     );
   }

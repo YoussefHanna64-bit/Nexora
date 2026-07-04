@@ -3,6 +3,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_primary_button.dart';
 
 class EmptyAddressState extends StatelessWidget {
   final VoidCallback onAddPressed;
@@ -35,17 +36,12 @@ class EmptyAddressState extends StatelessWidget {
               style: AppTextStyles.regular14Grey.copyWith(color: onSurface),
             ),
             const SizedBox(height: 24),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
+            CustomPrimaryButton(
+              width: null,
               onPressed: onAddPressed,
-              icon: const Icon(AppIcons.add, color: AppColors.whiteColor),
-              label: Text(l10n.addAddress, style: AppTextStyles.bold16White),
-            )
+              buttonText: l10n.addAddress,
+              icon: AppIcons.add,
+            ),
           ],
         ),
       ),

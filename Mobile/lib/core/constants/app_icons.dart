@@ -22,6 +22,8 @@ class AppIcons {
   static const IconData edit = Icons.edit;
   static const IconData editOutlined = Icons.edit_outlined;
   static const IconData locationOnOutlined = Icons.location_on_outlined;
+  static const IconData locationOffOutlined = Icons.location_off_outlined;
+  static const IconData locationOff = Icons.location_off;
   static const IconData shoppingBagOutlined = Icons.shopping_bag_outlined;
   static const IconData paymentOutlined = Icons.payment_outlined;
   static const IconData settingsOutlined = Icons.settings_outlined;
@@ -38,6 +40,6 @@ class AppIcons {
   static const IconData money = Icons.money;
   static const IconData homeOutlined = Icons.home_outlined;
   static const IconData workOutlined = Icons.work_outline;
-  static const IconData locationOffOutlined = Icons.location_off_outlined;
   static const IconData moreVert = Icons.more_vert;
+  static const IconData close = Icons.close;
 }
