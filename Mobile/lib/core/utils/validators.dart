@@ -35,13 +35,50 @@ class Validators {
     return null;
   }
 
-  static String? confirmPassword(BuildContext context, String? value, String password) {
+  static String? confirmPassword(
+      BuildContext context, String? value, String password) {
     final l10n = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
       return l10n.confirmPasswordRequired;
     }
     if (value != password) {
       return l10n.passwordsDoNotMatch;
+    }
+    return null;
+  }
+
+  static String? street(BuildContext context, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Street address is required";
+    }
+    return null;
+  }
+
+  static String? city(BuildContext context, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "City is required";
+    }
+    return null;
+  }
+
+  static String? postalCode(BuildContext context, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Postal code is required";
+    }
+
+    if (!RegExp(r'^[0-9]{5}$').hasMatch(value.trim())) {
+      return "Enter a valid postal code";
+    }
+    return null;
+  }
+
+  static String? phone(BuildContext context, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Phone number is required";
+    }
+
+    if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value.trim())) {
+      return "Enter a valid phone number";
     }
     return null;
   }

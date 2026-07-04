@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
@@ -49,7 +51,9 @@ class _ShippingAddressesViewState extends State<ShippingAddressesView> {
               : (state is AddressLoaded ? state.addresses : []);
 
           if (!isLoading && addresses.isEmpty) {
-            return EmptyAddressState(onAddPressed: () {});
+            return EmptyAddressState(onAddPressed: () {
+              context.push(Routes.addEditAddress);
+            });
           }
 
           return Skeletonizer(
@@ -61,7 +65,9 @@ class _ShippingAddressesViewState extends State<ShippingAddressesView> {
         builder: (context, state) {
           if (state is AddressLoaded && state.addresses.isNotEmpty) {
             return FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(Routes.addEditAddress);
+              },
               backgroundColor: AppColors.primary,
               child: const Icon(AppIcons.add, color: AppColors.whiteColor),
             );

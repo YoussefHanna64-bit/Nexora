@@ -8,6 +8,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final TextStyle? hintStyle;
+  final bool? showLabel;
   final Color? fillColor;
   final Color? cursorColor;
   final IconData? prefixIcon;
@@ -23,6 +24,7 @@ class CustomTextFormField extends StatefulWidget {
     super.key,
     required this.hintText,
     required this.controller,
+    this.showLabel = false,
     this.prefixIcon,
     this.obscureText = false,
     this.onTap,
@@ -55,7 +57,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final onSurface = colorScheme.onSurface;
-    final dividerColor = theme.dividerColor;
     final surfaceColor = widget.fillColor ?? colorScheme.surface;
     final textStyle = AppTextStyles.regular14Black.copyWith(color: onSurface);
 
@@ -73,13 +74,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         keyboardType: widget.keyboardType,
         decoration: InputDecoration(
           prefixIcon: widget.prefixIcon != null
-              ? Icon(widget.prefixIcon, color: AppColors.lightGrey, size: 24)
+              ? Icon(widget.prefixIcon, color: AppColors.greyColor, size: 24)
               : null,
           suffixIcon: widget.obscureText
               ? IconButton(
                   icon: isSecure
                       ? Icon(AppIcons.visibilityOff,
-                          color: dividerColor, size: 24)
+                          color: AppColors.greyColor, size: 24)
                       : const Icon(AppIcons.visibility,
                           color: AppColors.primary, size: 24),
                   onPressed: () {
@@ -93,7 +94,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           fillColor: surfaceColor,
           enabledBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(16)),
-              borderSide: BorderSide(color: dividerColor)),
+              borderSide: BorderSide(color: AppColors.greyColor)),
           focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16)),
               borderSide: BorderSide(color: AppColors.primary)),
@@ -109,6 +110,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           hintStyle: widget.hintStyle ??
               AppTextStyles.regular14Black
                   .copyWith(color: onSurface.withAlpha(102)),
+          labelText: widget.showLabel == true ? widget.hintText : null,
+          labelStyle: widget.showLabel == true
+              ? AppTextStyles.regular14Black.copyWith(color: onSurface)
+              : null,
         ),
         validator: widget.validator,
         readOnly: widget.onTap != null,

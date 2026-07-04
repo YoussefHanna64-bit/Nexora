@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
@@ -26,6 +28,7 @@ class ShippingAddressList extends StatelessWidget {
             icon: Icon(AppIcons.moreVert, color: AppColors.greyColor),
             onSelected: (value) {
               if (value == "edit") {
+                context.push(Routes.addEditAddress, extra: address);
               } else if (value == "delete") {
                 context.read<AddressCubit>().removeAddress(address.id!);
               }

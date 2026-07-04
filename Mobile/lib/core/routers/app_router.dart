@@ -5,6 +5,8 @@ import 'package:nexora/core/di/dependency_injection.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/services/secure_storage.dart';
+import 'package:nexora/features/address/domain/entities/shipping_address.dart';
+import 'package:nexora/features/address/presentation/views/add_edit_address_view.dart';
 import 'package:nexora/features/address/presentation/views/shipping_addresses_view.dart';
 import 'package:nexora/features/auth/presentation/views/login.dart';
 import 'package:nexora/features/auth/presentation/views/register.dart';
@@ -129,6 +131,15 @@ final GoRouter appRouter = GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
         return ShippingAddressesView();
+      },
+    ),
+    GoRoute(
+      path: Routes.addEditAddress,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        final address = state.extra as ShippingAddress?;
+
+        return AddEditAddressView(address: address);
       },
     ),
     ShellRoute(
