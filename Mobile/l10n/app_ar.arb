@@ -180,5 +180,10 @@
   "phoneRequired": "رقم الهاتف مطلوب",
   "invalidPhone": "أدخل رقم هاتف صحيح",
   "addressAdded": "تم إضافة العنوان",
-  "addressUpdated": "تم تحديث العنوان"
+  "addressUpdated": "تم تحديث العنوان",
+  "selectShippingAddress": "اختر عنوان الشحن",
+  "pleaseSelectAddressFirst": "يرجى اختيار عنوان الشحن أولاً",
+  "noAddressSelectedTitle": "لم يتم اختيار عنوان",
+  "noAddressSelectedSubtitle": "اضغط لاختيار عنوان أو إضافة عنوان جديد"
+
 }

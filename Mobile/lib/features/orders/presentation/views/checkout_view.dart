@@ -65,11 +65,11 @@ class _CheckoutViewState extends State<CheckoutView> {
         });
   }
 
-  void _placeOrder() {
+  void _placeOrder(AppLocalizations l10n) {
     if (selectedAddress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text("Please select a shipping address first"),
+        SnackBar(
+            content: Text(l10n.pleaseSelectAddressFirst),
             backgroundColor: AppColors.secondary),
       );
       return;
@@ -134,7 +134,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                   const Spacer(),
                   CustomPrimaryButton(
                     buttonText: l10n.placeOrder,
-                    onPressed: _placeOrder,
+                    onPressed: () => _placeOrder(l10n),
                     isLoading: state is CheckoutLoading,
                   ),
                 ],
@@ -165,8 +165,8 @@ class _CheckoutViewState extends State<CheckoutView> {
             child: ListTile(
               leading:
                   const Icon(AppIcons.locationOff, color: AppColors.greyColor),
-              title: const Text("No Address Selected"),
-              subtitle: const Text("Tap to select or add one"),
+              title: Text(l10n.noAddressSelectedTitle),
+              subtitle: Text(l10n.noAddressSelectedSubtitle),
               onTap: _openAddressSheet,
             ),
           ),

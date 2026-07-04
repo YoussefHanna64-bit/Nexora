@@ -187,5 +187,10 @@
   "phoneRequired": "Phone number is required",
   "invalidPhone": "Enter a valid phone number",
   "addressAdded": "Address added",
-  "addressUpdated": "Address updated"
+  "addressUpdated": "Address updated",
+  "selectShippingAddress": "Select Shipping Address",
+  "pleaseSelectAddressFirst": "Please select a shipping address first",
+  "noAddressSelectedTitle": "No Address Selected",
+  "noAddressSelectedSubtitle": "Tap to select or add one"
+
 }

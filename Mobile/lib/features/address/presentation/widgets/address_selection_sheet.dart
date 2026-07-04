@@ -26,6 +26,7 @@ class AddressSelectionSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return CustomBottomSheetContainer(
       child: FractionallySizedBox(
@@ -36,8 +37,9 @@ class AddressSelectionSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Select Shipping Address",
-                    style: AppTextStyles.bold18Black),
+                Text(l10n.selectShippingAddress,
+                    style:
+                        AppTextStyles.bold18Black.copyWith(color: onSurface)),
                 IconButton(
                   icon: Icon(AppIcons.close),
                   onPressed: () => Navigator.pop(context),
