@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
@@ -81,16 +82,18 @@ class _AddEditAddressViewState extends State<AddEditAddressView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     final isEditing = widget.address != null;
 
     return Scaffold(
         appBar: CustomAppBar(
-          title: isEditing ? "Edit Address" : "Add Address",
+          title: isEditing ? l10n.editAddress : l10n.addAddress,
           showBackButton: true,
         ),
         body: BlocConsumer<AddressCubit, AddressState>(
             listener: (context, state) {
-          _addressBlocListener(context, state);
+          _addressBlocListener(context, state, l10n);
         }, builder: (context, state) {
           final isLoading = state is AddressLoading;
 
@@ -100,30 +103,30 @@ class _AddEditAddressViewState extends State<AddEditAddressView> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Column(children: [
-                    _labelSelector(),
+                    _labelSelector(l10n),
                     const SizedBox(height: 24),
                     CustomTextFormField(
-                      hintText: "Street Address",
+                      hintText: l10n.streetAddress,
                       showLabel: true,
                       controller: _streetController,
                       validator: (val) => Validators.street(context, val),
                     ),
                     const SizedBox(height: 16),
                     CustomTextFormField(
-                        hintText: "Apt (Optional)",
+                        hintText: l10n.aptOptional,
                         showLabel: true,
                         controller: _apartmentController,
                         validator: null),
                     const SizedBox(height: 16),
                     CustomTextFormField(
-                      hintText: "City",
+                      hintText: l10n.city,
                       showLabel: true,
                       controller: _cityController,
                       validator: (val) => Validators.city(context, val),
                     ),
                     const SizedBox(height: 16),
                     CustomTextFormField(
-                      hintText: "Postal Code",
+                      hintText: l10n.postalCode,
                       showLabel: true,
                       controller: _postalCodeController,
                       keyboardType: TextInputType.number,
@@ -131,31 +134,33 @@ class _AddEditAddressViewState extends State<AddEditAddressView> {
                     ),
                     const SizedBox(height: 16),
                     CustomTextFormField(
-                      hintText: "Phone Number",
+                      hintText: l10n.phoneNumber,
                       showLabel: true,
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
                       validator: (val) => Validators.phone(context, val),
                     ),
                     const SizedBox(height: 24),
-                    _defaultAddressSwitch(),
+                    _defaultAddressSwitch(l10n),
                     const SizedBox(height: 40),
                     CustomPrimaryButton(
                       onPressed: isLoading ? () {} : _onSubmit,
-                      buttonText: isEditing ? "Save Changes" : "Add Address",
+                      buttonText:
+                          isEditing ? l10n.saveChanges : l10n.addAddress,
                       isLoading: isLoading,
                     ),
                   ])));
         }));
   }
 
-  void _addressBlocListener(BuildContext context, AddressState state) {
+  void _addressBlocListener(
+      BuildContext context, AddressState state, AppLocalizations l10n) {
     final isEditing = widget.address != null;
     if (state is AddressLoaded) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(isEditing ? "Address updated" : "Address added"),
+          content: Text(isEditing ? l10n.addressUpdated : l10n.addressAdded),
           backgroundColor: AppColors.primary,
         ),
       );
@@ -169,23 +174,29 @@ class _AddEditAddressViewState extends State<AddEditAddressView> {
     }
   }
 
-  Widget _labelSelector() {
+  Widget _labelSelector(AppLocalizations l10n) {
+    final Map<String, String> labels = {
+      "Home": l10n.homeLabel,
+      "Work": l10n.workLabel,
+      "Other": l10n.otherLabel,
+    };
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: ["Home", "Work", "Other"].map((label) {
-        final isSelected = _label == label;
+      children: labels.entries.map((entry) {
+        final isSelected = _label == entry.key;
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: CustomPrimaryButton(
               outlineColor:
                   isSelected ? AppColors.primary : AppColors.greyColor,
-              buttonText: label,
+              buttonText: entry.value,
               isOutlined: !isSelected,
               height: 46,
               onPressed: () {
                 setState(() {
-                  _label = label;
+                  _label = entry.key;
                 });
               },
             ),
@@ -195,10 +206,10 @@ class _AddEditAddressViewState extends State<AddEditAddressView> {
     );
   }
 
-  Widget _defaultAddressSwitch() {
+  Widget _defaultAddressSwitch(AppLocalizations l10n) {
     return SwitchListTile(
-      title: const Text("Make this my default address"),
-      subtitle: const Text("Used automatically for fast checkout"),
+      title: Text(l10n.makeDefaultAddress),
+      subtitle: Text(l10n.fastCheckoutSubtitle),
       value: _isDefault,
       activeColor: AppColors.primary,
       onChanged: (val) {

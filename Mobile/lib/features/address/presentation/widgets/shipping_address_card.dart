@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
@@ -12,20 +13,27 @@ class ShippingAddressCard extends StatelessWidget {
   const ShippingAddressCard(
       {super.key, required this.address, this.trailing, this.onTap});
 
-  IconData _icon(String label) {
-    switch (label.toLowerCase()) {
-      case "home":
-        return AppIcons.homeOutlined;
-      case "work":
-        return AppIcons.workOutlined;
-      default:
-        return AppIcons.locationOnOutlined;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
+
+    IconData icon;
+    String labelText;
+
+    switch (address.label.toLowerCase()) {
+      case "home":
+        icon = AppIcons.homeOutlined;
+        labelText = l10n.homeLabel;
+        break;
+      case "work":
+        icon = AppIcons.workOutlined;
+        labelText = l10n.workLabel;
+        break;
+      default:
+        icon = AppIcons.locationOnOutlined;
+        labelText = l10n.otherLabel;
+    }
 
     return Card(
       color: Theme.of(context).cardColor,
@@ -43,12 +51,12 @@ class ShippingAddressCard extends StatelessWidget {
             color: AppColors.primary.withAlpha(40),
             shape: BoxShape.circle,
           ),
-          child: Icon(_icon(address.label), color: AppColors.primary),
+          child: Icon(icon, color: AppColors.primary),
         ),
         title: Row(
           children: [
             Text(
-              address.label,
+              labelText,
               style: AppTextStyles.bold14Black.copyWith(color: onSurface),
             ),
             const SizedBox(width: 8),
@@ -59,8 +67,8 @@ class ShippingAddressCard extends StatelessWidget {
                   color: AppColors.greenColor.withAlpha(40),
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: const Text(
-                  "Default",
+                child: Text(
+                  l10n.defaultLabel,
                   style: AppTextStyles.bold10Green,
                 ),
               ),

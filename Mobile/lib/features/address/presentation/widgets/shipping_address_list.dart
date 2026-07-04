@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
@@ -15,6 +16,8 @@ class ShippingAddressList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: addresses.length,
@@ -29,25 +32,25 @@ class ShippingAddressList extends StatelessWidget {
             onSelected: (value) {
               if (value == "edit") {
                 context.push(Routes.addEditAddress, extra: address);
-              } else if (value == "delete") {
+              } else if (value == "remove") {
                 context.read<AddressCubit>().removeAddress(address.id!);
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: "edit",
                 child: Row(children: [
                   Icon(AppIcons.edit, size: 20),
                   SizedBox(width: 8),
-                  Text("Edit")
+                  Text(l10n.edit)
                 ]),
               ),
-              const PopupMenuItem(
-                value: "delete",
+              PopupMenuItem(
+                value: "remove",
                 child: Row(children: [
                   Icon(AppIcons.delete, color: AppColors.redColor, size: 20),
                   SizedBox(width: 8),
-                  Text("Delete", style: TextStyle(color: AppColors.redColor))
+                  Text(l10n.remove, style: TextStyle(color: AppColors.redColor))
                 ]),
               ),
             ],

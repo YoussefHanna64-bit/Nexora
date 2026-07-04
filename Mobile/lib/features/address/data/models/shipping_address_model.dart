@@ -40,7 +40,7 @@ class ShippingAddressModel extends ShippingAddress {
 
   Map<String, dynamic> toJson() {
     return {
-      "_id": id,
+      if (id != null) "_id": id,
       "street": street,
       "apartment": apartment,
       "city": city,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
@@ -10,6 +11,8 @@ class EmptyAddressState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return Center(
@@ -22,12 +25,12 @@ class EmptyAddressState extends StatelessWidget {
                 size: 80, color: AppColors.lightGrey),
             const SizedBox(height: 16),
             Text(
-              "No Addresses Found",
+              l10n.noAddressesYet,
               style: AppTextStyles.bold20White.copyWith(color: onSurface),
             ),
             const SizedBox(height: 8),
             Text(
-              "There are no shipping addresses yet. Add one to make checkout faster",
+              l10n.noAddressesSubtitle,
               textAlign: TextAlign.center,
               style: AppTextStyles.regular14Grey.copyWith(color: onSurface),
             ),
@@ -41,8 +44,7 @@ class EmptyAddressState extends StatelessWidget {
               ),
               onPressed: onAddPressed,
               icon: const Icon(AppIcons.add, color: AppColors.whiteColor),
-              label: const Text("Add New Address",
-                  style: AppTextStyles.bold16White),
+              label: Text(l10n.addAddress, style: AppTextStyles.bold16White),
             )
           ],
         ),

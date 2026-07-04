@@ -48,37 +48,45 @@ class Validators {
   }
 
   static String? street(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (value == null || value.trim().isEmpty) {
-      return "Street address is required";
+      return l10n.streetRequired;
     }
     return null;
   }
 
   static String? city(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (value == null || value.trim().isEmpty) {
-      return "City is required";
+      return l10n.cityRequired;
     }
     return null;
   }
 
   static String? postalCode(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (value == null || value.trim().isEmpty) {
-      return "Postal code is required";
+      return l10n.postalCodeRequired;
     }
 
     if (!RegExp(r'^[0-9]{5}$').hasMatch(value.trim())) {
-      return "Enter a valid postal code";
+      return l10n.invalidPostalCode;
     }
     return null;
   }
 
   static String? phone(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (value == null || value.trim().isEmpty) {
-      return "Phone number is required";
+      return l10n.phoneRequired;
     }
 
     if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value.trim())) {
-      return "Enter a valid phone number";
+      return l10n.invalidPhone;
     }
     return null;
   }
