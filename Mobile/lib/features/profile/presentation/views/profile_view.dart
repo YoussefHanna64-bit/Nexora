@@ -9,6 +9,7 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/profile_image.dart';
 import 'package:nexora/core/widgets/custom_list_tile.dart';
+import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
 import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
@@ -86,6 +87,7 @@ class ProfileView extends StatelessWidget {
                 onTap: () async {
                   context.read<WishlistCubit>().clearWishlist();
                   context.read<CartCubit>().clearCart();
+                  context.read<AddressCubit>().clearAddresses();
                   await context.read<AuthCubit>().logout();
 
                   if (context.mounted) {

@@ -29,6 +29,17 @@ class _CheckoutViewState extends State<CheckoutView> {
   String selectedPaymentMethod = "card";
   ShippingAddress? selectedAddress;
 
+  ShippingAddress? _findDefaultAddress(List<ShippingAddress> addresses) {
+    if (addresses.isEmpty) {
+      return null;
+    }
+
+    final defaultAddresses = addresses.where((addr) => addr.isDefault);
+    return defaultAddresses.isNotEmpty
+        ? defaultAddresses.first
+        : addresses.first;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -36,12 +47,7 @@ class _CheckoutViewState extends State<CheckoutView> {
 
     if (addressCubit.state is AddressLoaded) {
       final loadedState = addressCubit.state as AddressLoaded;
-      if (loadedState.addresses.isNotEmpty) {
-        final addresses = loadedState.addresses.where((addr) => addr.isDefault);
-        selectedAddress = addresses.isNotEmpty
-            ? addresses.first
-            : loadedState.addresses.first;
-      }
+      selectedAddress = _findDefaultAddress(loadedState.addresses);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -95,16 +101,12 @@ class _CheckoutViewState extends State<CheckoutView> {
         listeners: [
           BlocListener<AddressCubit, AddressState>(
             listener: (context, state) {
-              if (state is AddressLoaded &&
-                  state.addresses.isNotEmpty &&
-                  selectedAddress == null) {
-                setState(() {
-                  final addresses =
-                      state.addresses.where((addr) => addr.isDefault);
-                  selectedAddress = addresses.isNotEmpty
-                      ? addresses.first
-                      : state.addresses.first;
-                });
+              if (state is AddressLoaded && selectedAddress == null) {
+                final defaultAddr = _findDefaultAddress(state.addresses);
+
+                if (defaultAddr != null) {
+                  setState(() => selectedAddress = defaultAddr);
+                }
               }
             },
           ),

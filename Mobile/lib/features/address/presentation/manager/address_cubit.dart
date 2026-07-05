@@ -75,4 +75,8 @@ class AddressCubit extends Cubit<AddressState> {
       },
     );
   }
+
+  void clearAddresses() {
+    emit(AddressInitial());
+  }
 }
