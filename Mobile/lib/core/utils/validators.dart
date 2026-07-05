@@ -24,10 +24,11 @@ class Validators {
     return null;
   }
 
-  static String? password(BuildContext context, String? value) {
+  static String? password(BuildContext context, String? value,
+      {String? customErrorMessage}) {
     final l10n = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return l10n.passwordRequired;
+      return customErrorMessage ?? l10n.passwordRequired;
     }
     if (value.length < 8) {
       return l10n.passwordTooShort;

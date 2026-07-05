@@ -15,4 +15,5 @@ class Routes {
   static const String shippingAddresses = "/shippingAddresses";
   static const String addEditAddress = "/addEditAddress";
   static const String editProfile = "/editProfile";
+  static const String changePassword = "/changePassword";
 }

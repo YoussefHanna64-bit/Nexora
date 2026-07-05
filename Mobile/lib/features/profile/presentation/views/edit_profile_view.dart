@@ -45,6 +45,8 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   void _onSave() {
+    FocusScope.of(context).unfocus();
+
     if (_formKey.currentState!.validate()) {
       context.read<ProfileCubit>().updateProfile(
             fullname: _nameController.text.trim(),
@@ -125,7 +127,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                               buttonText: l10n.changePassword,
                               isOutlined: true,
                               onPressed: () {
-                                //context.push(Routes.changePassword);
+                                context.push(Routes.changePassword);
                               },
                               icon: AppIcons.lockOutlined,
                             ),
@@ -165,14 +167,6 @@ class _EditProfileViewState extends State<EditProfileView> {
             content: Text(l10n.profileUpdated),
             backgroundColor: AppColors.primary),
       );
-    } else if (state is PasswordChangeSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(l10n.passwordChanged),
-            backgroundColor: AppColors.primary),
-      );
-
-      context.pop();
     } else if (state is AccountDeletedSuccess) {
       context.read<WishlistCubit>().clearWishlist();
       context.read<CartCubit>().clearCart();

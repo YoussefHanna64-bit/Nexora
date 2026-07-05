@@ -22,6 +22,7 @@ import 'package:nexora/features/orders/presentation/views/order_details_view.dar
 import 'package:nexora/features/orders/presentation/views/order_success_view.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/product_details/presentation/views/product_details_view.dart';
+import 'package:nexora/features/profile/presentation/views/change_password_view.dart';
 import 'package:nexora/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:nexora/features/profile/presentation/views/profile_view.dart';
 import 'package:nexora/features/search/presentation/views/search_view.dart';
@@ -148,6 +149,13 @@ final GoRouter appRouter = GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
         return const EditProfileView();
+      },
+    ),
+    GoRoute(
+      path: Routes.changePassword,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        return const ChangePasswordView();
       },
     ),
     ShellRoute(

@@ -22,6 +22,8 @@
   "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
   "passwordRequired": "يرجى إدخال كلمة المرور",
   "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+  "currentPasswordRequired": "يرجى إدخال كلمة المرور الحالية",
+  "newPasswordRequired": "يرجى إدخال كلمة المرور الجديدة",
   "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
   "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
   "search": "بحث",
@@ -192,5 +194,10 @@
   "connectionFailed": "فشل الاتصال",
   "couldntLoadData": "تعذر تحميل البيانات",
   "tapToRetry": "اضغط لإعادة المحاولة",
-  "loading": "جاري التحميل..."
+  "loading": "جاري التحميل...",
+  "passwordPolicy": "يجب أن تتكون كلمة المرور الجديدة من 8 أحرف على الأقل وأن تكون مختلفة عن كلمة المرور السابقة",
+  "updatePassword": "تحديث كلمة المرور",
+  "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+  "newPassword": "كلمة المرور الجديدة",
+  "currentPassword": "كلمة المرور الحالية"
 }

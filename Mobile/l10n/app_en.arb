@@ -22,6 +22,8 @@
   "emailInvalid": "Please enter a valid email address",
   "passwordRequired": "Please enter your password",
   "passwordTooShort": "Password must be at least 8 characters",
+  "currentPasswordRequired": "Please enter your current password",
+  "newPasswordRequired": "Please enter your new password",
   "confirmPasswordRequired": "Please confirm your password",
   "passwordsDoNotMatch": "Passwords do not match",
   "search": "Search",
@@ -199,5 +201,10 @@
   "connectionFailed": "Connection Failed",
   "couldntLoadData": "Couldn't load data",
   "tapToRetry": "Tap to Retry",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "passwordPolicy": "Your new password must be at least 8 characters long and different from your previous password",
+  "updatePassword": "Update Password",
+  "confirmNewPassword": "Confirm New Password",
+  "newPassword": "New Password",
+  "currentPassword": "Current Password"
 }
