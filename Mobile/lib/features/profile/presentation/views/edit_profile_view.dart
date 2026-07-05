@@ -1,0 +1,190 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/routers/routes.dart';
+import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/validators.dart';
+import 'package:nexora/core/widgets/custom_app_bar.dart';
+import 'package:nexora/core/widgets/custom_primary_button.dart';
+import 'package:nexora/core/widgets/custom_text_form_field.dart';
+import 'package:nexora/features/profile/presentation/widgets/profile_image.dart';
+import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
+import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
+import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
+import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:nexora/features/profile/presentation/manager/profile_state.dart';
+import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+class EditProfileView extends StatefulWidget {
+  const EditProfileView({super.key});
+
+  @override
+  State<EditProfileView> createState() => _EditProfileViewState();
+}
+
+class _EditProfileViewState extends State<EditProfileView> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+
+    final profileState = context.read<ProfileCubit>().state;
+    if (profileState is ProfileLoaded) {
+      _nameController.text = profileState.user.fullname;
+      _emailController.text = profileState.user.email;
+    }
+  }
+
+  void _onSave() {
+    if (_formKey.currentState!.validate()) {
+      context.read<ProfileCubit>().updateProfile(
+            fullname: _nameController.text.trim(),
+            email: _emailController.text.trim(),
+          );
+    }
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Scaffold(
+        appBar: CustomAppBar(
+          title: l10n.editProfile,
+          showBackButton: true,
+        ),
+        body: BlocConsumer<ProfileCubit, ProfileState>(
+            listener: (context, state) async {
+          _editProfileBlocListener(context, state, l10n);
+        }, builder: (context, state) {
+          final isLoading = state is ProfileLoading || state is ProfileInitial;
+          final isUpdating = state is ProfileUpdating;
+
+          return Skeletonizer(
+            enabled: isLoading,
+            child: Form(
+                key: _formKey,
+                child: CustomScrollView(
+                  slivers: [
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          child: Column(children: [
+                            ProfileImage(
+                              icon: AppIcons.editOutlined,
+                              imageUrl:
+                                  'https://avatarfiles.alphacoders.com/823/thumb-1920-82313.jpg',
+                              radius: 54,
+                              onTap: () {},
+                            ),
+                            const SizedBox(height: 32),
+                            CustomTextFormField(
+                              hintText: l10n.fullName,
+                              showLabel: true,
+                              controller: _nameController,
+                              validator: (val) =>
+                                  Validators.username(context, val),
+                            ),
+                            const SizedBox(height: 20),
+                            CustomTextFormField(
+                              hintText: l10n.email,
+                              showLabel: true,
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              validator: (val) =>
+                                  Validators.email(context, val),
+                            ),
+                            const SizedBox(height: 32),
+                            CustomPrimaryButton(
+                              buttonText: l10n.saveChanges,
+                              onPressed: isUpdating ? () {} : _onSave,
+                              isLoading: isUpdating,
+                            ),
+                            const SizedBox(height: 24),
+                            const Divider(thickness: 1, height: 1),
+                            const SizedBox(height: 24),
+                            CustomPrimaryButton(
+                              buttonText: "Change Password",
+                              isOutlined: true,
+                              onPressed: () {
+                                //context.push(Routes.changePassword);
+                              },
+                              icon: Icons.lock_outline,
+                            ),
+                            const Spacer(),
+                            const SizedBox(height: 32),
+                            TextButton(
+                              onPressed: () {
+                                //Dialog to confirm account deletion
+                                context.read<ProfileCubit>().deleteAccount();
+                              },
+                              child: Text(
+                                "Delete Account",
+                                style: AppTextStyles.bold16White
+                                    .copyWith(color: AppColors.redColor),
+                              ),
+                            ),
+                          ])),
+                    ),
+                  ],
+                )),
+          );
+        }));
+  }
+
+  Future<void> _editProfileBlocListener(
+      BuildContext context, ProfileState state, AppLocalizations l10n) async {
+    if (state is ProfileError) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(state.message), backgroundColor: AppColors.redColor),
+      );
+    } else if (state is ProfileLoaded) {
+      _nameController.text = state.user.fullname;
+      _emailController.text = state.user.email;
+    } else if (state is ProfileUpdateSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Profile updated"),
+            backgroundColor: AppColors.primary),
+      );
+    } else if (state is PasswordChangeSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Password changed"),
+            backgroundColor: AppColors.primary),
+      );
+
+      context.pop();
+    } else if (state is AccountDeletedSuccess) {
+      context.read<WishlistCubit>().clearWishlist();
+      context.read<CartCubit>().clearCart();
+      context.read<AddressCubit>().clearAddresses();
+      context.read<ProfileCubit>().clearProfile();
+
+      await context.read<AuthCubit>().logout();
+
+      if (context.mounted) {
+        context.go(Routes.login);
+      }
+    }
+  }
+}

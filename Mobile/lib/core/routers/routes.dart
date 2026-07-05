@@ -14,4 +14,5 @@ class Routes {
   static const String orderDetails = "/orderDetails";
   static const String shippingAddresses = "/shippingAddresses";
   static const String addEditAddress = "/addEditAddress";
+  static const String editProfile = "/editProfile";
 }

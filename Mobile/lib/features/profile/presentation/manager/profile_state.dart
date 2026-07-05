@@ -6,17 +6,21 @@ class ProfileInitial extends ProfileState {}
 
 class ProfileLoading extends ProfileState {}
 
+class ProfileUpdating extends ProfileState {}
+
+class AccountDeleting extends ProfileState {}
+
 class ProfileLoaded extends ProfileState {
   final User user;
 
   ProfileLoaded(this.user);
 }
 
-class ProfileActionSuccess extends ProfileState {
-  final String message;
+class ProfileUpdateSuccess extends ProfileState {}
 
-  ProfileActionSuccess(this.message);
-}
+class PasswordChangeSuccess extends ProfileState {}
+
+class AccountDeletedSuccess extends ProfileState {}
 
 class ProfileError extends ProfileState {
   final String message;

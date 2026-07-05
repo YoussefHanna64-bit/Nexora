@@ -5,22 +5,37 @@ import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
-import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
-import 'package:nexora/core/widgets/profile_image.dart';
+import 'package:nexora/features/profile/presentation/widgets/profile_header.dart';
 import 'package:nexora/core/widgets/custom_list_tile.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
 import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
+import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:nexora/features/profile/presentation/manager/profile_state.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  @override
+  void initState() {
+    super.initState();
+    final profileCubit = context.read<ProfileCubit>();
+    if (profileCubit.state is! ProfileLoaded) {
+      profileCubit.fetchProfile();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return Scaffold(
         appBar: CustomAppBar(title: l10n.profile),
@@ -28,27 +43,48 @@ class ProfileView extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Column(
-                children: [
-                  ProfileImage(
-                    icon: AppIcons.editOutlined,
-                    imageUrl:
-                        'https://avatarfiles.alphacoders.com/823/thumb-1920-82313.jpg',
+              BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (context, state) {
+                if (state is ProfileError) {
+                  return ProfileHeader(
+                    icon: Icons.wifi_off_rounded,
+                    title: "Connection Failed",
+                    subtitle: "Couldn't load profile data",
+                    subtitleColor: AppColors.redColor,
                     onTap: () {},
+                    extraWidget: TextButton.icon(
+                      onPressed: () =>
+                          context.read<ProfileCubit>().fetchProfile(),
+                      icon: const Icon(Icons.refresh, color: AppColors.primary),
+                      label: const Text("Tap to Retry",
+                          style: TextStyle(color: AppColors.primary)),
+                    ),
+                  );
+                }
+
+                final isLoading =
+                    state is ProfileLoading || state is ProfileInitial;
+                final user = state is ProfileLoaded ? state.user : null;
+
+                return Skeletonizer(
+                  enabled: isLoading,
+                  child: ProfileHeader(
+                    icon: AppIcons.editOutlined,
+                    title: user?.fullname.split(" ").first ?? "Loading...",
+                    subtitle: user?.email ?? "loading.email@example.com",
+                    onTap: () {
+                      if (!isLoading) context.push(Routes.editProfile);
+                    },
                   ),
-                  const SizedBox(height: 16),
-                  Text('Legend',
-                      style: AppTextStyles.extraBold24Black
-                          .copyWith(color: onSurface)),
-                  const SizedBox(height: 4),
-                  Text('Legend@gmail.com', style: AppTextStyles.regular14Grey),
-                ],
-              ),
+                );
+              }),
               const SizedBox(height: 32),
               CustomListTile(
                 icon: AppIcons.editOutlined,
                 title: l10n.editProfile,
-                onTap: () {},
+                onTap: () {
+                  context.push(Routes.editProfile);
+                },
               ),
               CustomListTile(
                 icon: AppIcons.shoppingBagOutlined,
@@ -63,11 +99,6 @@ class ProfileView extends StatelessWidget {
                 onTap: () {
                   context.push(Routes.shippingAddresses);
                 },
-              ),
-              CustomListTile(
-                icon: AppIcons.paymentOutlined,
-                title: l10n.paymentMethods,
-                onTap: () {},
               ),
               CustomListTile(
                 icon: AppIcons.settingsOutlined,
@@ -88,6 +119,8 @@ class ProfileView extends StatelessWidget {
                   context.read<WishlistCubit>().clearWishlist();
                   context.read<CartCubit>().clearCart();
                   context.read<AddressCubit>().clearAddresses();
+                  context.read<ProfileCubit>().clearProfile();
+
                   await context.read<AuthCubit>().logout();
 
                   if (context.mounted) {

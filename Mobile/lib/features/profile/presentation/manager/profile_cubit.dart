@@ -31,7 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> updateProfile({String? fullname, String? email}) async {
-    emit(ProfileLoading());
+    emit(ProfileUpdating());
 
     final result = await updateProfileUseCase(fullname: fullname, email: email);
 
@@ -40,6 +40,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(ProfileError(failure.message));
       },
       (user) {
+        emit(ProfileUpdateSuccess());
         emit(ProfileLoaded(user));
       },
     );
@@ -47,7 +48,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> changePassword(String currentPassword, String newPassword,
       String confirmPassword) async {
-    emit(ProfileLoading());
+    emit(ProfileUpdating());
 
     final result = await updatePasswordUseCase(
         currentPassword: currentPassword,
@@ -59,13 +60,13 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(ProfileError(failure.message));
       },
       (message) {
-        emit(ProfileActionSuccess(message));
+        emit(PasswordChangeSuccess());
       },
     );
   }
 
   Future<void> deleteAccount() async {
-    emit(ProfileLoading());
+    emit(AccountDeleting());
 
     final result = await deleteAccountUseCase();
 
@@ -74,8 +75,12 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(ProfileError(failure.message));
       },
       (message) {
-        emit(ProfileActionSuccess(message));
+        emit(AccountDeletedSuccess());
       },
     );
+  }
+
+  void clearProfile() {
+    emit(ProfileInitial());
   }
 }
