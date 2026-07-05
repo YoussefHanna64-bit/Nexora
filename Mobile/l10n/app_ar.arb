@@ -184,6 +184,13 @@
   "selectShippingAddress": "اختر عنوان الشحن",
   "pleaseSelectAddressFirst": "يرجى اختيار عنوان الشحن أولاً",
   "noAddressSelectedTitle": "لم يتم اختيار عنوان",
-  "noAddressSelectedSubtitle": "اضغط لاختيار عنوان أو إضافة عنوان جديد"
-
+  "noAddressSelectedSubtitle": "اضغط لاختيار عنوان أو إضافة عنوان جديد",
+  "changePassword": "تغيير كلمة المرور",
+  "deleteAccount": "حذف الحساب",
+  "profileUpdated": "تم تحديث الملف الشخصي",
+  "passwordChanged": "تم تغيير كلمة المرور",
+  "connectionFailed": "فشل الاتصال",
+  "couldntLoadData": "تعذر تحميل البيانات",
+  "tapToRetry": "اضغط لإعادة المحاولة",
+  "loading": "جاري التحميل..."
 }

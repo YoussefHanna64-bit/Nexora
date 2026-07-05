@@ -42,4 +42,7 @@ class AppIcons {
   static const IconData workOutlined = Icons.work_outline;
   static const IconData moreVert = Icons.more_vert;
   static const IconData close = Icons.close;
+  static const IconData wifiOff = Icons.wifi_off_rounded;
+  static const IconData refresh = Icons.refresh;
+  static const IconData lockOutlined = Icons.lock_outline;
 }

@@ -47,16 +47,17 @@ class _ProfileViewState extends State<ProfileView> {
                   builder: (context, state) {
                 if (state is ProfileError) {
                   return ProfileHeader(
-                    icon: Icons.wifi_off_rounded,
-                    title: "Connection Failed",
-                    subtitle: "Couldn't load profile data",
+                    icon: AppIcons.wifiOff,
+                    title: l10n.connectionFailed,
+                    subtitle: l10n.couldntLoadData,
                     subtitleColor: AppColors.redColor,
                     onTap: () {},
                     extraWidget: TextButton.icon(
                       onPressed: () =>
                           context.read<ProfileCubit>().fetchProfile(),
-                      icon: const Icon(Icons.refresh, color: AppColors.primary),
-                      label: const Text("Tap to Retry",
+                      icon: const Icon(AppIcons.refresh,
+                          color: AppColors.primary),
+                      label: Text(l10n.tapToRetry,
                           style: TextStyle(color: AppColors.primary)),
                     ),
                   );
@@ -70,8 +71,8 @@ class _ProfileViewState extends State<ProfileView> {
                   enabled: isLoading,
                   child: ProfileHeader(
                     icon: AppIcons.editOutlined,
-                    title: user?.fullname.split(" ").first ?? "Loading...",
-                    subtitle: user?.email ?? "loading.email@example.com",
+                    title: user?.fullname.split(" ").first ?? l10n.loading,
+                    subtitle: user?.email ?? l10n.loading,
                     onTap: () {
                       if (!isLoading) context.push(Routes.editProfile);
                     },

@@ -122,12 +122,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                             const Divider(thickness: 1, height: 1),
                             const SizedBox(height: 24),
                             CustomPrimaryButton(
-                              buttonText: "Change Password",
+                              buttonText: l10n.changePassword,
                               isOutlined: true,
                               onPressed: () {
                                 //context.push(Routes.changePassword);
                               },
-                              icon: Icons.lock_outline,
+                              icon: AppIcons.lockOutlined,
                             ),
                             const Spacer(),
                             const SizedBox(height: 32),
@@ -137,9 +137,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 context.read<ProfileCubit>().deleteAccount();
                               },
                               child: Text(
-                                "Delete Account",
-                                style: AppTextStyles.bold16White
-                                    .copyWith(color: AppColors.redColor),
+                                l10n.deleteAccount,
+                                style: AppTextStyles.bold16Red,
                               ),
                             ),
                           ])),
@@ -163,13 +162,13 @@ class _EditProfileViewState extends State<EditProfileView> {
     } else if (state is ProfileUpdateSuccess) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text("Profile updated"),
+            content: Text(l10n.profileUpdated),
             backgroundColor: AppColors.primary),
       );
     } else if (state is PasswordChangeSuccess) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text("Password changed"),
+            content: Text(l10n.passwordChanged),
             backgroundColor: AppColors.primary),
       );
 
