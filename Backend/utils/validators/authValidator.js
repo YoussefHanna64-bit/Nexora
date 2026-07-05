@@ -52,3 +52,13 @@ export const loginValidator = [
 
   validatorMiddleware,
 ];
+
+export const refreshTokenValidator = [
+  check("refreshToken")
+    .notEmpty()
+    .withMessage("Refresh token is required")
+    .isString()
+    .withMessage("Refresh token must be a valid string"),
+
+  validatorMiddleware,
+];

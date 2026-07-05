@@ -65,6 +65,10 @@ const userSchema = new mongoose.Schema(
     passwordConfirm: {
       type: String,
     },
+    refreshToken: {
+      type: String,
+      select: false,
+    },
   },
   {
     timestamps: true,

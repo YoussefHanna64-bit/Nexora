@@ -11,7 +11,7 @@ import {
   USER_NOT_FOUND,
 } from "../utils/messages.js";
 import AppError from "../utils/AppError.js";
-import { generateToken } from "./authController.js";
+import { generateAccessToken, generateRefreshToken } from "./authController.js";
 
 export const getUser = asyncWrapper(async (req, res, next) => {
   const user = await User.findById(req.user.id);
@@ -106,15 +106,19 @@ export const updatePassword = asyncWrapper(async (req, res, next) => {
 
   user.password = newPassword;
   user.passwordConfirm = passwordConfirm;
-  await user.save();
 
-  const token = generateToken(user);
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  user.refreshToken = refreshToken;
+  await user.save();
 
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
     message: PASSWORD_UPDATED,
-    token,
+    accessToken,
+    refreshToken,
     data: null,
   });
 });
