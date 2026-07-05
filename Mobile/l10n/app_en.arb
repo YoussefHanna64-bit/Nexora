@@ -206,5 +206,10 @@
   "updatePassword": "Update Password",
   "confirmNewPassword": "Confirm New Password",
   "newPassword": "New Password",
-  "currentPassword": "Current Password"
+  "currentPassword": "Current Password",
+  "deleteAccountConfirmation": "Are you sure you want to permanently delete your account? This action can't be undone",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "removeAddress": "Remove Address",
+  "removeAddressConfirmation": "Are you sure you want to remove this address?"
 }

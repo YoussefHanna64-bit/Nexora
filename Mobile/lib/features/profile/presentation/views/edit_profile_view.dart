@@ -6,6 +6,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_dialogs.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
@@ -135,8 +136,19 @@ class _EditProfileViewState extends State<EditProfileView> {
                             const SizedBox(height: 32),
                             TextButton(
                               onPressed: () {
-                                //Dialog to confirm account deletion
-                                context.read<ProfileCubit>().deleteAccount();
+                                AppDialogs.showConfirmDialog(
+                                  context,
+                                  title: l10n.deleteAccount,
+                                  content: l10n.deleteAccountConfirmation,
+                                  confirmText: l10n.delete,
+                                  cancelText: l10n.cancel,
+                                  onConfirm: () {
+                                    context
+                                        .read<ProfileCubit>()
+                                        .deleteAccount();
+                                  },
+                                  isDanger: true,
+                                );
                               },
                               child: Text(
                                 l10n.deleteAccount,

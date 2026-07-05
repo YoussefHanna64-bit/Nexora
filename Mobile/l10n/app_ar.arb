@@ -199,5 +199,10 @@
   "updatePassword": "تحديث كلمة المرور",
   "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
   "newPassword": "كلمة المرور الجديدة",
-  "currentPassword": "كلمة المرور الحالية"
+  "currentPassword": "كلمة المرور الحالية",
+  "deleteAccountConfirmation": "هل أنت متأكد أنك تريد حذف حسابك نهائياً؟ لا يمكن التراجع عن هذا الإجراء بعد إتمامه",
+  "cancel": "إلغاء",
+  "delete": "حذف",
+  "removeAddress": "إزالة العنوان",
+  "removeAddressConfirmation": "هل أنت متأكد أنك تريد إزالة هذا العنوان؟"
 }

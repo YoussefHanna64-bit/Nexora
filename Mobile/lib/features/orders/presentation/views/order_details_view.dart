@@ -7,6 +7,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/localization/language_cubit.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_dialogs.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/order_summary_card.dart';
@@ -111,25 +112,18 @@ class OrderDetailsView extends StatelessWidget {
 
   void _cancelConfirmation(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.cancelOrderQuestion),
-        content: Text(l10n.cancelOrderConfirmationText),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(l10n.noKeepIt)),
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                context.read<OrderHistoryCubit>().cancelOrder(order.id);
-                context.pop();
-              },
-              child: Text(l10n.yesCancel,
-                  style: TextStyle(color: AppColors.redColor))),
-        ],
-      ),
+
+    AppDialogs.showConfirmDialog(
+      context,
+      title: l10n.cancelOrderQuestion,
+      content: l10n.cancelOrderConfirmationText,
+      cancelText: l10n.noKeepIt,
+      confirmText: l10n.yesCancel,
+      isDanger: true,
+      onConfirm: () {
+        context.read<OrderHistoryCubit>().cancelOrder(order.id);
+        context.pop();
+      },
     );
   }
 }

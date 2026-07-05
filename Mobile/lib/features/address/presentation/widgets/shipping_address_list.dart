@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/utils/app_dialogs.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
 import 'package:nexora/features/address/presentation/widgets/shipping_address_card.dart';
@@ -33,7 +34,17 @@ class ShippingAddressList extends StatelessWidget {
               if (value == "edit") {
                 context.push(Routes.addEditAddress, extra: address);
               } else if (value == "remove") {
-                context.read<AddressCubit>().removeAddress(address.id!);
+                AppDialogs.showConfirmDialog(
+                  context,
+                  title: l10n.removeAddress,
+                  content: l10n.removeAddressConfirmation,
+                  confirmText: l10n.remove,
+                  cancelText: l10n.cancel,
+                  onConfirm: () {
+                    context.read<AddressCubit>().removeAddress(address.id!);
+                  },
+                  isDanger: true,
+                );
               }
             },
             itemBuilder: (context) => [
