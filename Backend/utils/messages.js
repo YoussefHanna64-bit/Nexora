@@ -46,6 +46,8 @@ export const PASSWORD_UPDATED = "Password updated";
 export const ACCOUNT_DELETE_PERMISSION =
   "You don't have permission to delete this account";
 export const ACCOUNT_DELETED = "Account deleted";
+export const JWT_EXPIRED = "jwt expired";
+export const INVALID_TOKEN = "Invalid token. Please log in again";
 export const INVALID_EXPIRED_REFRESH_TOKEN = "Invalid or expired refresh token. Please log in again";
 export const INVALID_REFRESH_TOKEN = "Invalid refresh token";
 export const ADDRESS_ADDED = "Address added";

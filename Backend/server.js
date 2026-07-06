@@ -1,4 +1,5 @@
 import express from "express";
+import morgan from "morgan";
 import dotenv from "dotenv";
 import { connectDB } from "./config/dbConfig.js";
 import httpStatus from "./utils/httpStatus.js";
@@ -22,6 +23,7 @@ app.set("query parser", "extended");
 
 app.use(cors());
 app.use(express.json());
+app.use(morgan("dev"));
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);

@@ -18,8 +18,11 @@ class AuthRepoImpl implements AuthRepo {
     try {
       final json = await remoteDataSource.login(email, password);
 
-      final token = json["token"];
-      await SecureStorage.saveToken(token);
+      final accessToken = json["accessToken"];
+      final refreshToken = json["refreshToken"];
+
+      await SecureStorage.saveToken(accessToken);
+      await SecureStorage.saveRefreshToken(refreshToken);
 
       return Right(UserModel.fromJson(json["data"]["user"]));
     } catch (e) {
@@ -40,8 +43,11 @@ class AuthRepoImpl implements AuthRepo {
       final json = await remoteDataSource.register(
           fullname, email, password, passwordConfirm);
 
-      final token = json["token"];
-      await SecureStorage.saveToken(token);
+      final accessToken = json["accessToken"];
+      final refreshToken = json["refreshToken"];
+
+      await SecureStorage.saveToken(accessToken);
+      await SecureStorage.saveRefreshToken(refreshToken);
 
       return Right(UserModel.fromJson(json["data"]["user"]));
     } catch (e) {

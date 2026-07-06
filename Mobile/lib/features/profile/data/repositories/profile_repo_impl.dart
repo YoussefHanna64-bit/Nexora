@@ -61,8 +61,11 @@ class ProfileRepoImpl implements ProfileRepo {
         "passwordConfirm": confirmPassword,
       });
 
-      final newToken = json["token"];
-      await SecureStorage.saveToken(newToken);
+      final accessToken = json["accessToken"];
+      final refreshToken = json["refreshToken"];
+
+      await SecureStorage.saveToken(accessToken);
+      await SecureStorage.saveRefreshToken(refreshToken);
 
       return Right(json["message"]);
     } catch (e) {

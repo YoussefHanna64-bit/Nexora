@@ -1,5 +1,6 @@
 import httpStatus from "../utils/httpStatus.js";
 import AppError from "../utils/AppError.js";
+import { INVALID_TOKEN, JWT_EXPIRED } from "../utils/messages.js";
 
 const handleDuplicateFieldsDB = (err) => {
   const field = Object.keys(err.keyValue)[0];
@@ -12,6 +13,7 @@ const handleDuplicateFieldsDB = (err) => {
 export const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
+  error.name = err.name;
 
   if (err.code === 11000) {
     error = handleDuplicateFieldsDB(error);
@@ -20,6 +22,14 @@ export const errorHandler = (err, req, res, next) => {
   if (err.name === "CastError") {
     const message = `Invalid ${err.path}: ${err.value}.`;
     error = new AppError(message, 400);
+  }
+
+  if (err.name === "TokenExpiredError" || err.message === "jwt expired") {
+    error = new AppError(JWT_EXPIRED, 401);
+  }
+
+  if (err.name === "JsonWebTokenError") {
+    error = new AppError(INVALID_TOKEN, 401);
   }
 
   const statusCode = error.statusCode || 500;
