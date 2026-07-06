@@ -25,8 +25,11 @@ import 'package:nexora/features/orders/domain/services/payment_service.dart';
 import 'package:nexora/features/orders/domain/usecases/place_order_use_case.dart';
 import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cubit.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
+import 'package:nexora/features/product/data/datasources/product_remote_data_source.dart';
 import 'package:nexora/features/product/data/repositories/product_repo_impl.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
+import 'package:nexora/features/product/domain/usecases/get_all_products_use_case.dart';
+import 'package:nexora/features/product/domain/usecases/get_product_by_id_use_case.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:nexora/features/profile/data/repositories/profile_repo_impl.dart';
@@ -84,12 +87,24 @@ void setupGetIt() {
     () => WishlistCubit(getIt<WishlistRepo>()),
   );
 
+  getIt.registerLazySingleton<ProductRemoteDataSource>(
+    () => ProductRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
   getIt.registerLazySingleton<ProductRepo>(
-    () => ProductRepoImpl(getIt<ApiService>()),
+    () => ProductRepoImpl(getIt<ProductRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetAllProductsUseCase>(
+    () => GetAllProductsUseCase(getIt<ProductRepo>()),
+  );
+
+  getIt.registerLazySingleton<GetProductByIdUseCase>(
+    () => GetProductByIdUseCase(getIt<ProductRepo>()),
   );
 
   getIt.registerFactory<ProductCubit>(
-    () => ProductCubit(getIt<ProductRepo>()),
+    () => ProductCubit(getIt<GetAllProductsUseCase>()),
   );
 
   getIt.registerLazySingleton<CartRepo>(

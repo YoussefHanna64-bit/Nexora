@@ -1,17 +1,17 @@
 import 'package:bloc/bloc.dart';
-import 'package:nexora/features/product/domain/repositories/product_repo.dart';
+import 'package:nexora/features/product/domain/usecases/get_all_products_use_case.dart';
 import 'package:nexora/features/product/presentation/manager/product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  final ProductRepo productRepo;
+  final GetAllProductsUseCase getAllProductsUseCase;
 
-  ProductCubit(this.productRepo) : super(ProductInitial());
+  ProductCubit(this.getAllProductsUseCase) : super(ProductInitial());
 
   Future<void> fetchProducts({Map<String, dynamic>? queryParameters}) async {
     emit(ProductLoading());
 
     final result =
-        await productRepo.getAllProducts(queryParameters: queryParameters);
+        await getAllProductsUseCase(queryParameters: queryParameters);
 
     result.fold(
       (failure) {
@@ -19,7 +19,7 @@ class ProductCubit extends Cubit<ProductState> {
       },
       (products) {
         emit(ProductSuccess(
-            products: products['products'], maxPrice: products['maxPrice']));
+            products: products["products"], maxPrice: products["maxPrice"]));
       },
     );
   }
