@@ -25,7 +25,7 @@ import 'package:nexora/features/orders/domain/services/payment_service.dart';
 import 'package:nexora/features/orders/domain/usecases/place_order_use_case.dart';
 import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cubit.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
-import 'package:nexora/features/product/data/repositories/api_product_repo_impl.dart';
+import 'package:nexora/features/product/data/repositories/product_repo_impl.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
 import 'package:nexora/features/profile/data/datasources/profile_remote_data_source.dart';
@@ -85,7 +85,7 @@ void setupGetIt() {
   );
 
   getIt.registerLazySingleton<ProductRepo>(
-    () => ApiProductRepoImpl(getIt<ApiService>()),
+    () => ProductRepoImpl(getIt<ApiService>()),
   );
 
   getIt.registerFactory<ProductCubit>(

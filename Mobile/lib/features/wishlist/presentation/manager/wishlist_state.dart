@@ -1,4 +1,4 @@
-import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/core/entities/product.dart';
 
 abstract class WishlistState {}
 

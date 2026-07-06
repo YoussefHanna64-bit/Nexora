@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/quantity_selector.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
-import 'package:nexora/features/product_details/presentation/widgets/price_bottom_bar.dart';
-import 'package:nexora/features/product_details/presentation/widgets/product_image_carousel.dart';
+import 'package:nexora/features/product/presentation/widgets/price_bottom_bar.dart';
+import 'package:nexora/features/product/presentation/widgets/product_image_carousel.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 

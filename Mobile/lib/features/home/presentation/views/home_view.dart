@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
@@ -134,7 +134,7 @@ class _HomeViewState extends State<HomeView> {
                               state is ProductInitial;
 
                           final displayProducts = isLoading
-                              ? dummyProducts
+                              ? Product.mockProducts
                               : (state as ProductSuccess).products;
 
                           return Skeletonizer(

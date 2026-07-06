@@ -1,15 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 
-class ApiProductRepoImpl implements ProductRepo {
+class ProductRepoImpl implements ProductRepo {
   final ApiService apiService;
 
-  ApiProductRepoImpl(this.apiService);
+  ProductRepoImpl(this.apiService);
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> getAllProducts(
@@ -20,7 +21,7 @@ class ApiProductRepoImpl implements ProductRepo {
 
       List<Product> products = [];
       for (var item in response.data['data']['products']) {
-        products.add(Product.fromJson(item));
+        products.add(ProductModel.fromJson(item));
       }
       double maxPrice = response.data['maxPrice'].toDouble();
 

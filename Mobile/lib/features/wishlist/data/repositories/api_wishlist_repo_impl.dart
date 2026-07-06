@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/network/api_service.dart';
@@ -14,7 +15,7 @@ class ApiWishlistRepoImpl implements WishlistRepo {
   List<Product> parseWishlist(dynamic responseData) {
     List<Product> wishlist = [];
     for (var item in responseData['data']['wishlist']) {
-      wishlist.add(Product.fromJson(item));
+      wishlist.add(ProductModel.fromJson(item));
     }
     return wishlist;
   }

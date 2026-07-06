@@ -1,3 +1,4 @@
+import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/models/product_model.dart';
 
 class CartItem {
@@ -16,7 +17,7 @@ class CartItem {
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
       id: json['_id'],
-      product: Product.fromJson(json['product']),
+      product: ProductModel.fromJson(json['product']),
       quantity: json['quantity'],
       price: json['price'] as num,
     );
@@ -50,19 +51,19 @@ class Cart {
 final Cart dummyCart = Cart(items: [
   CartItem(
     id: "1",
-    product: dummyProducts[0],
+    product: Product.mockProducts[0],
     quantity: 1,
     price: 10,
   ),
   CartItem(
     id: "2",
-    product: dummyProducts[0],
+    product: Product.mockProducts[0],
     quantity: 1,
     price: 10,
   ),
   CartItem(
     id: "3",
-    product: dummyProducts[0],
+    product: Product.mockProducts[0],
     quantity: 1,
     price: 10,
   ),
