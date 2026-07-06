@@ -8,6 +8,7 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/order_summary_card.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
@@ -67,12 +68,11 @@ class _CartViewState extends State<CartView> {
               current is CartInitial,
           builder: (context, state) {
             if (state is CartError) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: AppTextStyles.regular18Black
-                      .copyWith(color: AppColors.redColor),
-                ),
+              return CustomErrorWidget(
+                message: state.message,
+                onRetry: () {
+                  context.read<CartCubit>().fetchCart();
+                },
               );
             }
 

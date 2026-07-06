@@ -7,6 +7,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
@@ -127,7 +128,17 @@ class _HomeViewState extends State<HomeView> {
                       BlocBuilder<ProductCubit, ProductState>(
                         builder: (context, state) {
                           if (state is ProductError) {
-                            return Center(child: Text(state.message));
+                            return CustomErrorWidget(
+                              message: state.message,
+                              onRetry: () {
+                                context
+                                    .read<ProductCubit>()
+                                    .fetchProducts(queryParameters: {
+                                  "sort": "-sold",
+                                  "limit": 6,
+                                });
+                              },
+                            );
                           }
 
                           final bool isLoading = state is ProductLoading ||

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/entities/product.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
@@ -22,10 +22,11 @@ class WishlistView extends StatelessWidget {
       body:
           BlocBuilder<WishlistCubit, WishlistState>(builder: (context, state) {
         if (state is WishlistError) {
-          return Center(
-            child: Text(state.message,
-                style: AppTextStyles.regular18Black
-                    .copyWith(color: AppColors.redColor)),
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () {
+              context.read<WishlistCubit>().fetchWishlist();
+            },
           );
         }
         final bool isLoading =

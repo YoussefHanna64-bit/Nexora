@@ -43,6 +43,7 @@ class AppIcons {
   static const IconData moreVert = Icons.more_vert;
   static const IconData close = Icons.close;
   static const IconData wifiOff = Icons.wifi_off_rounded;
+  static const IconData errorOutlined = Icons.error_outline;
   static const IconData refresh = Icons.refresh;
   static const IconData lockOutlined = Icons.lock_outline;
 }

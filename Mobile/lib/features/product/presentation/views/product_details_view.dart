@@ -6,6 +6,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/quantity_selector.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/product/presentation/manager/product_details/product_details_cubit.dart';
@@ -102,6 +103,17 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       ),
       body: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
           builder: (context, state) {
+        if (state is ProductDetailsError) {
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () {
+              context
+                  .read<ProductDetailsCubit>()
+                  .fetchProduct(widget.productId);
+            },
+          );
+        }
+
         final isLoading =
             state is ProductDetailsLoading || state is ProductDetailsInitial;
         final product = state is ProductDetailsLoaded

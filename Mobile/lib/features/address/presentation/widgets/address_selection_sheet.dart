@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
@@ -51,11 +52,11 @@ class AddressSelectionSheet extends StatelessWidget {
               child: BlocBuilder<AddressCubit, AddressState>(
                 builder: (context, state) {
                   if (state is AddressError) {
-                    return Center(
-                      child: Text(
-                        state.message,
-                        style: const TextStyle(color: AppColors.redColor),
-                      ),
+                    return CustomErrorWidget(
+                      message: state.message,
+                      onRetry: () {
+                        context.read<AddressCubit>().fetchAddresses();
+                      },
                     );
                   }
 

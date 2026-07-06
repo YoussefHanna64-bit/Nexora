@@ -7,6 +7,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_cubit.dart';
@@ -150,9 +151,12 @@ class _SearchViewState extends State<SearchView> {
       ),
       body: BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
         if (state is ProductError) {
-          return Center(
-              child: Text(state.message,
-                  style: const TextStyle(color: Colors.red)));
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () {
+              context.read<ProductCubit>().fetchProducts();
+            },
+          );
         }
 
         final bool isLoading =

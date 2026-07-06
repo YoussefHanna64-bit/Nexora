@@ -5,6 +5,7 @@ import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_state.dart';
@@ -23,8 +24,12 @@ class MyOrdersView extends StatelessWidget {
         body: BlocBuilder<OrderHistoryCubit, OrderHistoryState>(
             builder: (context, state) {
           if (state is OrderHistoryError) {
-            return Center(
-                child: Text(state.message, style: AppTextStyles.bold16Black));
+            return CustomErrorWidget(
+              message: state.message,
+              onRetry: () {
+                context.read<OrderHistoryCubit>().fetchOrders();
+              },
+            );
           }
 
           final bool isLoading = state is OrderHistoryLoading;
