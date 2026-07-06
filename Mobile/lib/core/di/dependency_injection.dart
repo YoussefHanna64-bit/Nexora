@@ -30,7 +30,8 @@ import 'package:nexora/features/product/data/repositories/product_repo_impl.dart
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 import 'package:nexora/features/product/domain/usecases/get_all_products_use_case.dart';
 import 'package:nexora/features/product/domain/usecases/get_product_by_id_use_case.dart';
-import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
+import 'package:nexora/features/product/presentation/manager/product/product_cubit.dart';
+import 'package:nexora/features/product/presentation/manager/product_details/product_details_cubit.dart';
 import 'package:nexora/features/profile/data/datasources/profile_remote_data_source.dart';
 import 'package:nexora/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nexora/features/profile/domain/repositories/profile_repo.dart';
@@ -105,6 +106,10 @@ void setupGetIt() {
 
   getIt.registerFactory<ProductCubit>(
     () => ProductCubit(getIt<GetAllProductsUseCase>()),
+  );
+
+  getIt.registerFactory<ProductDetailsCubit>(
+    () => ProductDetailsCubit(getIt<GetProductByIdUseCase>()),
   );
 
   getIt.registerLazySingleton<CartRepo>(

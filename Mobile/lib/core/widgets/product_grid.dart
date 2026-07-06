@@ -73,7 +73,7 @@ class ProductGrid extends StatelessWidget {
               discount: product.discount,
               imageUrl: product.thumbnail,
               onTap: () {
-                context.push(Routes.productDetails, extra: product);
+                context.push(Routes.productDetails, extra: product.id);
               },
               onFavoriteTap: () {
                 context.read<WishlistCubit>().toggleItem(product.id);

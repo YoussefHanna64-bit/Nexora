@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:nexora/features/product/domain/usecases/get_all_products_use_case.dart';
-import 'package:nexora/features/product/presentation/manager/product_state.dart';
+import 'package:nexora/features/product/presentation/manager/product/product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   final GetAllProductsUseCase getAllProductsUseCase;

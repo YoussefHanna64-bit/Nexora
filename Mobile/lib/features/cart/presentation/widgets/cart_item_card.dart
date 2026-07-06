@@ -99,7 +99,7 @@ class CartItemCard extends StatelessWidget {
             ),
           ),
           onTap: () {
-            context.push(Routes.productDetails, extra: product);
+            context.push(Routes.productDetails, extra: product.id);
           }),
     );
   }

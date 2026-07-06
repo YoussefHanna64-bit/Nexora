@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/di/dependency_injection.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/services/secure_storage.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
@@ -20,7 +19,8 @@ import 'package:nexora/features/orders/presentation/views/checkout_view.dart';
 import 'package:nexora/features/orders/presentation/views/my_orders_view.dart';
 import 'package:nexora/features/orders/presentation/views/order_details_view.dart';
 import 'package:nexora/features/orders/presentation/views/order_success_view.dart';
-import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
+import 'package:nexora/features/product/presentation/manager/product/product_cubit.dart';
+import 'package:nexora/features/product/presentation/manager/product_details/product_details_cubit.dart';
 import 'package:nexora/features/product/presentation/views/product_details_view.dart';
 import 'package:nexora/features/profile/presentation/views/change_password_view.dart';
 import 'package:nexora/features/profile/presentation/views/edit_profile_view.dart';
@@ -79,8 +79,11 @@ final GoRouter appRouter = GoRouter(
       path: Routes.productDetails,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
-        final product = state.extra as Product;
-        return ProductDetailsView(product: product);
+        final productId = state.extra as String;
+        return BlocProvider(
+          create: (context) => getIt<ProductDetailsCubit>(),
+          child: ProductDetailsView(productId: productId),
+        );
       },
     ),
     GoRoute(

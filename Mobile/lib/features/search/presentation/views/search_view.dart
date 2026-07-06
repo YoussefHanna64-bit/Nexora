@@ -9,8 +9,8 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
-import 'package:nexora/features/product/presentation/manager/product_cubit.dart';
-import 'package:nexora/features/product/presentation/manager/product_state.dart';
+import 'package:nexora/features/product/presentation/manager/product/product_cubit.dart';
+import 'package:nexora/features/product/presentation/manager/product/product_state.dart';
 import 'package:nexora/features/search/presentation/widgets/filter.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
