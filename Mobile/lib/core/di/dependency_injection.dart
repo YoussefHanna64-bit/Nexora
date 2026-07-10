@@ -16,6 +16,7 @@ import 'package:nexora/features/auth/domain/usecases/register_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/reset_password_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/verify_otp_use_case.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
+import 'package:nexora/features/auth/presentation/manager/forgot_password/forgot_password_cubit.dart';
 import 'package:nexora/features/cart/data/repositories/api_cart_repo_impl.dart';
 import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
@@ -89,6 +90,14 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<ResetPasswordUseCase>(
     () => ResetPasswordUseCase(getIt<AuthRepo>()),
+  );
+
+  getIt.registerFactory<ForgotPasswordCubit>(
+    () => ForgotPasswordCubit(
+      forgotPasswordUseCase: getIt<ForgotPasswordUseCase>(),
+      verifyOTPUseCase: getIt<VerifyOTPUseCase>(),
+      resetPasswordUseCase: getIt<ResetPasswordUseCase>(),
+    ),
   );
 
   getIt.registerLazySingleton<CategoryRepo>(
