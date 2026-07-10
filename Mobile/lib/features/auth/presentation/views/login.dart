@@ -9,8 +9,8 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
-import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
-import 'package:nexora/features/auth/presentation/manager/auth_state.dart';
+import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
+import 'package:nexora/features/auth/presentation/manager/auth/auth_state.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 
 class Login extends StatefulWidget {

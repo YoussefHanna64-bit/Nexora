@@ -13,7 +13,7 @@ import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/features/profile/presentation/widgets/profile_image.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
-import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
+import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:nexora/features/profile/presentation/manager/profile_state.dart';

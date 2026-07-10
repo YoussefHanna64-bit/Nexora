@@ -10,9 +10,12 @@ import 'package:nexora/features/address/presentation/manager/address_cubit.dart'
 import 'package:nexora/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:nexora/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
+import 'package:nexora/features/auth/domain/usecases/forgot_password_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/login_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/register_use_case.dart';
-import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
+import 'package:nexora/features/auth/domain/usecases/reset_password_use_case.dart';
+import 'package:nexora/features/auth/domain/usecases/verify_otp_use_case.dart';
+import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
 import 'package:nexora/features/cart/data/repositories/api_cart_repo_impl.dart';
 import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
@@ -74,6 +77,18 @@ void setupGetIt() {
 
   getIt.registerFactory<AuthCubit>(
     () => AuthCubit(getIt<LoginUseCase>(), getIt<RegisterUseCase>()),
+  );
+
+  getIt.registerLazySingleton<ForgotPasswordUseCase>(
+    () => ForgotPasswordUseCase(getIt<AuthRepo>()),
+  );
+
+  getIt.registerLazySingleton<VerifyOTPUseCase>(
+    () => VerifyOTPUseCase(getIt<AuthRepo>()),
+  );
+
+  getIt.registerLazySingleton<ResetPasswordUseCase>(
+    () => ResetPasswordUseCase(getIt<AuthRepo>()),
   );
 
   getIt.registerLazySingleton<CategoryRepo>(

@@ -8,7 +8,7 @@ import 'package:nexora/core/localization/language_cubit.dart';
 import 'package:nexora/core/routers/app_router.dart';
 import 'package:nexora/core/theme/app_theme.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
-import 'package:nexora/features/auth/presentation/manager/auth_cubit.dart';
+import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';

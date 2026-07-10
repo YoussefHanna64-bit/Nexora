@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nexora/core/services/secure_storage.dart';
 import 'package:nexora/features/auth/domain/usecases/login_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/register_use_case.dart';
-import 'package:nexora/features/auth/presentation/manager/auth_state.dart';
+import 'package:nexora/features/auth/presentation/manager/auth/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final LoginUseCase loginUseCase;
