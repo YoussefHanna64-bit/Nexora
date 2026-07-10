@@ -57,4 +57,56 @@ class AuthRepoImpl implements AuthRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> forgotPassword(
+      {required String email}) async {
+    try {
+      final json = await remoteDataSource.forgotPassword(email);
+      return Right(json["message"]);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> verifyOTP(
+      {required String email, required String otp}) async {
+    try {
+      final json = await remoteDataSource.verifyOTP(email, otp);
+      return Right(json["resetToken"]);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> resetPassword(
+      {required String resetToken,
+      required String newPassword,
+      required String confirmPassword}) async {
+    try {
+      final json = await remoteDataSource.resetPassword(
+          resetToken, newPassword, confirmPassword);
+
+      final accessToken = json["accessToken"];
+      final refreshToken = json["refreshToken"];
+
+      await SecureStorage.saveToken(accessToken);
+      await SecureStorage.saveRefreshToken(refreshToken);
+
+      return Right(json["message"]);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

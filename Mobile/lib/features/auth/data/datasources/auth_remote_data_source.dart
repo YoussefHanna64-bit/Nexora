@@ -5,6 +5,10 @@ abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> login(String email, String password);
   Future<Map<String, dynamic>> register(
       String fullname, String email, String password, String passwordConfirm);
+  Future<Map<String, dynamic>> forgotPassword(String email);
+  Future<Map<String, dynamic>> verifyOTP(String email, String otp);
+  Future<Map<String, dynamic>> resetPassword(
+      String resetToken, String newPassword, String confirmPassword);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -34,6 +38,43 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         "email": email,
         "password": password,
         "passwordConfirm": passwordConfirm
+      },
+    );
+    return response.data;
+  }
+
+  @override
+  Future<Map<String, dynamic>> forgotPassword(String email) async {
+    final response = await apiService.post(
+      EndPoints.forgotPassword,
+      body: {
+        "email": email,
+      },
+    );
+    return response.data;
+  }
+
+  @override
+  Future<Map<String, dynamic>> verifyOTP(String email, String otp) async {
+    final response = await apiService.post(
+      EndPoints.verifyOTP,
+      body: {
+        "email": email,
+        "otp": otp,
+      },
+    );
+    return response.data;
+  }
+
+  @override
+  Future<Map<String, dynamic>> resetPassword(
+      String resetToken, String newPassword, String confirmPassword) async {
+    final response = await apiService.patch(
+      EndPoints.resetPassword,
+      body: {
+        "resetToken": resetToken,
+        "newPassword": newPassword,
+        "passwordConfirm": confirmPassword,
       },
     );
     return response.data;
