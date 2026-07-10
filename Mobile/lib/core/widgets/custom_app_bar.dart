@@ -6,9 +6,13 @@ import 'package:nexora/core/theme/text_styles.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
+  final VoidCallback? onBackPressed;
 
   const CustomAppBar(
-      {super.key, required this.title, this.showBackButton = false});
+      {super.key,
+      required this.title,
+      this.showBackButton = false,
+      this.onBackPressed});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -24,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: showBackButton
           ? IconButton(
               icon: Icon(AppIcons.arrowBack, color: onSurface, size: 20),
-              onPressed: () => context.pop(),
+              onPressed: onBackPressed ?? () => context.pop(),
             )
           : null,
       title: Text(

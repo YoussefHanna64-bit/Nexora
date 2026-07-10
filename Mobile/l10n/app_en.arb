@@ -211,5 +211,15 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "removeAddress": "Remove Address",
-  "removeAddressConfirmation": "Are you sure you want to remove this address?"
+  "removeAddressConfirmation": "Are you sure you want to remove this address?",
+  "resetPassword": "Reset Password",
+  "passwordResetSuccess": "Password reseted",
+  "enterRegisteredEmailInfo": "Enter your registered email. We will send you a 6-digit verification code",
+  "send": "Send",
+  "enterOtpInfo": "Enter the 6-digit code sent to your email",
+  "enterOtp": "Enter OTP",
+  "verify": "Verify",
+  "createNewPasswordInfo": "Create a new, secure password",
+  "otpRequired": "OTP is required",
+  "invalidOtp": "Invalid OTP"
 }

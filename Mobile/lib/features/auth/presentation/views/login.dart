@@ -119,7 +119,7 @@ class _LoginState extends State<Login> {
                             style: AppTextStyles.bold16Primary,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                context.go(Routes.register);
+                                context.push(Routes.forgotPassword);
                               }),
                       ),
                       SizedBox(

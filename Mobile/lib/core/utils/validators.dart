@@ -91,4 +91,17 @@ class Validators {
     }
     return null;
   }
+
+  static String? otp(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+
+    if (value == null || value.trim().isEmpty) {
+      return l10n.otpRequired;
+    }
+
+    if (!RegExp(r'^[0-9]{6}$').hasMatch(value.trim())) {
+      return l10n.invalidOtp;
+    }
+    return null;
+  }
 }

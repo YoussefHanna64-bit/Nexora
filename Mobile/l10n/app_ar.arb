@@ -204,5 +204,15 @@
   "cancel": "إلغاء",
   "delete": "حذف",
   "removeAddress": "إزالة العنوان",
-  "removeAddressConfirmation": "هل أنت متأكد أنك تريد إزالة هذا العنوان؟"
+  "removeAddressConfirmation": "هل أنت متأكد أنك تريد إزالة هذا العنوان؟",
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "passwordResetSuccess": "تمت إعادة تعيين كلمة المرور",
+  "enterRegisteredEmailInfo": "أدخل بريدك الإلكتروني المسجل. سنرسل لك رمز تحقق مكون من 6 أرقام",
+  "send": "إرسال",
+  "enterOtpInfo": "أدخل الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني",
+  "enterOtp": "أدخل رمز التحقق (OTP)",
+  "verify": "تحقق",
+  "createNewPasswordInfo": "قم بإنشاء كلمة مرور جديدة وآمنة",
+  "otpRequired": "رمز التحقق مطلوب",
+  "invalidOtp": "رمز التحقق غير صحيح"
 }

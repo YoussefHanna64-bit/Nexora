@@ -7,6 +7,8 @@ import 'package:nexora/core/services/secure_storage.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/address/presentation/views/add_edit_address_view.dart';
 import 'package:nexora/features/address/presentation/views/shipping_addresses_view.dart';
+import 'package:nexora/features/auth/presentation/manager/forgot_password/forgot_password_cubit.dart';
+import 'package:nexora/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:nexora/features/auth/presentation/views/login.dart';
 import 'package:nexora/features/auth/presentation/views/register.dart';
 import 'package:nexora/features/cart/presentation/views/cart_view.dart';
@@ -41,7 +43,8 @@ final GoRouter appRouter = GoRouter(
     final bool isLoggedIn = token != null;
 
     final bool isGoingToAuth = state.matchedLocation == Routes.login ||
-        state.matchedLocation == Routes.register;
+        state.matchedLocation == Routes.register ||
+        state.matchedLocation == Routes.forgotPassword;
 
     if (!isLoggedIn && !isGoingToAuth) {
       return Routes.login;
@@ -63,6 +66,16 @@ final GoRouter appRouter = GoRouter(
       path: Routes.register,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const Register(),
+    ),
+    GoRoute(
+      path: Routes.forgotPassword,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        return BlocProvider(
+          create: (context) => getIt<ForgotPasswordCubit>(),
+          child: const ForgotPasswordView(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.search,
