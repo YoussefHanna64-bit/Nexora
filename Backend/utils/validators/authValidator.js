@@ -62,3 +62,55 @@ export const refreshTokenValidator = [
 
   validatorMiddleware,
 ];
+
+export const forgotPasswordValidator = [
+  check("email")
+    .notEmpty()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Invalid email format"),
+
+  validatorMiddleware,
+];
+
+export const verifyOTPValidator = [
+  check("email")
+    .notEmpty()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Invalid email format"),
+
+  check("otp")
+    .notEmpty()
+    .withMessage("OTP is required")
+    .isLength({ min: 6, max: 6 })
+    .withMessage("OTP must be 6 digits"),
+
+  validatorMiddleware,
+];
+
+export const resetPasswordValidator = [
+  check("resetToken")
+    .notEmpty()
+    .withMessage("Reset token is required")
+    .isString()
+    .withMessage("Reset token must be a valid string"),
+
+  check("newPassword")
+    .notEmpty()
+    .withMessage("New password is required")
+    .isLength({ min: 8 })
+    .withMessage("New password must be at least 8 characters"),
+
+  check("passwordConfirm")
+    .notEmpty()
+    .withMessage("Password confirmation is required")
+    .custom((val, { req }) => {
+      if (val !== req.body.newPassword) {
+        throw new Error("Passwords don't match");
+      }
+      return true;
+    }),
+
+  validatorMiddleware,
+];

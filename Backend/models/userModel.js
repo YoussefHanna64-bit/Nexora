@@ -65,6 +65,12 @@ const userSchema = new mongoose.Schema(
     passwordConfirm: {
       type: String,
     },
+    passwordResetOTP: {
+      type: String,
+    },
+    passwordResetExpiresAt: {
+      type: Date,
+    },
     refreshToken: {
       type: String,
       select: false,

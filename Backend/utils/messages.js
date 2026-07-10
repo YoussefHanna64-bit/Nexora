@@ -43,13 +43,20 @@ export const PROFILE_UPDATED = "Profile updated";
 export const INCORRECT_CURRENT_PASSWORD =
   "The current password you entered is incorrect";
 export const PASSWORD_UPDATED = "Password updated";
+export const PASSWORD_RESETED = "Password reseted";
 export const ACCOUNT_DELETE_PERMISSION =
   "You don't have permission to delete this account";
 export const ACCOUNT_DELETED = "Account deleted";
 export const JWT_EXPIRED = "jwt expired";
 export const INVALID_TOKEN = "Invalid token. Please log in again";
+export const UNAUTHORIZED_REFRESH_TOKEN = "Unauthorized: Refresh token is missing";
 export const INVALID_EXPIRED_REFRESH_TOKEN = "Invalid or expired refresh token. Please log in again";
 export const INVALID_REFRESH_TOKEN = "Invalid refresh token";
+export const RESET_CODE_SENT = "Reset code sent to email";
+export const EMAIL_SENDING_ERROR = "There was an error sending the email. Please try again later";
+export const INVALID_RESET_CODE = "Reset code is invalid or has expired";
+export const UNAUTHORIZED_RESET_TOKEN = "Unauthorized: Reset token is missing";
+export const INVALID_EXPIRED_RESET_TOKEN = "Invalid or expired Reset token is invalid or has expired. Please request a new OTP";
 export const ADDRESS_ADDED = "Address added";
 export const ADDRESS_NOT_FOUND = "No address found with that ID";
 export const ADDRESS_UPDATED = "Address updated";
