@@ -1,5 +1,8 @@
 import { check } from "express-validator";
 import validatorMiddleware from "../../middleware/validatorMiddleware.js";
+import Product from "../../models/productModel.js";
+import { PRODUCT_NOT_FOUND } from "../messages.js";
+import mongoose from "mongoose";
 
 export const createBannerValidator = [
   check("title")
@@ -22,7 +25,21 @@ export const createBannerValidator = [
 
   check("target")
     .notEmpty()
-    .withMessage("Banner target is required productId or search keyword"),
+    .withMessage("Banner target is required productId or search keyword")
+    .custom(async (val, { req }) => {
+      if (req.body.type === "product") {
+        if (!mongoose.Types.ObjectId.isValid(val)) {
+          throw new Error(
+            "Banner target must be a valid MongoDB ID when type is product",
+          );
+        }
+        const product = await Product.findById(val);
+        if (!product) {
+          throw new Error(PRODUCT_NOT_FOUND);
+        }
+      }
+      return true;
+    }),
 
   check("isActive")
     .optional()
@@ -51,7 +68,21 @@ export const updateBannerValidator = [
   check("target")
     .optional()
     .notEmpty()
-    .withMessage("Banner target can't be empty"),
+    .withMessage("Banner target is required productId or search keyword")
+    .custom(async (val, { req }) => {
+      if (req.body.type === "product") {
+        if (!mongoose.Types.ObjectId.isValid(val)) {
+          throw new Error(
+            "Banner target must be a valid MongoDB ID when type is product",
+          );
+        }
+        const product = await Product.findById(val);
+        if (!product) {
+          throw new Error(PRODUCT_NOT_FOUND);
+        }
+      }
+      return true;
+    }),
 
   check("isActive")
     .optional()
