@@ -49,6 +49,9 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    profileImage: {
+      type: String,
+    },
     wishlist: [
       {
         type: mongoose.Schema.Types.ObjectId,

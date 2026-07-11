@@ -62,3 +62,8 @@ export const ADDRESS_ADDED = "Address added";
 export const ADDRESS_NOT_FOUND = "No address found with that ID";
 export const ADDRESS_UPDATED = "Address updated";
 export const ADDRESS_DELETED = "Address deleted";
+
+export const INVALID_IMAGE = "Please upload only images";
+export const NO_IMAGE_PROVIDED = "No image provided. Please upload an image";
+export const PROFILE_PICTURE_UPDATED = "Profile picture updated";
+export const CLOUDINARY_UPLOAD_ERROR = "Error uploading image to Cloudinary";

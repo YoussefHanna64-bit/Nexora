@@ -15,9 +15,11 @@ import cartRoute from "./routes/cartRoute.js";
 import wishlistRoute from "./routes/wishlistRoute.js";
 import orderRoute from "./routes/orderRoute.js";
 import paymentRoute from "./routes/paymentRoute.js";
+import { connectCloudinary } from "./config/cloudinaryConfig.js";
 
 dotenv.config();
 connectDB();
+connectCloudinary();
 const app = express();
 
 app.set("query parser", "extended");

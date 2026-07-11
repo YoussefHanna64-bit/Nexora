@@ -8,6 +8,7 @@ import {
   getUserById,
   updatePassword,
   updateUser,
+  uploadProfilePicture,
 } from "../controllers/userController.js";
 import { validateMongoId } from "../utils/validators/idValidator.js";
 import {
@@ -24,6 +25,7 @@ import {
   getAddresses,
   updateAddress,
 } from "../controllers/addressController.js";
+import { uploadProfileImage } from "../middleware/uploadMiddleware.js";
 
 const router = express.Router();
 
@@ -43,6 +45,13 @@ router.patch(
   authorize("user", "admin"),
   updatePasswordValidator,
   updatePassword,
+);
+
+router.patch(
+  "/profilePicture",
+  authorize("user", "admin"),
+  uploadProfileImage,
+  uploadProfilePicture,
 );
 
 router.get("/addresses", authorize("user", "admin"), getAddresses);

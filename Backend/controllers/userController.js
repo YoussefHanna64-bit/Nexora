@@ -5,13 +5,18 @@ import httpStatus from "../utils/httpStatus.js";
 import {
   ACCOUNT_DELETE_PERMISSION,
   ACCOUNT_DELETED,
+  CLOUDINARY_UPLOAD_ERROR,
   INCORRECT_CURRENT_PASSWORD,
+  NO_IMAGE_PROVIDED,
   PASSWORD_UPDATED,
+  PROFILE_PICTURE_UPDATED,
   PROFILE_UPDATED,
   USER_NOT_FOUND,
 } from "../utils/messages.js";
 import AppError from "../utils/AppError.js";
 import { generateAccessToken, generateRefreshToken } from "./authController.js";
+import streamifier from "streamifier";
+import { v2 as cloudinary } from "cloudinary";
 
 export const getUser = asyncWrapper(async (req, res, next) => {
   const user = await User.findById(req.user.id);
@@ -120,6 +125,59 @@ export const updatePassword = asyncWrapper(async (req, res, next) => {
     accessToken,
     refreshToken,
     data: null,
+  });
+});
+
+export const uploadProfilePicture = asyncWrapper(async (req, res, next) => {
+  if (!req.file) {
+    return next(new AppError(NO_IMAGE_PROVIDED, 400));
+  }
+
+  const uploadStream = (req) => {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "NexoraPFPs",
+          gravity: "face",
+          crop: "fill",
+          width: 400,
+          height: 400,
+        },
+        (error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
+        },
+      );
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+  };
+
+  let result;
+  try {
+    result = await uploadStream(req);
+  } catch (error) {
+    return next(new AppError(CLOUDINARY_UPLOAD_ERROR, 500));
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { profileImage: result.secure_url },
+    {
+      returnDocument: "after",
+      runValidators: true,
+    },
+  );
+
+  res.status(200).json({
+    success: true,
+    status: httpStatus.SUCCESS,
+    message: PROFILE_PICTURE_UPDATED,
+    data: {
+      user: updatedUser,
+    },
   });
 });
 
