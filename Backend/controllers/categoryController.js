@@ -5,7 +5,7 @@ import AppError from "../utils/AppError.js";
 import { CATEGORY_NOT_FOUND } from "../utils/messages.js";
 
 export const createCategory = asyncWrapper(async (req, res, next) => {
-  const category = await Category.create({ ...req.body });
+  const category = await Category.create(req.body);
 
   res.status(201).json({
     success: true,

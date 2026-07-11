@@ -7,7 +7,7 @@ import ApiFeatures from "../utils/ApiFeatures.js";
 import { PRODUCT_NOT_FOUND } from "../utils/messages.js";
 
 export const createProduct = asyncWrapper(async (req, res, next) => {
-  const product = await Product.create({ ...req.body });
+  const product = await Product.create(req.body);
 
   res.status(201).json({
     success: true,
