@@ -16,7 +16,7 @@ class BannerRepoImpl implements BannerRepo {
     try {
       final json = await remoteDataSource.getActiveBanners();
 
-      final List<BannerModel> banners = (json["data"]["addresses"] as List)
+      final List<BannerModel> banners = (json["data"]["banners"] as List)
           .map((b) => BannerModel.fromJson(b as Map<String, dynamic>))
           .toList();
 

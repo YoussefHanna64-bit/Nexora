@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/models/category_model.dart';
 import 'package:nexora/core/routers/routes.dart';
+import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/widgets/category_card.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
 import 'package:nexora/features/category/presentation/manager/category_state.dart';
@@ -20,7 +21,7 @@ class CategoryList extends StatelessWidget {
           child: Center(
             child: Text(
               state.message,
-              style: const TextStyle(color: Colors.red),
+              style: const TextStyle(color: AppColors.redColor),
             ),
           ),
         );

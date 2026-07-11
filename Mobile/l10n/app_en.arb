@@ -221,5 +221,7 @@
   "verify": "Verify",
   "createNewPasswordInfo": "Create a new, secure password",
   "otpRequired": "OTP is required",
-  "invalidOtp": "Invalid OTP"
+  "invalidOtp": "Invalid OTP",
+  "imageUnavailable": "Image unavailable",
+  "failedToLoadBanners": "Failed to load banners"
 }

@@ -9,6 +9,7 @@ import 'package:nexora/core/routers/app_router.dart';
 import 'package:nexora/core/theme/app_theme.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
+import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
@@ -35,6 +36,7 @@ void main() async {
       BlocProvider<CategoryCubit>(
           create: (context) =>
               CategoryCubit(getIt<CategoryRepo>())..fetchCategories()),
+      BlocProvider<BannerCubit>(create: (context) => getIt<BannerCubit>()),
       BlocProvider<CartCubit>(create: (context) => getIt<CartCubit>()),
       BlocProvider<WishlistCubit>(create: (context) => getIt<WishlistCubit>()),
       BlocProvider<ProfileCubit>(create: (context) => getIt<ProfileCubit>()),

@@ -10,9 +10,12 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
+import 'package:nexora/features/banner/presentation/manager/banner_state.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/home/presentation/widgets/category_list.dart';
+import 'package:nexora/features/home/presentation/widgets/home_banners.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_cubit.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_state.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
@@ -48,6 +51,11 @@ class _HomeViewState extends State<HomeView> {
       if (wishlistState is WishlistInitial || wishlistState is WishlistError) {
         context.read<WishlistCubit>().fetchWishlist();
       }
+
+      final bannerState = context.read<BannerCubit>().state;
+      if (bannerState is BannerInitial || bannerState is BannerError) {
+        context.read<BannerCubit>().fetchBanners();
+      }
     });
   }
 
@@ -79,17 +87,7 @@ class _HomeViewState extends State<HomeView> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: h * 0.22,
-                        child: CarouselView(itemExtent: w * 0.8, children: [
-                          Image.network('https://picsum.photos/id/20/800/400',
-                              fit: BoxFit.cover),
-                          Image.network('https://i.imgur.com/Qphac99.jpeg',
-                              fit: BoxFit.cover),
-                          Image.network('https://picsum.photos/id/60/800/400',
-                              fit: BoxFit.cover),
-                        ]),
-                      ),
+                      SizedBox(height: h * 0.22, child: HomeBanners()),
                       SizedBox(
                         height: h * 0.02,
                       ),

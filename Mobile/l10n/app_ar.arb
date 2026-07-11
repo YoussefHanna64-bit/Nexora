@@ -214,5 +214,7 @@
   "verify": "تحقق",
   "createNewPasswordInfo": "قم بإنشاء كلمة مرور جديدة وآمنة",
   "otpRequired": "رمز التحقق مطلوب",
-  "invalidOtp": "رمز التحقق غير صحيح"
+  "invalidOtp": "رمز التحقق غير صحيح",
+  "imageUnavailable": "الصورة غير متاحة",
+  "failedToLoadBanners": "فشل في تحميل البنرات"
 }
