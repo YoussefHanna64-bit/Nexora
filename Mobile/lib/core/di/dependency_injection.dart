@@ -20,6 +20,8 @@ import 'package:nexora/features/auth/presentation/manager/forgot_password/forgot
 import 'package:nexora/features/banner/data/datasources/banner_remote_data_source.dart';
 import 'package:nexora/features/banner/data/repositories/banner_repo_impl.dart';
 import 'package:nexora/features/banner/domain/repositories/banner_repo.dart';
+import 'package:nexora/features/banner/domain/usecases/get_active_banners_use_case.dart';
+import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
 import 'package:nexora/features/cart/data/repositories/api_cart_repo_impl.dart';
 import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
@@ -145,6 +147,14 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<BannerRepo>(
     () => BannerRepoImpl(getIt<BannerRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetActiveBannersUseCase>(
+    () => GetActiveBannersUseCase(getIt<BannerRepo>()),
+  );
+
+  getIt.registerFactory<BannerCubit>(
+    () => BannerCubit(getIt<GetActiveBannersUseCase>()),
   );
 
   getIt.registerLazySingleton<CartRepo>(
