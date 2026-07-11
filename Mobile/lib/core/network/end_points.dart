@@ -7,6 +7,7 @@ class EndPoints {
   static const String verifyOTP = "/auth/verifyOTP";
   static const String resetPassword = "/auth/resetPassword";
   static const String products = "/products";
+  static const String activeBanners = "/banners/active";
   static const String categories = "/categories";
   static const String cart = "/cart";
   static const String wishlist = "/wishlist";
