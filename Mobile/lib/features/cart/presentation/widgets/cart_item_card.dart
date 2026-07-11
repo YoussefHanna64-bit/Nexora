@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
@@ -52,11 +53,17 @@ class CartItemCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    product.thumbnail,
+                  child: CachedNetworkImage(
+                    imageUrl: product.thumbnail,
                     height: 80,
                     width: 80,
                     fit: BoxFit.cover,
+                    errorWidget: (context, url, error) => Container(
+                      color:
+                          Theme.of(context).colorScheme.surfaceContainerHighest,
+                      child: const Icon(AppIcons.brokenImage,
+                          color: AppColors.greyColor),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),

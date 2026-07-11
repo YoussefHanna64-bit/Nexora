@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nexora/core/theme/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nexora/core/theme/text_styles.dart';
 
 class ProductImageCarousel extends StatefulWidget {
   final List<String> images;
@@ -14,6 +17,8 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -25,10 +30,20 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
             });
           },
           itemBuilder: (context, index) {
-            return Image.network(
-              widget.images[index],
+            return CachedNetworkImage(
+              imageUrl: widget.images[index],
               fit: BoxFit.contain,
               width: double.infinity,
+              errorWidget: (context, url, error) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.broken_image,
+                      size: 48, color: AppColors.greyColor),
+                  const SizedBox(height: 8),
+                  Text(l10n.imageUnavailable,
+                      style: AppTextStyles.regular12Grey),
+                ],
+              ),
             );
           },
         ),

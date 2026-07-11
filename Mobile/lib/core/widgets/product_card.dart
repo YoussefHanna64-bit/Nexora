@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
@@ -40,54 +41,62 @@ class ProductCard extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
             flex: 5,
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: imageUrl,
                   fit: BoxFit.contain,
+                  errorWidget: (context, url, error) => const Icon(
+                    AppIcons.brokenImage,
+                    size: 32,
+                    color: AppColors.greyColor,
+                  ),
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (discount != null)
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppColors.redColor,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            '-${discount!.toInt()}%',
-                            style: AppTextStyles.bold10White,
-                          ),
-                        )
-                      else
-                        const SizedBox(),
-                      GestureDetector(
-                        onTap: onFavoriteTap,
-                        child: CircleAvatar(
-                          radius: 14,
-                          backgroundColor: AppColors.whiteColor,
-                          child: Icon(
-                              isFavorite
-                                  ? AppIcons.favorites
-                                  : AppIcons.favoritesBorder,
-                              size: 16,
-                              color: isFavorite
-                                  ? AppColors.redColor
-                                  : AppColors.greyColor),
-                        ),
-                      )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (discount != null)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.redColor,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                '-${discount!.toInt()}%',
+                                style: AppTextStyles.bold10White,
+                              ),
+                            )
+                          else
+                            const SizedBox(),
+                          GestureDetector(
+                            onTap: onFavoriteTap,
+                            child: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: AppColors.whiteColor,
+                              child: Icon(
+                                  isFavorite
+                                      ? AppIcons.favorites
+                                      : AppIcons.favoritesBorder,
+                                  size: 16,
+                                  color: isFavorite
+                                      ? AppColors.redColor
+                                      : AppColors.greyColor),
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Expanded(

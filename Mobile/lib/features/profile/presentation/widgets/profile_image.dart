@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
 
 class ProfileImage extends StatelessWidget {
@@ -22,10 +24,24 @@ class ProfileImage extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomRight,
         children: [
-          CircleAvatar(
-            radius: radius,
-            backgroundColor: AppColors.primary.withAlpha(25),
-            backgroundImage: NetworkImage(imageUrl),
+          Container(
+            width: radius * 2,
+            height: radius * 2,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.primary.withAlpha(25),
+            ),
+            child: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) => Icon(
+                  AppIcons.profile,
+                  size: radius,
+                  color: AppColors.primary.withAlpha(100),
+                ),
+              ),
+            ),
           ),
           Container(
             padding: const EdgeInsets.all(4),
