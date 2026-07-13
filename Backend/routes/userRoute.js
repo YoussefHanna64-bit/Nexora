@@ -48,7 +48,7 @@ router.patch(
 );
 
 router.patch(
-  "/profilePicture",
+  "/uploadProfilePicture",
   authorize("user", "admin"),
   uploadProfileImage,
   uploadProfilePicture,

@@ -5,6 +5,7 @@ class User {
   final String fullname;
   final String email;
   final String role;
+  final String? profileImage;
   final List<ShippingAddress> addresses;
 
   User({
@@ -12,6 +13,7 @@ class User {
     required this.fullname,
     required this.email,
     required this.role,
+    this.profileImage,
     required this.addresses,
   });
 }

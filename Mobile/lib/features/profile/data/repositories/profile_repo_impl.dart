@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:nexora/core/errors/failure.dart';
@@ -68,6 +70,20 @@ class ProfileRepoImpl implements ProfileRepo {
       await SecureStorage.saveRefreshToken(refreshToken);
 
       return Right(json["message"]);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> uploadProfilePicture(File image) async {
+    try {
+      final json = await remoteDataSource.uploadProfilePicture(image);
+
+      return Right(UserModel.fromJson(json["data"]["user"]));
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));

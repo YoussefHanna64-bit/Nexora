@@ -7,6 +7,7 @@ class UserModel extends User {
     required super.fullname,
     required super.email,
     required super.role,
+    super.profileImage,
     required super.addresses,
   });
 
@@ -16,6 +17,7 @@ class UserModel extends User {
       fullname: json["fullname"] ?? "",
       email: json["email"] ?? "",
       role: json["role"] ?? "user",
+      profileImage: json["profileImage"],
       addresses: json["addresses"] != null
           ? (json["addresses"] as List)
               .map((addr) => ShippingAddressModel.fromJson(addr))
@@ -30,6 +32,7 @@ class UserModel extends User {
       fullname: entity.fullname,
       email: entity.email,
       role: entity.role,
+      profileImage: entity.profileImage,
       addresses: entity.addresses,
     );
   }
@@ -40,6 +43,7 @@ class UserModel extends User {
       "fullname": fullname,
       "email": email,
       "role": role,
+      "profileImage": profileImage,
       "addresses": addresses.map((addr) {
         if (addr is ShippingAddressModel) {
           return addr.toJson();

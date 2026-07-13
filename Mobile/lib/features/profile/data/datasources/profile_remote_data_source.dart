@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
 
@@ -5,6 +7,7 @@ abstract class ProfileRemoteDataSource {
   Future<Map<String, dynamic>> getUserProfile();
   Future<Map<String, dynamic>> updateProfile(Map<String, dynamic> data);
   Future<Map<String, dynamic>> updatePassword(Map<String, dynamic> data);
+  Future<Map<String, dynamic>> uploadProfilePicture(File image);
   Future<Map<String, dynamic>> deleteAccount();
 }
 
@@ -29,6 +32,23 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   Future<Map<String, dynamic>> updatePassword(Map<String, dynamic> data) async {
     final response =
         await apiService.patch(EndPoints.updatePassword, body: data);
+    return response.data;
+  }
+
+  @override
+  Future<Map<String, dynamic>> uploadProfilePicture(File image) async {
+    FormData formData = FormData.fromMap({
+      "profileImage": await MultipartFile.fromFile(
+        image.path,
+        filename: image.path.split("/").last,
+      ),
+    });
+
+    final response = await apiService.post(
+      EndPoints.uploadProfilePicture,
+      body: formData,
+    );
+
     return response.data;
   }
 
