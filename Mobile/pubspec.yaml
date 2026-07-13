@@ -51,6 +51,7 @@ dependencies:
   flutter_stripe: ^11.5.0
   envied: ^1.2.1
   carousel_slider: ^5.1.2
+  image_picker: ^1.2.0
   
 dev_dependencies:
   flutter_test:

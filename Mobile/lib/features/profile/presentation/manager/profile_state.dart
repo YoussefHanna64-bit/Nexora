@@ -8,6 +8,8 @@ class ProfileLoading extends ProfileState {}
 
 class ProfileUpdating extends ProfileState {}
 
+class ProfileImageUploading extends ProfileState {}
+
 class AccountDeleting extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {

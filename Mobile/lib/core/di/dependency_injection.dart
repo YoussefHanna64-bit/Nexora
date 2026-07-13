@@ -51,6 +51,7 @@ import 'package:nexora/features/address/domain/usecases/remove_address_use_case.
 import 'package:nexora/features/address/domain/usecases/update_address_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/update_password_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/update_profile_use_case.dart';
+import 'package:nexora/features/profile/domain/usecases/upload_profile_picture_use_case.dart';
 import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:nexora/features/wishlist/data/repositories/api_wishlist_repo_impl.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
@@ -242,6 +243,10 @@ void setupGetIt() {
     () => UpdatePasswordUseCase(getIt<ProfileRepo>()),
   );
 
+  getIt.registerLazySingleton<UploadProfilePictureUseCase>(
+    () => UploadProfilePictureUseCase(getIt<ProfileRepo>()),
+  );
+
   getIt.registerLazySingleton<DeleteAccountUseCase>(
     () => DeleteAccountUseCase(getIt<ProfileRepo>()),
   );
@@ -251,6 +256,7 @@ void setupGetIt() {
       getIt<GetUserProfileUseCase>(),
       getIt<UpdateProfileUseCase>(),
       getIt<UpdatePasswordUseCase>(),
+      getIt<UploadProfilePictureUseCase>(),
       getIt<DeleteAccountUseCase>(),
     ),
   );
