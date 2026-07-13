@@ -4,14 +4,14 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
 
 class ProfileImage extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final IconData icon;
   final VoidCallback onTap;
   final double radius;
 
   const ProfileImage({
     super.key,
-    required this.imageUrl,
+    this.imageUrl,
     required this.icon,
     required this.onTap,
     this.radius = 50,
@@ -32,15 +32,23 @@ class ProfileImage extends StatelessWidget {
               color: AppColors.primary.withAlpha(25),
             ),
             child: ClipOval(
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) => Icon(
-                  AppIcons.profile,
-                  size: radius,
-                  color: AppColors.primary.withAlpha(100),
-                ),
-              ),
+              child: (imageUrl == null || imageUrl!.isEmpty)
+                  ? Center(
+                      child: Icon(
+                        AppIcons.profile,
+                        size: radius,
+                        color: AppColors.primary.withAlpha(100),
+                      ),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: imageUrl!,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => Icon(
+                        AppIcons.profile,
+                        size: radius,
+                        color: AppColors.primary.withAlpha(100),
+                      ),
+                    ),
             ),
           ),
           Container(

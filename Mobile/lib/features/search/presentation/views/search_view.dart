@@ -125,8 +125,8 @@ class _SearchViewState extends State<SearchView> {
                     final Map<String, dynamic>? filters =
                         await showModalBottomSheet(
                       context: context,
+                      showDragHandle: true,
                       isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
                       builder: (context) {
                         return Filter(
                           initialPriceRange: savedPriceRange,

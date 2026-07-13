@@ -216,5 +216,8 @@
   "otpRequired": "رمز التحقق مطلوب",
   "invalidOtp": "رمز التحقق غير صحيح",
   "imageUnavailable": "الصورة غير متاحة",
-  "failedToLoadBanners": "فشل في تحميل البنرات"
+  "failedToLoadBanners": "فشل في تحميل البنرات",
+  "chooseFromGallery": "اختيار من المعرض",
+  "takeAPhoto": "التقاط صورة",
+  "imagePickingError": "حدث خطأ غير متوقع أثناء اختيار الصورة"
 }

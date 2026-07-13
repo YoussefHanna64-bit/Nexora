@@ -6,6 +6,7 @@ class ProfileHeader extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
+  final String? imageUrl;
   final Color? subtitleColor;
   final VoidCallback onTap;
   final Widget? extraWidget;
@@ -15,6 +16,7 @@ class ProfileHeader extends StatelessWidget {
       required this.icon,
       required this.title,
       required this.subtitle,
+      this.imageUrl,
       this.subtitleColor,
       required this.onTap,
       this.extraWidget});
@@ -27,8 +29,7 @@ class ProfileHeader extends StatelessWidget {
       children: [
         ProfileImage(
           icon: icon,
-          imageUrl:
-              "https://avatarfiles.alphacoders.com/823/thumb-1920-82313.jpg",
+          imageUrl: imageUrl,
           onTap: onTap,
         ),
         const SizedBox(height: 16),

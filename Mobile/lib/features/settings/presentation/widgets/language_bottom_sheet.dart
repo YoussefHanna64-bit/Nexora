@@ -14,6 +14,8 @@ class LanguageBottomSheet extends StatelessWidget {
     final onSurface = Theme.of(context).colorScheme.onSurface;
     final surface = Theme.of(context).colorScheme.surface;
     final divider = Theme.of(context).dividerColor;
+    final isEngSelected = currentLang == "en";
+    final isArSelected = currentLang == "ar";
 
     return SafeArea(
       child: Column(
@@ -23,23 +25,27 @@ class LanguageBottomSheet extends StatelessWidget {
             leading: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: surface,
+                color:
+                    isEngSelected ? AppColors.primary.withAlpha(30) : surface,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: divider),
+                border: Border.all(
+                    color: isEngSelected ? AppColors.primary : divider),
               ),
               child: Text(
-                'EN',
-                style: AppTextStyles.bold12Black.copyWith(
-                  color: onSurface.withAlpha(180),
-                ),
+                "EN",
+                style: isEngSelected
+                    ? AppTextStyles.bold12Primary
+                    : AppTextStyles.bold12Black.copyWith(
+                        color: onSurface.withAlpha(180),
+                      ),
               ),
             ),
-            title: const Text('English'),
-            trailing: currentLang == 'en'
+            title: const Text("English"),
+            trailing: isEngSelected
                 ? const Icon(AppIcons.check, color: AppColors.primary)
                 : null,
             onTap: () {
-              context.read<LanguageCubit>().changeLanguage('en');
+              context.read<LanguageCubit>().changeLanguage("en");
               Navigator.pop(context);
             },
           ),
@@ -47,23 +53,26 @@ class LanguageBottomSheet extends StatelessWidget {
             leading: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: surface,
+                color: isArSelected ? AppColors.primary.withAlpha(30) : surface,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: divider),
+                border: Border.all(
+                    color: isArSelected ? AppColors.primary : divider),
               ),
               child: Text(
-                'AR',
-                style: AppTextStyles.bold12Black.copyWith(
-                  color: onSurface.withAlpha(180),
-                ),
+                "AR",
+                style: isArSelected
+                    ? AppTextStyles.bold12Primary
+                    : AppTextStyles.bold12Black.copyWith(
+                        color: onSurface.withAlpha(180),
+                      ),
               ),
             ),
-            title: const Text('العربية'),
-            trailing: currentLang == 'ar'
+            title: const Text("العربية"),
+            trailing: isArSelected
                 ? const Icon(AppIcons.check, color: AppColors.primary)
                 : null,
             onTap: () {
-              context.read<LanguageCubit>().changeLanguage('ar');
+              context.read<LanguageCubit>().changeLanguage("ar");
               Navigator.pop(context);
             },
           ),

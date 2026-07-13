@@ -223,5 +223,8 @@
   "otpRequired": "OTP is required",
   "invalidOtp": "Invalid OTP",
   "imageUnavailable": "Image unavailable",
-  "failedToLoadBanners": "Failed to load banners"
+  "failedToLoadBanners": "Failed to load banners",
+  "chooseFromGallery": "Choose from Gallery",
+  "takeAPhoto": "Take a Photo",
+  "imagePickingError": "An unexpected error occurred while picking the image"
 }

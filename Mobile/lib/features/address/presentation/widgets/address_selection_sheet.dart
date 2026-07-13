@@ -4,7 +4,6 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
-import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
@@ -29,90 +28,83 @@ class AddressSelectionSheet extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
-    return CustomBottomSheetContainer(
-      child: FractionallySizedBox(
-        heightFactor: 0.6,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(l10n.selectShippingAddress,
-                    style:
-                        AppTextStyles.bold18Black.copyWith(color: onSurface)),
-                IconButton(
-                  icon: Icon(AppIcons.close),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: BlocBuilder<AddressCubit, AddressState>(
-                builder: (context, state) {
-                  if (state is AddressError) {
-                    return CustomErrorWidget(
-                      message: state.message,
-                      onRetry: () {
-                        context.read<AddressCubit>().fetchAddresses();
-                      },
-                    );
-                  }
-
-                  if (state is AddressLoaded) {
-                    if (state.addresses.isEmpty) {
-                      return EmptyAddressState(
-                        onAddPressed: () {
-                          Navigator.pop(context);
-                          onAddNewAddress();
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: FractionallySizedBox(
+          heightFactor: 0.6,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.selectShippingAddress,
+                  style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
+              const SizedBox(height: 16),
+              Expanded(
+                child: BlocBuilder<AddressCubit, AddressState>(
+                  builder: (context, state) {
+                    if (state is AddressError) {
+                      return CustomErrorWidget(
+                        message: state.message,
+                        onRetry: () {
+                          context.read<AddressCubit>().fetchAddresses();
                         },
                       );
                     }
 
-                    return Column(
-                      children: [
-                        Expanded(
-                          child: ListView.separated(
-                            itemCount: state.addresses.length,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemBuilder: (context, index) {
-                              final address = state.addresses[index];
-                              final isSelected =
-                                  currentSelectedAddress?.id == address.id;
+                    if (state is AddressLoaded) {
+                      if (state.addresses.isEmpty) {
+                        return EmptyAddressState(
+                          onAddPressed: () {
+                            Navigator.pop(context);
+                            onAddNewAddress();
+                          },
+                        );
+                      }
 
-                              return ShippingAddressCard(
-                                address: address,
-                                onTap: () {
-                                  onAddressSelected(address);
-                                  Navigator.pop(context);
-                                },
-                                trailing: isSelected
-                                    ? const Icon(AppIcons.checkCircle,
-                                        color: AppColors.primary)
-                                    : null,
-                              );
-                            },
+                      return Column(
+                        children: [
+                          Expanded(
+                            child: ListView.separated(
+                              itemCount: state.addresses.length,
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 12),
+                              itemBuilder: (context, index) {
+                                final address = state.addresses[index];
+                                final isSelected =
+                                    currentSelectedAddress?.id == address.id;
+
+                                return ShippingAddressCard(
+                                  address: address,
+                                  onTap: () {
+                                    onAddressSelected(address);
+                                    Navigator.pop(context);
+                                  },
+                                  trailing: isSelected
+                                      ? const Icon(AppIcons.checkCircle,
+                                          color: AppColors.primary)
+                                      : null,
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        CustomPrimaryButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              onAddNewAddress();
-                            },
-                            isOutlined: true,
-                            icon: AppIcons.add,
-                            buttonText: l10n.addAddress),
-                      ],
-                    );
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
+                          const SizedBox(height: 16),
+                          CustomPrimaryButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                onAddNewAddress();
+                              },
+                              isOutlined: true,
+                              icon: AppIcons.add,
+                              buttonText: l10n.addAddress),
+                        ],
+                      );
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

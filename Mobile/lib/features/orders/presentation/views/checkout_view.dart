@@ -59,7 +59,7 @@ class _CheckoutViewState extends State<CheckoutView> {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        backgroundColor: Colors.transparent,
+        showDragHandle: true,
         builder: (context) {
           return AddressSelectionSheet(
             currentSelectedAddress: selectedAddress,

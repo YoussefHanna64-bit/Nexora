@@ -53,6 +53,7 @@ class _SettingsViewState extends State<SettingsView> {
                   : 'English',
               onTap: () {
                 showModalBottomSheet(
+                    showDragHandle: true,
                     context: context,
                     builder: (context) => const LanguageBottomSheet());
               },

@@ -21,6 +21,8 @@ class AppIcons {
   static const IconData deleteOutlined = Icons.delete_outline;
   static const IconData edit = Icons.edit;
   static const IconData editOutlined = Icons.edit_outlined;
+  static const IconData camera = Icons.camera_alt;
+  static const IconData photoLibrary = Icons.photo_library;
   static const IconData locationOnOutlined = Icons.location_on_outlined;
   static const IconData locationOffOutlined = Icons.location_off_outlined;
   static const IconData locationOff = Icons.location_off;

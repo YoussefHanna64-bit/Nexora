@@ -11,6 +11,7 @@ import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
+import 'package:nexora/features/profile/presentation/widgets/image_picker_bottom_sheet.dart';
 import 'package:nexora/features/profile/presentation/widgets/profile_image.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
@@ -78,6 +79,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         }, builder: (context, state) {
           final isLoading = state is ProfileLoading || state is ProfileInitial;
           final isUpdating = state is ProfileUpdating;
+          final user = state is ProfileLoaded ? state.user : null;
 
           return Skeletonizer(
             enabled: isLoading,
@@ -92,11 +94,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                               horizontal: 16, vertical: 12),
                           child: Column(children: [
                             ProfileImage(
-                              icon: AppIcons.editOutlined,
-                              imageUrl:
-                                  'https://avatarfiles.alphacoders.com/823/thumb-1920-82313.jpg',
+                              icon: AppIcons.camera,
+                              imageUrl: user?.profileImage ?? "",
                               radius: 54,
-                              onTap: () {},
+                              onTap: () {
+                                showModalBottomSheet(
+                                    showDragHandle: true,
+                                    context: context,
+                                    builder: (context) =>
+                                        const ImagePickerBottomSheet());
+                              },
                             ),
                             const SizedBox(height: 32),
                             CustomTextFormField(
@@ -166,9 +173,16 @@ class _EditProfileViewState extends State<EditProfileView> {
   Future<void> _editProfileBlocListener(
       BuildContext context, ProfileState state, AppLocalizations l10n) async {
     if (state is ProfileError) {
+      String message;
+
+      if (state.message == "profile_image_upload_error") {
+        message = l10n.imagePickingError;
+      } else {
+        message = state.message;
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(state.message), backgroundColor: AppColors.redColor),
+        SnackBar(content: Text(message), backgroundColor: AppColors.redColor),
       );
     } else if (state is ProfileLoaded) {
       _nameController.text = state.user.fullname;
