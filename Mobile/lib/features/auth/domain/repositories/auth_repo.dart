@@ -12,6 +12,8 @@ abstract class AuthRepo {
       required String password,
       required String passwordConfirm});
 
+  Future<Either<Failure, User>> googleAuth({required String idToken});
+
   Future<Either<Failure, String>> forgotPassword({required String email});
 
   Future<Either<Failure, String>> verifyOTP(

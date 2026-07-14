@@ -11,6 +11,7 @@ import 'package:nexora/features/auth/data/datasources/auth_remote_data_source.da
 import 'package:nexora/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:nexora/features/auth/domain/repositories/auth_repo.dart';
 import 'package:nexora/features/auth/domain/usecases/forgot_password_use_case.dart';
+import 'package:nexora/features/auth/domain/usecases/google_auth_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/login_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/register_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/reset_password_use_case.dart';
@@ -80,6 +81,10 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<RegisterUseCase>(
     () => RegisterUseCase(getIt<AuthRepo>()),
+  );
+
+  getIt.registerLazySingleton<GoogleAuthUseCase>(
+    () => GoogleAuthUseCase(getIt<AuthRepo>()),
   );
 
   getIt.registerFactory<AuthCubit>(

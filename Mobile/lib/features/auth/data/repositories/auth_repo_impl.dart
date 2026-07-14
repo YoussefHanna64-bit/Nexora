@@ -59,6 +59,26 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
+  Future<Either<Failure, User>> googleAuth({required String idToken}) async {
+    try {
+      final json = await remoteDataSource.googleAuth(idToken);
+
+      final accessToken = json["accessToken"];
+      final refreshToken = json["refreshToken"];
+
+      await SecureStorage.saveToken(accessToken);
+      await SecureStorage.saveRefreshToken(refreshToken);
+
+      return Right(UserModel.fromJson(json["data"]["user"]));
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, String>> forgotPassword(
       {required String email}) async {
     try {

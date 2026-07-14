@@ -5,6 +5,7 @@ abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> login(String email, String password);
   Future<Map<String, dynamic>> register(
       String fullname, String email, String password, String passwordConfirm);
+  Future<Map<String, dynamic>> googleAuth(String idToken);
   Future<Map<String, dynamic>> forgotPassword(String email);
   Future<Map<String, dynamic>> verifyOTP(String email, String otp);
   Future<Map<String, dynamic>> resetPassword(
@@ -39,6 +40,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         "password": password,
         "passwordConfirm": passwordConfirm
       },
+    );
+    return response.data;
+  }
+
+  @override
+  Future<Map<String, dynamic>> googleAuth(String idToken) async {
+    final response = await apiService.post(
+      EndPoints.googleAuth,
+      body: {"idToken": idToken},
     );
     return response.data;
   }
