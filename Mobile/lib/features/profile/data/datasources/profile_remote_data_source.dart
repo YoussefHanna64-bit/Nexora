@@ -44,7 +44,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       ),
     });
 
-    final response = await apiService.post(
+    final response = await apiService.patch(
       EndPoints.uploadProfilePicture,
       body: formData,
     );

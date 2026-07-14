@@ -67,3 +67,6 @@ export const INVALID_IMAGE = "Please upload only images";
 export const NO_IMAGE_PROVIDED = "No image provided. Please upload an image";
 export const PROFILE_PICTURE_UPDATED = "Profile picture updated";
 export const CLOUDINARY_UPLOAD_ERROR = "Error uploading image to Cloudinary";
+
+export const GOOGLE_ID_TOKEN_REQUIRED = "Google ID token is required";
+export const INVALID_GOOGLE_ID_TOKEN = "Invalid Google ID token";

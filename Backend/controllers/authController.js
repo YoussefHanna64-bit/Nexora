@@ -15,9 +15,14 @@ import {
   UNAUTHORIZED_REFRESH_TOKEN,
   USER_NOT_FOUND,
   PASSWORD_RESETED,
+  GOOGLE_ID_TOKEN_REQUIRED,
+  INVALID_GOOGLE_ID_TOKEN,
 } from "../utils/messages.js";
 import crypto from "crypto";
 import sendEmail from "../utils/sendEmail.js";
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const generateAccessToken = (user) => {
   return jwt.sign(
@@ -82,6 +87,59 @@ export const login = asyncWrapper(async (req, res, next) => {
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError(INCORRECT_CREDENTIALS, 401));
+  }
+
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  user.refreshToken = refreshToken;
+  await user.save({ validateBeforeSave: false });
+
+  user.password = undefined;
+  user.refreshToken = undefined;
+
+  res.status(200).json({
+    success: true,
+    status: httpStatus.SUCCESS,
+    accessToken,
+    refreshToken,
+    data: {
+      user: user,
+    },
+  });
+});
+
+export const googleAuth = asyncWrapper(async (req, res, next) => {
+  const { idToken } = req.body;
+
+  if (!idToken) {
+    return next(new AppError(GOOGLE_ID_TOKEN_REQUIRED, 400));
+  }
+
+  let ticket;
+  try {
+    ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+  } catch (error) {
+    return next(new AppError(INVALID_GOOGLE_ID_TOKEN, 401));
+  }
+
+  const { email, name, picture } = ticket.getPayload();
+
+  let user = await User.findOne({ email });
+
+  if (!user) {
+    const genPassword = crypto.randomBytes(20).toString("hex");
+
+    user = await User.create({
+      fullname: name,
+      email,
+      password: genPassword,
+      passwordConfirm: genPassword,
+      profileImage: picture,
+    });
   }
 
   const accessToken = generateAccessToken(user);

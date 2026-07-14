@@ -1,6 +1,7 @@
 import express from "express";
 import {
   forgotPassword,
+  googleAuth,
   login,
   refreshUserToken,
   register,
@@ -20,6 +21,7 @@ const router = express.Router();
 
 router.post("/register", registerValidator, register);
 router.post("/login", loginValidator, login);
+router.post("/googleAuth", googleAuth);
 router.post("/refresh", refreshTokenValidator, refreshUserToken);
 
 router.post("/forgotPassword", forgotPasswordValidator, forgotPassword);
