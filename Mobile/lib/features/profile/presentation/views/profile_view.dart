@@ -73,6 +73,7 @@ class _ProfileViewState extends State<ProfileView> {
                     icon: AppIcons.editOutlined,
                     title: user?.fullname.split(" ").first ?? l10n.loading,
                     subtitle: user?.email ?? l10n.loading,
+                    imageUrl: user?.profileImage,
                     onTap: () {
                       if (!isLoading) context.push(Routes.editProfile);
                     },

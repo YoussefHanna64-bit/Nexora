@@ -88,7 +88,8 @@ void setupGetIt() {
   );
 
   getIt.registerFactory<AuthCubit>(
-    () => AuthCubit(getIt<LoginUseCase>(), getIt<RegisterUseCase>()),
+    () => AuthCubit(getIt<LoginUseCase>(), getIt<RegisterUseCase>(),
+        getIt<GoogleAuthUseCase>()),
   );
 
   getIt.registerLazySingleton<ForgotPasswordUseCase>(

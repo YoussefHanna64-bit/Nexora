@@ -6,4 +6,7 @@ part 'env.g.dart';
 abstract class Env {
   @EnviedField(varName: "STRIPE_PUBLISHABLE_KEY", obfuscate: true)
   static final String stripePublishableKey = _Env.stripePublishableKey;
+
+  @EnviedField(varName: "GOOGLE_CLIENT_ID", obfuscate: true)
+  static final String googleClientId = _Env.googleClientId;
 }

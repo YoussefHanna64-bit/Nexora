@@ -12,7 +12,7 @@
   "login": "Login",
   "forgotPassword": "Forgot password?",
   "or": "OR",
-  "signInWithGoogle": "Sign in with Google",
+  "continueWithGoogle": "Continue with Google",
   "dontHaveAccount": "Don't have an account?",
   "alreadyHaveAccount": "Already have an account?",
   "signUp": "Sign Up",
@@ -226,5 +226,6 @@
   "failedToLoadBanners": "Failed to load banners",
   "chooseFromGallery": "Choose from Gallery",
   "takeAPhoto": "Take a Photo",
-  "imagePickingError": "An unexpected error occurred while picking the image"
+  "imagePickingError": "An unexpected error occurred while picking the image",
+  "googleAuthFailed": "Google Sign-In failed. Please try again"
 }

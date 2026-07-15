@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/validators.dart';
@@ -11,6 +10,7 @@ import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_state.dart';
+import 'package:nexora/features/auth/presentation/widgets/google_sign_in_button.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -46,9 +46,17 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
         if (state is AuthError) {
+          String message;
+
+          if (state.message == "google_auth_failed") {
+            message = l10n.googleAuthFailed;
+          } else {
+            message = state.message;
+          }
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.message),
+              content: Text(message),
               backgroundColor: Colors.red,
             ),
           );
@@ -160,32 +168,7 @@ class _RegisterState extends State<Register> {
                       SizedBox(
                         height: h * 0.04,
                       ),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: Image.asset(
-                          AppIcons.google,
-                          height: 20,
-                          width: 20,
-                        ),
-                        label: Text(
-                          l10n.signInWithGoogle,
-                          style: AppTextStyles.regular14Black
-                              .copyWith(color: onSurface),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(double.infinity, 0),
-                          shadowColor: Colors.transparent,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surface,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
-                          side: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
-                          ),
-                        ),
-                      ),
+                      GoogleSignInButton(),
                       SizedBox(
                         height: h * 0.04,
                       ),
