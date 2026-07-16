@@ -1,4 +1,5 @@
-import 'package:nexora/core/models/cart_model.dart';
+
+import 'package:nexora/core/entities/cart.dart';
 
 abstract class CartState {}
 

@@ -1,22 +1,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:nexora/core/entities/cart.dart';
 import 'package:nexora/core/errors/failure.dart';
-import 'package:nexora/core/models/cart_model.dart';
-import 'package:nexora/core/network/api_service.dart';
-import 'package:nexora/core/network/end_points.dart';
+import 'package:nexora/features/cart/data/datasources/cart_remote_data_source.dart';
 import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
 
-class ApiCartRepoImpl implements CartRepo {
-  final ApiService apiService;
+class CartRepoImpl implements CartRepo {
+  final CartRemoteDataSource remoteDataSource;
 
-  ApiCartRepoImpl(this.apiService);
+  CartRepoImpl(this.remoteDataSource);
 
   @override
   Future<Either<Failure, Cart>> getUserCart() async {
     try {
-      final response = await apiService.get(EndPoints.cart);
+      final cart = await remoteDataSource.getUserCart();
 
-      return Right(Cart.fromJson(response.data['data']['cart']));
+      return Right(cart);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -29,10 +28,9 @@ class ApiCartRepoImpl implements CartRepo {
   Future<Either<Failure, Cart>> addProductToCart(
       String productId, int quantity) async {
     try {
-      final response = await apiService.post(EndPoints.cart,
-          body: {'productId': productId, 'quantity': quantity});
+      final cart = await remoteDataSource.addProductToCart(productId, quantity);
 
-      return Right(Cart.fromJson(response.data['data']['cart']));
+      return Right(cart);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -45,10 +43,10 @@ class ApiCartRepoImpl implements CartRepo {
   Future<Either<Failure, Cart>> updateCartItemQuantity(
       String cartItemId, int quantity) async {
     try {
-      final response = await apiService
-          .patch("${EndPoints.cart}/$cartItemId", body: {'quantity': quantity});
+      final cart =
+          await remoteDataSource.updateCartItemQuantity(cartItemId, quantity);
 
-      return Right(Cart.fromJson(response.data['data']['cart']));
+      return Right(cart);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -60,9 +58,9 @@ class ApiCartRepoImpl implements CartRepo {
   @override
   Future<Either<Failure, Cart>> removeCartItem(String cartItemId) async {
     try {
-      final response = await apiService.delete("${EndPoints.cart}/$cartItemId");
+      final cart = await remoteDataSource.removeCartItem(cartItemId);
 
-      return Right(Cart.fromJson(response.data['data']['cart']));
+      return Right(cart);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -74,7 +72,7 @@ class ApiCartRepoImpl implements CartRepo {
   @override
   Future<Either<Failure, void>> clearCart() async {
     try {
-      await apiService.delete(EndPoints.cart);
+      await remoteDataSource.clearCart();
 
       return Right(null);
     } catch (e) {

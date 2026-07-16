@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:nexora/core/entities/cart.dart';
 import 'package:nexora/core/errors/failure.dart';
-import 'package:nexora/core/models/cart_model.dart';
 
 abstract class CartRepo {
   Future<Either<Failure, Cart>> getUserCart();

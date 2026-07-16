@@ -1,49 +1,39 @@
+import 'package:nexora/core/entities/cart.dart';
 import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/models/product_model.dart';
 
-class CartItem {
-  final String id;
-  final Product product;
-  int quantity;
-  final num price;
-
-  CartItem({
-    required this.id,
-    required this.product,
-    required this.quantity,
-    required this.price,
+class CartItemModel extends CartItem {
+  CartItemModel({
+    required super.id,
+    required super.product,
+    required super.quantity,
+    required super.price,
   });
 
-  factory CartItem.fromJson(Map<String, dynamic> json) {
-    return CartItem(
-      id: json['_id'],
-      product: ProductModel.fromJson(json['product']),
-      quantity: json['quantity'],
-      price: json['price'] as num,
+  factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    return CartItemModel(
+      id: json["_id"],
+      product: ProductModel.fromJson(json["product"]),
+      quantity: json["quantity"],
+      price: json["price"] as num,
     );
   }
 }
 
-class Cart {
-  final String? id;
-  final List<CartItem> items;
-  final num totalPrice;
-
-  Cart({
-    this.id,
-    required this.items,
-    required this.totalPrice,
+class CartModel extends Cart {
+  CartModel({
+    super.id,
+    required super.items,
+    required super.totalPrice,
   });
 
-  factory Cart.fromJson(Map<String, dynamic> json) {
-    var itemsList = json['cartItems'] as List? ?? [];
-    List<CartItem> parsedItems =
-        itemsList.map((i) => CartItem.fromJson(i)).toList();
+  factory CartModel.fromJson(Map<String, dynamic> json) {
+    var itemsList = json["cartItems"] as List? ?? [];
 
-    return Cart(
-      id: json['_id'],
-      items: parsedItems,
-      totalPrice: json['totalCartPrice'] as num,
+    return CartModel(
+      id: json["_id"],
+      items: itemsList.map((i) => CartItemModel.fromJson(i)).toList(),
+      totalPrice: json["totalCartPrice"] as num,
     );
   }
 }

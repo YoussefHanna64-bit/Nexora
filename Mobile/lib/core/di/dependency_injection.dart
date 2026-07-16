@@ -23,8 +23,13 @@ import 'package:nexora/features/banner/data/repositories/banner_repo_impl.dart';
 import 'package:nexora/features/banner/domain/repositories/banner_repo.dart';
 import 'package:nexora/features/banner/domain/usecases/get_active_banners_use_case.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
-import 'package:nexora/features/cart/data/repositories/api_cart_repo_impl.dart';
+import 'package:nexora/features/cart/data/datasources/cart_remote_data_source.dart';
+import 'package:nexora/features/cart/data/repositories/cart_repo_impl.dart';
 import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
+import 'package:nexora/features/cart/domain/usecases/add_product_to_cart_use_case.dart';
+import 'package:nexora/features/cart/domain/usecases/get_user_cart_use_case.dart';
+import 'package:nexora/features/cart/domain/usecases/remove_cart_item_use_case.dart';
+import 'package:nexora/features/cart/domain/usecases/update_cart_item_quantity_use_case.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/category/data/repositories/api_category_repo_impl.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
@@ -164,12 +169,36 @@ void setupGetIt() {
     () => BannerCubit(getIt<GetActiveBannersUseCase>()),
   );
 
+  getIt.registerLazySingleton<CartRemoteDataSource>(
+    () => CartRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<GetUserCartUseCase>(
+    () => GetUserCartUseCase(getIt<CartRepo>()),
+  );
+
+  getIt.registerLazySingleton<AddProductToCartUseCase>(
+    () => AddProductToCartUseCase(getIt<CartRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateCartItemQuantityUseCase>(
+    () => UpdateCartItemQuantityUseCase(getIt<CartRepo>()),
+  );
+
+  getIt.registerLazySingleton<RemoveCartItemUseCase>(
+    () => RemoveCartItemUseCase(getIt<CartRepo>()),
+  );
+
   getIt.registerLazySingleton<CartRepo>(
-    () => ApiCartRepoImpl(getIt<ApiService>()),
+    () => CartRepoImpl(getIt<CartRemoteDataSource>()),
   );
 
   getIt.registerFactory<CartCubit>(
-    () => CartCubit(getIt<CartRepo>()),
+    () => CartCubit(
+        getIt<GetUserCartUseCase>(),
+        getIt<AddProductToCartUseCase>(),
+        getIt<UpdateCartItemQuantityUseCase>(),
+        getIt<RemoveCartItemUseCase>()),
   );
 
   getIt.registerLazySingleton<PaymentService>(

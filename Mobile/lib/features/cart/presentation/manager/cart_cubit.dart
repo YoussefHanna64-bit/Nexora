@@ -1,15 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';
+import 'package:nexora/features/cart/domain/usecases/add_product_to_cart_use_case.dart';
+import 'package:nexora/features/cart/domain/usecases/get_user_cart_use_case.dart';
+import 'package:nexora/features/cart/domain/usecases/remove_cart_item_use_case.dart';
+import 'package:nexora/features/cart/domain/usecases/update_cart_item_quantity_use_case.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
-  final CartRepo cartRepo;
-  CartCubit(this.cartRepo) : super(CartInitial());
+  final GetUserCartUseCase getUserCartUseCase;
+  final AddProductToCartUseCase addProductToCartUseCase;
+  final UpdateCartItemQuantityUseCase updateCartItemQuantityUseCase;
+  final RemoveCartItemUseCase removeCartItemUseCase;
+
+  CartCubit(this.getUserCartUseCase, this.addProductToCartUseCase,
+      this.updateCartItemQuantityUseCase, this.removeCartItemUseCase)
+      : super(CartInitial());
 
   Future<void> fetchCart() async {
     emit(CartLoading());
 
-    final result = await cartRepo.getUserCart();
+    final result = await getUserCartUseCase();
+
     result.fold(
       (failure) {
         emit(CartError(message: failure.message));
@@ -24,7 +34,7 @@ class CartCubit extends Cubit<CartState> {
     final currentCart =
         state is CartSuccess ? (state as CartSuccess).cart : null;
 
-    final result = await cartRepo.addProductToCart(productId, quantity);
+    final result = await addProductToCartUseCase(productId, quantity);
 
     result.fold(
       (failure) {
@@ -47,8 +57,7 @@ class CartCubit extends Cubit<CartState> {
   Future<void> updateQuantity(String cartItemId, int newQuantity) async {
     final currentCart = (state as CartSuccess).cart;
 
-    final result =
-        await cartRepo.updateCartItemQuantity(cartItemId, newQuantity);
+    final result = await updateCartItemQuantityUseCase(cartItemId, newQuantity);
 
     result.fold(
       (failure) {
@@ -63,7 +72,7 @@ class CartCubit extends Cubit<CartState> {
   Future<void> removeCartItem(String cartItemId) async {
     final currentCart = (state as CartSuccess).cart;
 
-    final result = await cartRepo.removeCartItem(cartItemId);
+    final result = await removeCartItemUseCase(cartItemId);
 
     result.fold(
       (failure) {
