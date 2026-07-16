@@ -59,8 +59,11 @@ import 'package:nexora/features/profile/domain/usecases/update_password_use_case
 import 'package:nexora/features/profile/domain/usecases/update_profile_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/upload_profile_picture_use_case.dart';
 import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
-import 'package:nexora/features/wishlist/data/repositories/api_wishlist_repo_impl.dart';
+import 'package:nexora/features/wishlist/data/datasources/wishlist_remote_data_source.dart';
+import 'package:nexora/features/wishlist/data/repositories/wishlist_repo_impl.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
+import 'package:nexora/features/wishlist/domain/usecases/get_user_wishlist_use_case.dart';
+import 'package:nexora/features/wishlist/domain/usecases/toggle_wishlist_use_case.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -121,12 +124,25 @@ void setupGetIt() {
     () => ApiCategoryRepoImpl(getIt<ApiService>()),
   );
 
+  getIt.registerLazySingleton<WishlistRemoteDataSource>(
+    () => WishlistRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
   getIt.registerLazySingleton<WishlistRepo>(
-    () => ApiWishlistRepoImpl(getIt<ApiService>()),
+    () => WishlistRepoImpl(getIt<WishlistRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetUserWishlistUseCase>(
+    () => GetUserWishlistUseCase(getIt<WishlistRepo>()),
+  );
+
+  getIt.registerLazySingleton<ToggleWishlistUseCase>(
+    () => ToggleWishlistUseCase(getIt<WishlistRepo>()),
   );
 
   getIt.registerFactory<WishlistCubit>(
-    () => WishlistCubit(getIt<WishlistRepo>()),
+    () => WishlistCubit(
+        getIt<GetUserWishlistUseCase>(), getIt<ToggleWishlistUseCase>()),
   );
 
   getIt.registerLazySingleton<ProductRemoteDataSource>(

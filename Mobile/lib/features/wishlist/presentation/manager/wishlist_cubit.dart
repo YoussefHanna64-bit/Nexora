@@ -1,11 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
+import 'package:nexora/features/wishlist/domain/usecases/get_user_wishlist_use_case.dart';
+import 'package:nexora/features/wishlist/domain/usecases/toggle_wishlist_use_case.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 
 class WishlistCubit extends Cubit<WishlistState> {
-  final WishlistRepo wishlistRepo;
+  final GetUserWishlistUseCase getUserWishlistUseCase;
+  final ToggleWishlistUseCase toggleWishlistUseCase;
 
-  WishlistCubit(this.wishlistRepo) : super(WishlistInitial());
+  WishlistCubit(this.getUserWishlistUseCase, this.toggleWishlistUseCase)
+      : super(WishlistInitial());
 
   bool isInWishlist(String productId) {
     if (state is WishlistSuccess) {
@@ -19,7 +22,7 @@ class WishlistCubit extends Cubit<WishlistState> {
   Future<void> fetchWishlist() async {
     emit(WishlistLoading());
 
-    final result = await wishlistRepo.getUserWishlist();
+    final result = await getUserWishlistUseCase();
 
     result.fold(
       (failure) {
@@ -32,7 +35,7 @@ class WishlistCubit extends Cubit<WishlistState> {
   }
 
   Future<void> toggleItem(String productId) async {
-    final result = await wishlistRepo.toggleWishlist(productId);
+    final result = await toggleWishlistUseCase(productId);
 
     result.fold(
       (failure) {

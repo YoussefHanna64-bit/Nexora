@@ -2,30 +2,20 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/errors/failure.dart';
-import 'package:nexora/core/models/product_model.dart';
-import 'package:nexora/core/network/api_service.dart';
-import 'package:nexora/core/network/end_points.dart';
+import 'package:nexora/features/wishlist/data/datasources/wishlist_remote_data_source.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
 
-class ApiWishlistRepoImpl implements WishlistRepo {
-  final ApiService apiService;
+class WishlistRepoImpl implements WishlistRepo {
+  final WishlistRemoteDataSource remoteDataSource;
 
-  ApiWishlistRepoImpl(this.apiService);
-
-  List<Product> parseWishlist(dynamic responseData) {
-    List<Product> wishlist = [];
-    for (var item in responseData['data']['wishlist']) {
-      wishlist.add(ProductModel.fromJson(item));
-    }
-    return wishlist;
-  }
+  WishlistRepoImpl(this.remoteDataSource);
 
   @override
   Future<Either<Failure, List<Product>>> getUserWishlist() async {
     try {
-      final response = await apiService.get(EndPoints.wishlist);
+      final wishlist = await remoteDataSource.getUserWishlist();
 
-      return Right(parseWishlist(response.data));
+      return Right(wishlist);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -38,10 +28,9 @@ class ApiWishlistRepoImpl implements WishlistRepo {
   Future<Either<Failure, List<Product>>> toggleWishlist(
       String productId) async {
     try {
-      final response =
-          await apiService.post('${EndPoints.wishlist}/$productId');
+      final wishlist = await remoteDataSource.toggleWishlist(productId);
 
-      return Right(parseWishlist(response.data));
+      return Right(wishlist);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
