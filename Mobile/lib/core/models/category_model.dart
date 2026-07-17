@@ -1,19 +1,17 @@
-class Category {
-  String id;
-  String name;
-  String image;
+import 'package:nexora/core/entities/category.dart';
 
-  Category({
-    required this.id,
-    required this.name,
-    required this.image,
+class CategoryModel extends Category {
+  CategoryModel({
+    required super.id,
+    required super.name,
+    required super.image,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
-      id: json['_id'] ?? '',
-      name: json['name'] ?? 'Unknown Category',
-      image: json['image'] ?? '',
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+      id: json["_id"] ?? "",
+      name: json["name"] ?? "Unknown Category",
+      image: json["image"] ?? "",
     );
   }
 }

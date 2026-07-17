@@ -1,4 +1,4 @@
-import 'package:nexora/core/models/category_model.dart';
+import 'package:nexora/core/entities/category.dart';
 
 abstract class CategoryState {}
 

@@ -1,16 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nexora/features/category/domain/repositories/category_repo.dart';
+import 'package:nexora/features/category/domain/usecases/get_categories_use_case.dart';
 import 'package:nexora/features/category/presentation/manager/category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
-  final CategoryRepo categoryRepo;
+  final GetCategoriesUseCase getCategoriesUseCase;
 
-  CategoryCubit(this.categoryRepo) : super(CategoryInitial());
+  CategoryCubit(this.getCategoriesUseCase) : super(CategoryInitial());
 
   Future<void> fetchCategories() async {
     emit(CategoryLoading());
 
-    final result = await categoryRepo.getCategories();
+    final result = await getCategoriesUseCase();
 
     result.fold(
       (failure) {

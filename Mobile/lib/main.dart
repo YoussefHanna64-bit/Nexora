@@ -11,7 +11,7 @@ import 'package:nexora/features/address/presentation/manager/address_cubit.dart'
 import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
-import 'package:nexora/features/category/domain/repositories/category_repo.dart';
+import 'package:nexora/features/category/domain/usecases/get_categories_use_case.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
 import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
@@ -35,7 +35,7 @@ void main() async {
       BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
       BlocProvider<CategoryCubit>(
           create: (context) =>
-              CategoryCubit(getIt<CategoryRepo>())..fetchCategories()),
+              CategoryCubit(getIt<GetCategoriesUseCase>())..fetchCategories()),
       BlocProvider<BannerCubit>(create: (context) => getIt<BannerCubit>()),
       BlocProvider<CartCubit>(create: (context) => getIt<CartCubit>()),
       BlocProvider<WishlistCubit>(create: (context) => getIt<WishlistCubit>()),

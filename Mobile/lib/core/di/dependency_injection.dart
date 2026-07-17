@@ -31,8 +31,10 @@ import 'package:nexora/features/cart/domain/usecases/get_user_cart_use_case.dart
 import 'package:nexora/features/cart/domain/usecases/remove_cart_item_use_case.dart';
 import 'package:nexora/features/cart/domain/usecases/update_cart_item_quantity_use_case.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
-import 'package:nexora/features/category/data/repositories/api_category_repo_impl.dart';
+import 'package:nexora/features/category/data/datasources/category_remote_data_source.dart';
+import 'package:nexora/features/category/data/repositories/category_repo_impl.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
+import 'package:nexora/features/category/domain/usecases/get_categories_use_case.dart';
 import 'package:nexora/features/orders/data/datasources/order_remote_data_source.dart';
 import 'package:nexora/features/orders/data/repositories/order_repo_impl.dart';
 import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
@@ -122,8 +124,16 @@ void setupGetIt() {
     ),
   );
 
+  getIt.registerLazySingleton<CategoryRemoteDataSource>(
+    () => CategoryRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
   getIt.registerLazySingleton<CategoryRepo>(
-    () => ApiCategoryRepoImpl(getIt<ApiService>()),
+    () => CategoryRepoImpl(getIt<CategoryRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetCategoriesUseCase>(
+    () => GetCategoriesUseCase(getIt<CategoryRepo>()),
   );
 
   getIt.registerLazySingleton<WishlistRemoteDataSource>(
