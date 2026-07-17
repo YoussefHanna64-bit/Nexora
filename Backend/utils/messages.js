@@ -70,3 +70,11 @@ export const CLOUDINARY_UPLOAD_ERROR = "Error uploading image to Cloudinary";
 
 export const GOOGLE_ID_TOKEN_REQUIRED = "Google ID token is required";
 export const INVALID_GOOGLE_ID_TOKEN = "Invalid Google ID token";
+
+export const ONLY_DELIVERED_PRODUCTS_REVIEWABLE = "You can only review products that have been delivered to you";
+export const ALREADY_REVIEWED_PRODUCT = "You have already reviewed this product";
+export const REVIEW_SUBMITTED = "Thank you for your review! Your feedback has been submitted";
+export const REVIEW_NOT_FOUND = "Review not found";
+export const UNAUTHORIZED_UPDATE_REVIEW = "You are not allowed to update this review";
+export const REVIEW_UPDATED = "Review updated";
+export const REVIEW_DELETED = "Review deleted";
