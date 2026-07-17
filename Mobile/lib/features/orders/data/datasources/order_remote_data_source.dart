@@ -1,13 +1,14 @@
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
+import 'package:nexora/features/orders/data/models/order_model.dart';
 
 abstract class OrderRemoteDataSource {
   Future<String> createPaymentIntent();
-  Future<Map<String, dynamic>> createOrder(
+  Future<OrderModel> createOrder(
       Map<String, dynamic> shippingAddress, String paymentMethodType);
-  Future<List<Map<String, dynamic>>> getUserOrders();
-  Future<Map<String, dynamic>> getOrderById(String orderId);
-  Future<Map<String, dynamic>> cancelOrder(String orderId);
+  Future<List<OrderModel>> getUserOrders();
+  Future<OrderModel> getOrderById(String orderId);
+  Future<OrderModel> cancelOrder(String orderId);
 }
 
 class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
@@ -22,7 +23,7 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>> createOrder(
+  Future<OrderModel> createOrder(
       Map<String, dynamic> shippingAddress, String paymentMethodType) async {
     final response = await apiService.post(
       EndPoints.orders,
@@ -31,26 +32,36 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
         "paymentMethodType": paymentMethodType,
       },
     );
-    return response.data["data"]["order"];
+    return getOrder(response.data);
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getUserOrders() async {
+  Future<List<OrderModel>> getUserOrders() async {
     final response = await apiService.get(EndPoints.myOrders);
-    final List<dynamic> ordersList = response.data["data"]["orders"];
-    return ordersList.map((or) => or as Map<String, dynamic>).toList();
+
+    return getOrdersList(response.data);
   }
 
   @override
-  Future<Map<String, dynamic>> getOrderById(String orderId) async {
+  Future<OrderModel> getOrderById(String orderId) async {
     final response = await apiService.get('${EndPoints.orders}/$orderId');
-    return response.data["data"]["order"];
+    return getOrder(response.data);
   }
 
   @override
-  Future<Map<String, dynamic>> cancelOrder(String orderId) async {
+  Future<OrderModel> cancelOrder(String orderId) async {
     final response =
         await apiService.patch('${EndPoints.orders}/$orderId/cancel');
-    return response.data["data"]["order"];
+    return getOrder(response.data);
+  }
+
+  OrderModel getOrder(Map<String, dynamic> response) {
+    return OrderModel.fromJson(response["data"]["order"]);
+  }
+
+  List<OrderModel> getOrdersList(Map<String, dynamic> response) {
+    final List<dynamic> ordersList = response["data"]["orders"] ?? [];
+
+    return ordersList.map((or) => OrderModel.fromJson(or)).toList();
   }
 }

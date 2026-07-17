@@ -29,12 +29,8 @@ class WishlistRemoteDataSourceImpl implements WishlistRemoteDataSource {
   }
 
   List<ProductModel> getWishlist(Map<String, dynamic> response) {
-    List<ProductModel> wishlist = [];
+    final List<dynamic> ordersList = response["data"]["wishlist"] ?? [];
 
-    for (var item in response["data"]["wishlist"]) {
-      wishlist.add(ProductModel.fromJson(item));
-    }
-
-    return wishlist;
+    return ordersList.map((or) => ProductModel.fromJson(or)).toList();
   }
 }

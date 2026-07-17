@@ -1,17 +1,20 @@
 import 'package:bloc/bloc.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
-import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
+import 'package:nexora/features/orders/domain/usecases/cancel_order_use_case.dart';
+import 'package:nexora/features/orders/domain/usecases/get_user_orders_use_case.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_state.dart';
 
 class OrderHistoryCubit extends Cubit<OrderHistoryState> {
-  final OrderRepo orderRepo;
+  final GetUserOrdersUseCase getUserOrdersUseCase;
+  final CancelOrderUseCase cancelOrderUseCase;
 
-  OrderHistoryCubit(this.orderRepo) : super(OrderHistoryInitial());
+  OrderHistoryCubit(this.getUserOrdersUseCase, this.cancelOrderUseCase)
+      : super(OrderHistoryInitial());
 
   Future<void> fetchOrders() async {
     emit(OrderHistoryLoading());
 
-    final result = await orderRepo.getUserOrders();
+    final result = await getUserOrdersUseCase();
 
     result.fold(
       (failure) {
@@ -32,7 +35,7 @@ class OrderHistoryCubit extends Cubit<OrderHistoryState> {
 
     emit(OrderHistoryLoading());
 
-    final result = await orderRepo.cancelOrder(orderId);
+    final result = await cancelOrderUseCase(orderId);
 
     result.fold(
       (failure) => emit(OrderHistoryError(message: failure.message)),

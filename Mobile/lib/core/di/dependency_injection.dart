@@ -37,6 +37,8 @@ import 'package:nexora/features/orders/data/datasources/order_remote_data_source
 import 'package:nexora/features/orders/data/repositories/order_repo_impl.dart';
 import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
 import 'package:nexora/features/orders/domain/services/payment_service.dart';
+import 'package:nexora/features/orders/domain/usecases/cancel_order_use_case.dart';
+import 'package:nexora/features/orders/domain/usecases/get_user_orders_use_case.dart';
 import 'package:nexora/features/orders/domain/usecases/place_order_use_case.dart';
 import 'package:nexora/features/orders/presentation/manager/checkout/checkout_cubit.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
@@ -237,8 +239,17 @@ void setupGetIt() {
     () => CheckoutCubit(getIt<PlaceOrderUseCase>()),
   );
 
+  getIt.registerLazySingleton<GetUserOrdersUseCase>(
+    () => GetUserOrdersUseCase(getIt<OrderRepo>()),
+  );
+
+  getIt.registerLazySingleton<CancelOrderUseCase>(
+    () => CancelOrderUseCase(getIt<OrderRepo>()),
+  );
+
   getIt.registerFactory<OrderHistoryCubit>(
-    () => OrderHistoryCubit(getIt<OrderRepo>()),
+    () => OrderHistoryCubit(
+        getIt<GetUserOrdersUseCase>(), getIt<CancelOrderUseCase>()),
   );
 
   getIt.registerLazySingleton<AddressRemoteDataSource>(

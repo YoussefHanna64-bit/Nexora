@@ -4,7 +4,6 @@ import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/features/address/data/models/shipping_address_model.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/orders/data/datasources/order_remote_data_source.dart';
-import 'package:nexora/features/orders/data/models/order_model.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
 import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
 
@@ -34,12 +33,12 @@ class OrderRepoImpl implements OrderRepo {
     try {
       final address = ShippingAddressModel.fromEntity(shippingAddress).toJson();
 
-      final json = await remoteDataSource.createOrder(
+      final order = await remoteDataSource.createOrder(
         address,
         paymentMethodType,
       );
 
-      return Right(OrderModel.fromJson(json));
+      return Right(order);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -51,8 +50,8 @@ class OrderRepoImpl implements OrderRepo {
   @override
   Future<Either<Failure, List<Order>>> getUserOrders() async {
     try {
-      final jsonList = await remoteDataSource.getUserOrders();
-      return Right(jsonList.map(OrderModel.fromJson).toList());
+      final orders = await remoteDataSource.getUserOrders();
+      return Right(orders);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -64,8 +63,8 @@ class OrderRepoImpl implements OrderRepo {
   @override
   Future<Either<Failure, Order>> getOrderById(String orderId) async {
     try {
-      final json = await remoteDataSource.getOrderById(orderId);
-      return Right(OrderModel.fromJson(json));
+      final order = await remoteDataSource.getOrderById(orderId);
+      return Right(order);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
@@ -77,8 +76,8 @@ class OrderRepoImpl implements OrderRepo {
   @override
   Future<Either<Failure, Order>> cancelOrder(String orderId) async {
     try {
-      final json = await remoteDataSource.cancelOrder(orderId);
-      return Right(OrderModel.fromJson(json));
+      final order = await remoteDataSource.cancelOrder(orderId);
+      return Right(order);
     } catch (e) {
       if (e is DioException) {
         return Left(ServerFailure.fromDioError(e));
