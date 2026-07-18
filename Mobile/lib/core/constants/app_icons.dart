@@ -17,6 +17,7 @@ class AppIcons {
   static const IconData arrowBack = Icons.arrow_back_ios_new;
   static const IconData arrowForward = Icons.arrow_forward_ios;
   static const IconData star = Icons.star;
+  static const IconData starBorder = Icons.star_border;
   static const IconData delete = Icons.delete;
   static const IconData deleteOutlined = Icons.delete_outline;
   static const IconData edit = Icons.edit;

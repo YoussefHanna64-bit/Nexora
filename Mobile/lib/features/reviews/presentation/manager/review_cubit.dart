@@ -34,7 +34,7 @@ class ReviewCubit extends Cubit<ReviewState> {
     );
   }
 
-  Future<void> addReview(ReviewParams reviewParams) async {
+  Future<void> submitReview(ReviewParams reviewParams) async {
     emit(ReviewLoading());
     final result = await addReviewUseCase(reviewParams);
 

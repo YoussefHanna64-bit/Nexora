@@ -220,5 +220,11 @@
   "chooseFromGallery": "اختيار من المعرض",
   "takeAPhoto": "التقاط صورة",
   "imagePickingError": "حدث خطأ غير متوقع أثناء اختيار الصورة",
-  "googleAuthFailed": "فشل تسجيل الدخول باستخدام جـوجل. يرجى المحاولة مرة أخرى"
+  "googleAuthFailed": "فشل تسجيل الدخول باستخدام جـوجل. يرجى المحاولة مرة أخرى",
+  "rateThisProduct": "قم بتقييم هذا المنتج",
+  "reviewHint": "أخبرنا المزيد عن تجربتك (اختياري)",
+  "submitReview": "إرسال التقييم",
+  "thankYouForYourReview": "شكراً لك على تقييمك",
+  "reviewUpdated": "تم تحديث التقييم",
+  "reviewDeleted": "تم حذف التقييم"
 }

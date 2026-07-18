@@ -1,11 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
+import 'package:nexora/features/reviews/presentation/manager/review_cubit.dart';
+import 'package:nexora/features/reviews/presentation/widgets/review_bottom_sheet.dart';
 
 class OrderProductTile extends StatelessWidget {
   final OrderItem item;
@@ -37,7 +41,7 @@ class OrderProductTile extends StatelessWidget {
             imageUrl: item.productThumbnail,
             fit: BoxFit.cover,
             errorWidget: (context, url, error) => const Icon(
-              Icons.broken_image,
+              AppIcons.brokenImage,
               color: AppColors.greyColor,
             ),
           ),
@@ -54,8 +58,14 @@ class OrderProductTile extends StatelessWidget {
             const SizedBox(height: 8),
             GestureDetector(
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l10n.ratingFeatureComingSoon)),
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  showDragHandle: true,
+                  builder: (sheetContext) => BlocProvider.value(
+                    value: context.read<ReviewCubit>(),
+                    child: ReviewBottomSheet(productId: item.productId),
+                  ),
                 );
               },
               child: Row(

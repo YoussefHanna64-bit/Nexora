@@ -227,5 +227,11 @@
   "chooseFromGallery": "Choose from Gallery",
   "takeAPhoto": "Take a Photo",
   "imagePickingError": "An unexpected error occurred while picking the image",
-  "googleAuthFailed": "Google Sign-In failed. Please try again"
+  "googleAuthFailed": "Google Sign-In failed. Please try again",
+  "rateThisProduct": "Rate this product",
+  "reviewHint": "Tell us more about your experience (optional)",
+  "submitReview": "Submit Review",
+  "thankYouForYourReview": "Thank you for your review",
+  "reviewUpdated": "Review updated",
+  "reviewDeleted": "Review deleted"
 }
