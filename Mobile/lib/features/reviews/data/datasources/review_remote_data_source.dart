@@ -1,12 +1,12 @@
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
 import 'package:nexora/features/reviews/data/models/review_model.dart';
+import 'package:nexora/features/reviews/domain/usecases/params/review_params.dart';
 
 abstract class ReviewRemoteDataSource {
   Future<List<ReviewModel>> getProductReviews(String productId);
-  Future<ReviewModel> createReview(Map<String, dynamic> reviewData);
-  Future<ReviewModel> updateReview(
-      String reviewId, Map<String, dynamic> reviewData);
+  Future<ReviewModel> addReview(ReviewParams reviewParams);
+  Future<ReviewModel> updateReview(String reviewId, ReviewParams reviewParams);
   Future<void> deleteReview(String reviewId);
 }
 
@@ -23,17 +23,18 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
   }
 
   @override
-  Future<ReviewModel> createReview(Map<String, dynamic> reviewData) async {
-    final response = await apiService.post(EndPoints.reviews, body: reviewData);
+  Future<ReviewModel> addReview(ReviewParams reviewParams) async {
+    final response =
+        await apiService.post(EndPoints.reviews, body: reviewParams.toJson());
 
     return getReview(response.data);
   }
 
   @override
   Future<ReviewModel> updateReview(
-      String reviewId, Map<String, dynamic> reviewData) async {
+      String reviewId, ReviewParams reviewParams) async {
     final response = await apiService.patch("${EndPoints.reviews}/$reviewId",
-        body: reviewData);
+        body: reviewParams.toJson());
 
     return getReview(response.data);
   }

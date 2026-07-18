@@ -2,7 +2,7 @@ import 'package:nexora/features/reviews/domain/entities/review.dart';
 
 class ReviewModel extends Review {
   ReviewModel({
-    super.id,
+    required super.id,
     required super.productId,
     required super.userId,
     required super.userName,
@@ -25,26 +25,5 @@ class ReviewModel extends Review {
           ? DateTime.parse(json["createdAt"])
           : DateTime.now(),
     );
-  }
-
-  factory ReviewModel.fromEntity(Review entity) {
-    return ReviewModel(
-      id: entity.id,
-      productId: entity.productId,
-      userId: entity.userId,
-      userName: entity.userName,
-      userProfileImage: entity.userProfileImage,
-      rating: entity.rating,
-      comment: entity.comment,
-      createdAt: entity.createdAt,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "product": productId,
-      "rating": rating,
-      if (comment != null) "comment": comment,
-    };
   }
 }

@@ -1,5 +1,5 @@
 class Review {
-  final String? id;
+  final String id;
   final String productId;
   final String userId;
   final String userName;
@@ -9,7 +9,7 @@ class Review {
   final DateTime createdAt;
 
   Review({
-    this.id,
+    required this.id,
     required this.productId,
     required this.userId,
     required this.userName,
