@@ -63,6 +63,14 @@ import 'package:nexora/features/profile/domain/usecases/update_password_use_case
 import 'package:nexora/features/profile/domain/usecases/update_profile_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/upload_profile_picture_use_case.dart';
 import 'package:nexora/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:nexora/features/reviews/data/datasources/review_remote_data_source.dart';
+import 'package:nexora/features/reviews/data/repositories/review_repo_impl.dart';
+import 'package:nexora/features/reviews/domain/repositories/review_repo.dart';
+import 'package:nexora/features/reviews/domain/usecases/add_review_use_case.dart';
+import 'package:nexora/features/reviews/domain/usecases/delete_review_use_case.dart';
+import 'package:nexora/features/reviews/domain/usecases/get_product_reviews_use_case.dart';
+import 'package:nexora/features/reviews/domain/usecases/update_review_use_case.dart';
+import 'package:nexora/features/reviews/presentation/manager/review_cubit.dart';
 import 'package:nexora/features/wishlist/data/datasources/wishlist_remote_data_source.dart';
 import 'package:nexora/features/wishlist/data/repositories/wishlist_repo_impl.dart';
 import 'package:nexora/features/wishlist/domain/repositories/wishlist_repo.dart';
@@ -179,6 +187,39 @@ void setupGetIt() {
 
   getIt.registerFactory<ProductDetailsCubit>(
     () => ProductDetailsCubit(getIt<GetProductByIdUseCase>()),
+  );
+
+  getIt.registerLazySingleton<ReviewRemoteDataSource>(
+    () => ReviewRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<ReviewRepo>(
+    () => ReviewRepoImpl(getIt<ReviewRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetProductReviewsUseCase>(
+    () => GetProductReviewsUseCase(getIt<ReviewRepo>()),
+  );
+
+  getIt.registerLazySingleton<AddReviewUseCase>(
+    () => AddReviewUseCase(getIt<ReviewRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateReviewUseCase>(
+    () => UpdateReviewUseCase(getIt<ReviewRepo>()),
+  );
+
+  getIt.registerLazySingleton<DeleteReviewUseCase>(
+    () => DeleteReviewUseCase(getIt<ReviewRepo>()),
+  );
+
+  getIt.registerFactory<ReviewCubit>(
+    () => ReviewCubit(
+      getIt<GetProductReviewsUseCase>(),
+      getIt<AddReviewUseCase>(),
+      getIt<UpdateReviewUseCase>(),
+      getIt<DeleteReviewUseCase>(),
+    ),
   );
 
   getIt.registerLazySingleton<BannerRemoteDataSource>(
