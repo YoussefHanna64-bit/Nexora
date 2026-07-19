@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nexora/core/constants/api_keys.dart';
 import 'package:nexora/core/services/secure_storage.dart';
+import 'package:nexora/core/services/user_cache_service.dart';
 import 'package:nexora/features/auth/domain/usecases/google_auth_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/login_use_case.dart';
 import 'package:nexora/features/auth/domain/usecases/register_use_case.dart';
@@ -11,9 +12,14 @@ class AuthCubit extends Cubit<AuthState> {
   final LoginUseCase loginUseCase;
   final RegisterUseCase registerUseCase;
   final GoogleAuthUseCase googleAuthUseCase;
+  final UserCacheService userCacheService;
 
-  AuthCubit(this.loginUseCase, this.registerUseCase, this.googleAuthUseCase)
-      : super(AuthInitial());
+  AuthCubit(
+    this.loginUseCase,
+    this.registerUseCase,
+    this.googleAuthUseCase,
+    this.userCacheService,
+  ) : super(AuthInitial());
 
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
@@ -27,6 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthError(message: failure.message));
       },
       (user) {
+        userCacheService.user = user;
         emit(AuthSuccess(user: user));
       },
     );
@@ -52,6 +59,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthError(message: failure.message));
       },
       (user) {
+        userCacheService.user = user;
         emit(AuthSuccess(user: user));
       },
     );
@@ -80,6 +88,7 @@ class AuthCubit extends Cubit<AuthState> {
           emit(AuthError(message: failure.message));
         },
         (user) {
+          userCacheService.user = user;
           emit(AuthSuccess(user: user));
         },
       );
@@ -91,7 +100,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logout() async {
     await SecureStorage.clearAll();
-
+    userCacheService.clearCache();
     emit(AuthInitial());
   }
 }

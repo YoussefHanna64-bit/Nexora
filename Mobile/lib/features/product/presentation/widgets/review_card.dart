@@ -14,14 +14,21 @@ import 'package:nexora/features/reviews/presentation/widgets/review_bottom_sheet
 
 class ReviewCard extends StatelessWidget {
   final Review review;
+  final String? currentUserId;
 
-  const ReviewCard({super.key, required this.review});
+  const ReviewCard({
+    super.key,
+    required this.review,
+    required this.currentUserId,
+  });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
-    final isMyReview = review.userId == "";
+
+    final bool isMyReview =
+        currentUserId != null && review.userId == currentUserId;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

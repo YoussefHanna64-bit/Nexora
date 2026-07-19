@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/token_interceptor.dart';
 import 'package:nexora/core/services/stripe_service.dart';
+import 'package:nexora/core/services/user_cache_service.dart';
 import 'package:nexora/features/address/data/datasources/address_remote_data_source.dart';
 import 'package:nexora/features/address/data/repositories/address_repo_impl.dart';
 import 'package:nexora/features/address/domain/repositories/address_repo.dart';
@@ -81,6 +82,8 @@ import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dar
 final getIt = GetIt.instance;
 
 void setupGetIt() {
+  getIt.registerLazySingleton<UserCacheService>(() => UserCacheService());
+
   getIt.registerLazySingleton<TokenInterceptor>(() => TokenInterceptor());
 
   getIt.registerLazySingleton<ApiService>(
@@ -108,8 +111,12 @@ void setupGetIt() {
   );
 
   getIt.registerFactory<AuthCubit>(
-    () => AuthCubit(getIt<LoginUseCase>(), getIt<RegisterUseCase>(),
-        getIt<GoogleAuthUseCase>()),
+    () => AuthCubit(
+      getIt<LoginUseCase>(),
+      getIt<RegisterUseCase>(),
+      getIt<GoogleAuthUseCase>(),
+      getIt<UserCacheService>(),
+    ),
   );
 
   getIt.registerLazySingleton<ForgotPasswordUseCase>(
@@ -371,6 +378,7 @@ void setupGetIt() {
       getIt<UpdatePasswordUseCase>(),
       getIt<UploadProfilePictureUseCase>(),
       getIt<DeleteAccountUseCase>(),
+      getIt<UserCacheService>(),
     ),
   );
 }

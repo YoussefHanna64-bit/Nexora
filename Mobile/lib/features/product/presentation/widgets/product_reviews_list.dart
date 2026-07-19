@@ -9,7 +9,9 @@ import 'package:nexora/features/reviews/presentation/manager/review_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductReviewsList extends StatelessWidget {
-  const ProductReviewsList({super.key});
+  final String? currentUserId;
+
+  const ProductReviewsList({super.key, required this.currentUserId});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,10 @@ class ProductReviewsList extends StatelessWidget {
             itemCount: reviews.length,
             separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
-              return ReviewCard(review: reviews[index]);
+              return ReviewCard(
+                review: reviews[index],
+                currentUserId: currentUserId,
+              );
             },
           ),
         );

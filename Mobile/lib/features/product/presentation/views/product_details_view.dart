@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/entities/product.dart';
+import 'package:nexora/core/services/user_cache_service.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
@@ -53,6 +55,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     final h = MediaQuery.of(context).size.height;
+
+    final String? currentUserId = GetIt.instance<UserCacheService>().userId;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -217,7 +221,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             .copyWith(color: onSurface),
                       ),
                       const SizedBox(height: 16),
-                      const ProductReviewsList(),
+                      ProductReviewsList(currentUserId: currentUserId),
                       SizedBox(height: h * 0.02),
                     ],
                   ),

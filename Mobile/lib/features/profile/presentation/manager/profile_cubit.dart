@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nexora/core/services/user_cache_service.dart';
 import 'package:nexora/features/auth/domain/entities/user.dart';
 import 'package:nexora/features/profile/domain/usecases/delete_account_use_case.dart';
 import 'package:nexora/features/profile/domain/usecases/get_user_profile_use_case.dart';
@@ -16,13 +17,15 @@ class ProfileCubit extends Cubit<ProfileState> {
   final UpdatePasswordUseCase updatePasswordUseCase;
   final UploadProfilePictureUseCase uploadProfilePictureUseCase;
   final DeleteAccountUseCase deleteAccountUseCase;
+  final UserCacheService userCacheService;
 
   ProfileCubit(
       this.getUserProfileUseCase,
       this.updateProfileUseCase,
       this.updatePasswordUseCase,
       this.uploadProfilePictureUseCase,
-      this.deleteAccountUseCase)
+      this.deleteAccountUseCase,
+      this.userCacheService)
       : super(ProfileInitial());
 
   User? currentUser;
@@ -39,6 +42,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
       (user) {
         currentUser = user;
+        userCacheService.user = user;
         emit(ProfileLoaded(user));
       },
     );
@@ -55,6 +59,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
       (user) {
         currentUser = user;
+        userCacheService.user = user;
         emit(ProfileUpdateSuccess());
         emit(ProfileLoaded(user));
       },
@@ -105,6 +110,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         },
         (user) {
           currentUser = user;
+          userCacheService.user = user;
           emit(ProfileUpdateSuccess());
           emit(ProfileLoaded(user));
         },
