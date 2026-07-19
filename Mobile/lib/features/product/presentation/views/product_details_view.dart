@@ -13,6 +13,8 @@ import 'package:nexora/features/product/presentation/manager/product_details/pro
 import 'package:nexora/features/product/presentation/manager/product_details/product_details_state.dart';
 import 'package:nexora/features/product/presentation/widgets/price_bottom_bar.dart';
 import 'package:nexora/features/product/presentation/widgets/product_image_carousel.dart';
+import 'package:nexora/features/product/presentation/widgets/product_reviews_list.dart';
+import 'package:nexora/features/reviews/presentation/manager/review_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -33,6 +35,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   void initState() {
     super.initState();
     context.read<ProductDetailsCubit>().fetchProduct(widget.productId);
+    context.read<ReviewCubit>().fetchProductReviews(widget.productId);
   }
 
   void incrementQuantity() {
@@ -207,6 +210,14 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         product.description,
                         style: AppTextStyles.regular14Grey,
                       ),
+                      SizedBox(height: h * 0.02),
+                      Text(
+                        l10n.ratingsAndReviews,
+                        style: AppTextStyles.bold16White
+                            .copyWith(color: onSurface),
+                      ),
+                      const SizedBox(height: 16),
+                      const ProductReviewsList(),
                       SizedBox(height: h * 0.02),
                     ],
                   ),

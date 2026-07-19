@@ -94,8 +94,11 @@ final GoRouter appRouter = GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
         final productId = state.extra as String;
-        return BlocProvider(
-          create: (context) => getIt<ProductDetailsCubit>(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => getIt<ProductDetailsCubit>()),
+            BlocProvider(create: (context) => getIt<ReviewCubit>()),
+          ],
           child: ProductDetailsView(productId: productId),
         );
       },

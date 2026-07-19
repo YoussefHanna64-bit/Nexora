@@ -34,7 +34,6 @@ reviewSchema.pre(/^find/, function (next) {
     path: "user",
     select: "fullname profileImage",
   });
-  next();
 });
 
 reviewSchema.statics.calcAvgRatings = async function (productId) {

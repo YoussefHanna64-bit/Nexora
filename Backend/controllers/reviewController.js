@@ -36,11 +36,16 @@ export const createReview = asyncWrapper(async (req, res, next) => {
     return next(new AppError(ALREADY_REVIEWED_PRODUCT, 400));
   }
 
-  const review = await Review.create({
+  let review = await Review.create({
     user: userId,
     product: productId,
     rating,
     comment,
+  });
+
+  review = await review.populate({
+    path: "user",
+    select: "fullname profileImage",
   });
 
   res.status(201).json({
@@ -54,10 +59,8 @@ export const createReview = asyncWrapper(async (req, res, next) => {
 });
 
 export const getAllProductReviews = asyncWrapper(async (req, res, next) => {
-  const { productId } = req.params;
-
   const reviews = await Review.find({
-    product: productId,
+    product: req.params.id,
     comment: { $exists: true, $ne: "" },
   });
 

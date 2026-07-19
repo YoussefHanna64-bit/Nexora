@@ -226,5 +226,10 @@
   "submitReview": "إرسال التقييم",
   "thankYouForYourReview": "شكراً لك على تقييمك",
   "reviewUpdated": "تم تحديث التقييم",
-  "reviewDeleted": "تم حذف التقييم"
+  "reviewDeleted": "تم حذف التقييم",
+  "editYourReview": "تعديل تقييمك",
+  "updateReview": "تحديث التقييم",
+  "ratingsAndReviews": "التقييمات والمراجعات",
+  "deleteReviewTitle": "حذف التقييم",
+  "deleteReviewContent": "هل أنت متأكد من أنك تريد حذف هذا التقييم؟"
 }
