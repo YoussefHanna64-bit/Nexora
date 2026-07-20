@@ -14,12 +14,12 @@ abstract class AuthRepo {
 
   Future<Either<Failure, User>> googleAuth({required String idToken});
 
-  Future<Either<Failure, String>> forgotPassword({required String email});
+  Future<Either<Failure, void>> forgotPassword({required String email});
 
   Future<Either<Failure, String>> verifyOTP(
       {required String email, required String otp});
 
-  Future<Either<Failure, String>> resetPassword(
+  Future<Either<Failure, void>> resetPassword(
       {required String resetToken,
       required String newPassword,
       required String confirmPassword});

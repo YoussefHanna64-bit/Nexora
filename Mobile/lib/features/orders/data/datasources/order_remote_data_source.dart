@@ -1,11 +1,11 @@
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
 import 'package:nexora/features/orders/data/models/order_model.dart';
+import 'package:nexora/features/orders/domain/usecases/params/order_params.dart';
 
 abstract class OrderRemoteDataSource {
   Future<String> createPaymentIntent();
-  Future<OrderModel> createOrder(
-      Map<String, dynamic> shippingAddress, String paymentMethodType);
+  Future<OrderModel> createOrder(CreateOrderParams params);
   Future<List<OrderModel>> getUserOrders();
   Future<OrderModel> getOrderById(String orderId);
   Future<OrderModel> cancelOrder(String orderId);
@@ -23,15 +23,12 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   }
 
   @override
-  Future<OrderModel> createOrder(
-      Map<String, dynamic> shippingAddress, String paymentMethodType) async {
+  Future<OrderModel> createOrder(CreateOrderParams params) async {
     final response = await apiService.post(
       EndPoints.orders,
-      body: {
-        "shippingAddress": shippingAddress,
-        "paymentMethodType": paymentMethodType,
-      },
+      body: params.toJson(),
     );
+
     return getOrder(response.data);
   }
 

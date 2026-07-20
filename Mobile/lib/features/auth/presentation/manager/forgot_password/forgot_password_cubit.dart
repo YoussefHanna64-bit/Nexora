@@ -29,7 +29,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
       },
       (message) {
         _email = email;
-        emit(ForgotPasswordEmailSent(message));
+        emit(ForgotPasswordEmailSent("account_email_sent"));
       },
     );
   }
@@ -70,7 +70,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         _email = null;
         _resetToken = null;
 
-        emit(ForgotPasswordSuccess(message));
+        emit(ForgotPasswordSuccess("account_recovered"));
       },
     );
   }

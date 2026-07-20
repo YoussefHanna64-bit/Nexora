@@ -7,7 +7,7 @@ class ResetPasswordUseCase {
 
   ResetPasswordUseCase(this.authRepo);
 
-  Future<Either<Failure, String>> call(
+  Future<Either<Failure, void>> call(
       {required String resetToken,
       required String newPassword,
       required String confirmPassword}) {

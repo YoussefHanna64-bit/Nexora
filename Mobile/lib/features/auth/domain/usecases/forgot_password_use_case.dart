@@ -7,7 +7,7 @@ class ForgotPasswordUseCase {
 
   ForgotPasswordUseCase(this.authRepo);
 
-  Future<Either<Failure, String>> call({required String email}) {
+  Future<Either<Failure, void>> call({required String email}) {
     return authRepo.forgotPassword(email: email);
   }
 }

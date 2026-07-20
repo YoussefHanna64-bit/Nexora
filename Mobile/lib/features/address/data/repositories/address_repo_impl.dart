@@ -14,13 +14,7 @@ class AddressRepoImpl implements AddressRepo {
   @override
   Future<Either<Failure, List<ShippingAddress>>> getAddresses() async {
     try {
-      final json = await remoteDataSource.getAddresses();
-
-      final List<ShippingAddressModel> addresses =
-          (json["data"]["addresses"] as List)
-              .map<ShippingAddressModel>((addr) =>
-                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
-              .toList();
+      final addresses = await remoteDataSource.getAddresses();
 
       return Right(addresses);
     } catch (e) {
@@ -35,14 +29,8 @@ class AddressRepoImpl implements AddressRepo {
   Future<Either<Failure, List<ShippingAddress>>> addAddress(
       ShippingAddress address) async {
     try {
-      final addressModel = ShippingAddressModel.fromEntity(address);
-      final json = await remoteDataSource.addAddress(addressModel.toJson());
-
-      final List<ShippingAddressModel> addresses =
-          (json["data"]["addresses"] as List)
-              .map<ShippingAddressModel>((addr) =>
-                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
-              .toList();
+      final addresses = await remoteDataSource
+          .addAddress(ShippingAddressModel.fromEntity(address));
 
       return Right(addresses);
     } catch (e) {
@@ -57,16 +45,9 @@ class AddressRepoImpl implements AddressRepo {
   Future<Either<Failure, List<ShippingAddress>>> updateAddress(
       String addrId, ShippingAddress address) async {
     try {
-      final addressModel = ShippingAddressModel.fromEntity(address);
-      final json =
-          await remoteDataSource.updateAddress(addrId, addressModel.toJson());
-
-      final List<ShippingAddressModel> addresses =
-          (json["data"]["addresses"] as List)
-              .map<ShippingAddressModel>((addr) =>
-                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
-              .toList();
-
+      final addresses = await remoteDataSource.updateAddress(
+          addrId, ShippingAddressModel.fromEntity(address));
+          
       return Right(addresses);
     } catch (e) {
       if (e is DioException) {
@@ -80,13 +61,7 @@ class AddressRepoImpl implements AddressRepo {
   Future<Either<Failure, List<ShippingAddress>>> removeAddress(
       String addrId) async {
     try {
-      final json = await remoteDataSource.removeAddress(addrId);
-
-      final List<ShippingAddressModel> addresses =
-          (json["data"]["addresses"] as List)
-              .map<ShippingAddressModel>((addr) =>
-                  ShippingAddressModel.fromJson(addr as Map<String, dynamic>))
-              .toList();
+      final addresses = await remoteDataSource.removeAddress(addrId);
 
       return Right(addresses);
     } catch (e) {
