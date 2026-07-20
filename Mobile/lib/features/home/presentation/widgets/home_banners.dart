@@ -8,7 +8,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
-import 'package:nexora/features/banner/domain/entities/banner.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -34,7 +34,7 @@ class HomeBanners extends StatelessWidget {
         final isLoading = state is BannerInitial || state is BannerLoading;
 
         final banners =
-            state is BannerLoaded ? state.banners : PromoBanner.mockBanners;
+            state is BannerLoaded ? state.banners : MockData.banners;
 
         if (banners.isEmpty && !isLoading) {
           return const SizedBox.shrink();

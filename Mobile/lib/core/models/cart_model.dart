@@ -1,5 +1,4 @@
 import 'package:nexora/core/entities/cart.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/models/product_model.dart';
 
 class CartItemModel extends CartItem {
@@ -37,24 +36,3 @@ class CartModel extends Cart {
     );
   }
 }
-
-final Cart dummyCart = Cart(items: [
-  CartItem(
-    id: "1",
-    product: Product.mockProducts[0],
-    quantity: 1,
-    price: 10,
-  ),
-  CartItem(
-    id: "2",
-    product: Product.mockProducts[0],
-    quantity: 1,
-    price: 10,
-  ),
-  CartItem(
-    id: "3",
-    product: Product.mockProducts[0],
-    quantity: 1,
-    price: 10,
-  ),
-], totalPrice: 0);

@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/entities/product.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/services/user_cache_service.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
@@ -125,7 +125,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             state is ProductDetailsLoading || state is ProductDetailsInitial;
         final product = state is ProductDetailsLoaded
             ? state.product
-            : Product.mockProducts[0];
+            : MockData.products[0];
 
         final priceBeforeDiscount =
             product.price / (1 - (product.discount) / 100);

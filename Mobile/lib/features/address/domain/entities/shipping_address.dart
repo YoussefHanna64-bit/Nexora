@@ -18,17 +18,4 @@ class ShippingAddress {
     this.label = "Home",
     this.isDefault = false,
   });
-
-  static List<ShippingAddress> get mockAddresses => List.generate(
-      3,
-      (index) => ShippingAddress(
-            id: index.toString(),
-            label: "Home",
-            street: "Grove ST",
-            apartment: "Grove",
-            city: "Alex",
-            postalCode: "21500",
-            phone: "01234567891",
-            isDefault: index == 0,
-          ));
 }

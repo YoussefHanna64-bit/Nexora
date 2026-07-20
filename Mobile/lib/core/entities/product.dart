@@ -30,23 +30,4 @@ class Product {
     required this.thumbnail,
     required this.images,
   });
-
-  static List<Product> get mockProducts => List.generate(
-      10,
-      (index) => Product(
-            id: index.toString(),
-            name: "Product",
-            brand: "Brand",
-            description: "Description for Product",
-            price: 299.99,
-            discount: 20.0,
-            stock: 50,
-            sold: 120,
-            ratingRate: 4.8,
-            ratingCount: 320,
-            categoryId: "categoryId",
-            categoryName: "CategoryName",
-            thumbnail: "https://i.imgur.com/yVeIeDa.jpeg",
-            images: ["https://i.imgur.com/yVeIeDa.jpeg"],
-          ));
 }

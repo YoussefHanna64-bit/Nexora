@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nexora/core/models/cart_model.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
@@ -79,7 +79,7 @@ class _CartViewState extends State<CartView> {
             final bool isLoading = state is CartLoading || state is CartInitial;
 
             final cartItems =
-                isLoading ? dummyCart.items : (state as CartSuccess).cart.items;
+                isLoading ? MockData.cart.items : (state as CartSuccess).cart.items;
 
             final totalPrice =
                 isLoading ? 0.0 : (state as CartSuccess).cart.totalPrice;

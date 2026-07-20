@@ -6,6 +6,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/address/presentation/manager/address_cubit.dart';
 import 'package:nexora/features/address/presentation/manager/address_state.dart';
@@ -47,7 +48,7 @@ class _ShippingAddressesViewState extends State<ShippingAddressesView> {
           final bool isLoading = state is AddressLoading;
 
           final List<ShippingAddress> addresses = isLoading
-              ? ShippingAddress.mockAddresses
+              ? MockData.addresses
               : (state is AddressLoaded ? state.addresses : []);
 
           if (!isLoading && addresses.isEmpty) {

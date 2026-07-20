@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/entities/product.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
@@ -163,7 +163,7 @@ class _SearchViewState extends State<SearchView> {
             state is ProductLoading || state is ProductInitial;
 
         final displayProducts =
-            (state is ProductSuccess) ? state.products : Product.mockProducts;
+            (state is ProductSuccess) ? state.products : MockData.products;
 
         return SingleChildScrollView(
           padding:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:nexora/core/entities/product.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
@@ -33,7 +33,7 @@ class WishlistView extends StatelessWidget {
             state is WishlistLoading || state is WishlistInitial;
 
         final wishList = isLoading
-            ? Product.mockProducts
+            ? MockData.products
             : (state as WishlistSuccess).wishlist;
 
         if (wishList.isEmpty) {
