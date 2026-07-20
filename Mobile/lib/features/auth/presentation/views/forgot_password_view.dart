@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
@@ -78,21 +78,13 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       body: BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
         listener: (context, state) {
           if (state is ForgotPasswordError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: AppColors.redColor),
-            );
+            AppSnackbars.showError(context, state.message);
           } else if (state is ForgotPasswordEmailSent) {
             _nextPage();
           } else if (state is ForgotPasswordOTPVerified) {
             _nextPage();
           } else if (state is ForgotPasswordSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content: Text(l10n.passwordResetSuccess),
-                  backgroundColor: AppColors.primary),
-            );
+            AppSnackbars.showSuccess(context, l10n.passwordResetSuccess);
             context.go(Routes.home);
           }
         },

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
@@ -52,19 +52,11 @@ class _LoginState extends State<Login> {
             message = state.message;
           }
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-              backgroundColor: AppColors.redColor,
-            ),
-          );
+          AppSnackbars.showError(context, message);
         } else if (state is AuthSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                  "Welcome back, ${state.user.fullname.split(" ").first}!"),
-              backgroundColor: AppColors.primary,
-            ),
+          AppSnackbars.showSuccess(
+            context,
+            "${l10n.welcomeBack}, ${state.user.fullname.split(" ").first}!",
           );
           context.go(Routes.home);
         }

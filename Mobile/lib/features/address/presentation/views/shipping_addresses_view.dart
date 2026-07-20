@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
@@ -37,11 +38,7 @@ class _ShippingAddressesViewState extends State<ShippingAddressesView> {
       body: BlocConsumer<AddressCubit, AddressState>(
         listener: (context, state) {
           if (state is AddressError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: AppColors.redColor),
-            );
+            AppSnackbars.showError(context, state.message);
           }
         },
         builder: (context, state) {

@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
 import 'package:nexora/core/widgets/custom_empty_state.dart';
@@ -48,19 +48,9 @@ class _CartViewState extends State<CartView> {
               } else {
                 translatedMessage = state.successMessage;
               }
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(translatedMessage),
-                  backgroundColor: AppColors.primary,
-                ),
-              );
+              AppSnackbars.showSuccess(context, translatedMessage);
             } else if (state is CartActionError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.errorMessage),
-                  backgroundColor: AppColors.redColor,
-                ),
-              );
+              AppSnackbars.showError(context, state.errorMessage);
             }
           },
           buildWhen: (previous, current) =>

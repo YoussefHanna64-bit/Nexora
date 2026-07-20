@@ -6,6 +6,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
@@ -73,11 +74,7 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   void _placeOrder(AppLocalizations l10n) {
     if (selectedAddress == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(l10n.pleaseSelectAddressFirst),
-            backgroundColor: AppColors.secondary),
-      );
+      AppSnackbars.showError(context, l10n.pleaseSelectAddressFirst);
       return;
     }
 
@@ -113,9 +110,7 @@ class _CheckoutViewState extends State<CheckoutView> {
           BlocListener<CheckoutCubit, CheckoutState>(
             listener: (context, state) {
               if (state is CheckoutError) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: AppColors.redColor));
+                AppSnackbars.showError(context, state.message);
               } else if (state is CheckoutSuccess) {
                 context.read<CartCubit>().fetchCart();
                 context.go(Routes.orderSuccess, extra: state.order);

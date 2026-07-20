@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
@@ -158,19 +159,12 @@ class _AddEditAddressViewState extends State<AddEditAddressView> {
     final isEditing = widget.address != null;
     if (state is AddressLoaded) {
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(isEditing ? l10n.addressUpdated : l10n.addressAdded),
-          backgroundColor: AppColors.primary,
-        ),
+      AppSnackbars.showSuccess(
+        context,
+        isEditing ? l10n.addressUpdated : l10n.addressAdded,
       );
     } else if (state is AddressError) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(state.message),
-          backgroundColor: AppColors.redColor,
-        ),
-      );
+      AppSnackbars.showError(context, state.message);
     }
   }
 

@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
 
+  "welcome": "Welcome",
   "welcomeBack": "Welcome Back",
   "createAccount": "Create Account",
   "signInSubtitle": "Sign in to continue shopping",

@@ -4,9 +4,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/app_dialogs.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
@@ -181,18 +181,12 @@ class _EditProfileViewState extends State<EditProfileView> {
         message = state.message;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message), backgroundColor: AppColors.redColor),
-      );
+      AppSnackbars.showError(context, message);
     } else if (state is ProfileLoaded) {
       _nameController.text = state.user.fullname;
       _emailController.text = state.user.email;
     } else if (state is ProfileUpdateSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(l10n.profileUpdated),
-            backgroundColor: AppColors.primary),
-      );
+      AppSnackbars.showSuccess(context, l10n.profileUpdated);
     } else if (state is AccountDeletedSuccess) {
       context.read<WishlistCubit>().clearWishlist();
       context.read<CartCubit>().clearCart();

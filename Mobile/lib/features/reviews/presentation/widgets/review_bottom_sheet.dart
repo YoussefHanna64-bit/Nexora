@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/reviews/domain/entities/review.dart';
 import 'package:nexora/features/reviews/domain/usecases/params/review_params.dart';
@@ -107,18 +108,10 @@ class _ReviewBottomSheetState extends State<ReviewBottomSheet> {
                   message = l10n.thankYouForYourReview;
                 }
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                      content: Text(message),
-                      backgroundColor: AppColors.primary),
-                );
+                AppSnackbars.showSuccess(context, message);
               } else if (state is ReviewError) {
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                      content: Text(state.message),
-                      backgroundColor: AppColors.redColor),
-                );
+                AppSnackbars.showError(context, state.message);
               }
             },
             builder: (context, state) {

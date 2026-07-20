@@ -9,7 +9,7 @@ class ProductLoading extends ProductState {}
 class ProductSuccess extends ProductState {
   final List<Product> products;
   final double maxPrice;
-  
+
   ProductSuccess({required this.products, required this.maxPrice});
 }
 

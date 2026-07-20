@@ -4,12 +4,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/colors.dart';
-import 'package:nexora/core/widgets/product_card.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
+import 'package:nexora/core/widgets/product_card.dart';
 
 class ProductGrid extends StatelessWidget {
   final List<Product> products;
@@ -34,19 +34,9 @@ class ProductGrid extends StatelessWidget {
           } else {
             translatedMessage = state.successMessage;
           }
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(translatedMessage),
-              backgroundColor: AppColors.primary,
-            ),
-          );
+          AppSnackbars.showSuccess(context, translatedMessage);
         } else if (state is CartActionError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: AppColors.redColor,
-            ),
-          );
+          AppSnackbars.showError(context, state.errorMessage);
         }
       },
       child: GridView.builder(

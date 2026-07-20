@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
@@ -54,19 +55,11 @@ class _RegisterState extends State<Register> {
             message = state.message;
           }
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-              backgroundColor: Colors.red,
-            ),
-          );
+          AppSnackbars.showError(context, message);
         } else if (state is AuthSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content:
-                  Text("Welcome, ${state.user.fullname.split(" ").first}!"),
-              backgroundColor: Colors.green,
-            ),
+          AppSnackbars.showSuccess(
+            context,
+            "${l10n.welcome}, ${state.user.fullname.split(" ").first}!",
           );
           context.go(Routes.home);
         }

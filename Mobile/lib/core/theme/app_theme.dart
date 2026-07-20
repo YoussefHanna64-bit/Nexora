@@ -33,5 +33,4 @@ final ThemeData darkTheme = ThemeData(
   cardColor: AppColors.darkSurface,
 );
 
-
 final ThemeData appTheme = lightTheme;

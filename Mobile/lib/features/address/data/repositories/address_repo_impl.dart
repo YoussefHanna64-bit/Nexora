@@ -47,7 +47,7 @@ class AddressRepoImpl implements AddressRepo {
     try {
       final addresses = await remoteDataSource.updateAddress(
           addrId, ShippingAddressModel.fromEntity(address));
-          
+
       return Right(addresses);
     } catch (e) {
       if (e is DioException) {

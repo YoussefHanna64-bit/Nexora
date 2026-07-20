@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
@@ -66,12 +66,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
         body: BlocConsumer<ProfileCubit, ProfileState>(
             listener: (context, state) async {
           if (state is PasswordChangeSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content: Text(l10n.passwordChanged),
-                  backgroundColor: AppColors.primary),
-            );
-
+            AppSnackbars.showSuccess(context, l10n.passwordChanged);
             context.pop();
           }
         }, builder: (context, state) {

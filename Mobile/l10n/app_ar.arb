@@ -1,6 +1,7 @@
 {
   "@@locale": "ar",
 
+  "welcome": "مرحباً",
   "welcomeBack": "مرحباً بعودتك",
   "createAccount": "إنشاء حساب",
   "signInSubtitle": "سجّل دخولك لمتابعة التسوق",
