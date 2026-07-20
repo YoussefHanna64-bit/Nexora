@@ -1,14 +1,20 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
+import 'package:nexora/features/auth/data/models/user_model.dart';
 
 abstract class ProfileRemoteDataSource {
-  Future<Map<String, dynamic>> getUserProfile();
-  Future<Map<String, dynamic>> updateProfile(Map<String, dynamic> data);
-  Future<Map<String, dynamic>> updatePassword(Map<String, dynamic> data);
-  Future<Map<String, dynamic>> uploadProfilePicture(File image);
-  Future<Map<String, dynamic>> deleteAccount();
+  Future<UserModel> getUserProfile();
+  Future<UserModel> updateProfile({String? fullname, String? email});
+  Future<Map<String, dynamic>> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  });
+  Future<UserModel> uploadProfilePicture(File image);
+  Future<void> deleteAccount();
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -17,27 +23,55 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   ProfileRemoteDataSourceImpl(this.apiService);
 
   @override
-  Future<Map<String, dynamic>> getUserProfile() async {
+  Future<UserModel> getUserProfile() async {
     final response = await apiService.get(EndPoints.me);
-    return response.data;
+
+    return getUser(response.data);
   }
 
   @override
-  Future<Map<String, dynamic>> updateProfile(Map<String, dynamic> data) async {
+  Future<UserModel> updateProfile({String? fullname, String? email}) async {
+    final Map<String, dynamic> data = {};
+
+    if (fullname != null) {
+      data["fullname"] = fullname;
+    }
+
+    if (email != null) {
+      data["email"] = email;
+    }
+
     final response = await apiService.patch(EndPoints.updateUser, body: data);
-    return response.data;
+
+    return getUser(response.data);
   }
 
   @override
-  Future<Map<String, dynamic>> updatePassword(Map<String, dynamic> data) async {
-    final response =
-        await apiService.patch(EndPoints.updatePassword, body: data);
-    return response.data;
+  Future<Map<String, dynamic>> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    final response = await apiService.patch(
+      EndPoints.updatePassword,
+      body: {
+        "currentPassword": currentPassword,
+        "newPassword": newPassword,
+        "passwordConfirm": confirmPassword,
+      },
+    );
+
+    final data = response.data["data"];
+
+    return {
+      "accessToken": data["accessToken"],
+      "refreshToken": data["refreshToken"]
+    };
   }
 
   @override
-  Future<Map<String, dynamic>> uploadProfilePicture(File image) async {
-    FormData formData = FormData.fromMap({
+  Future<UserModel> uploadProfilePicture(File image) async {
+    final formData = FormData.fromMap({
       "profileImage": await MultipartFile.fromFile(
         image.path,
         filename: image.path.split("/").last,
@@ -48,13 +82,15 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       EndPoints.uploadProfilePicture,
       body: formData,
     );
-
-    return response.data;
+    return getUser(response.data);
   }
 
   @override
-  Future<Map<String, dynamic>> deleteAccount() async {
-    final response = await apiService.delete(EndPoints.users);
-    return response.data;
+  Future<void> deleteAccount() async {
+    await apiService.delete(EndPoints.users);
+  }
+
+  UserModel getUser(Map<String, dynamic> response) {
+    return UserModel.fromJson(response["data"]["user"]);
   }
 }

@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:nexora/features/banner/domain/entities/banner.dart';
 import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/features/banner/data/datasources/banner_remote_data_source.dart';
-import 'package:nexora/features/banner/data/models/banner_model.dart';
-import 'package:nexora/features/banner/domain/entities/banner.dart';
 import 'package:nexora/features/banner/domain/repositories/banner_repo.dart';
 
 class BannerRepoImpl implements BannerRepo {
@@ -14,11 +13,7 @@ class BannerRepoImpl implements BannerRepo {
   @override
   Future<Either<Failure, List<PromoBanner>>> getActiveBanners() async {
     try {
-      final json = await remoteDataSource.getActiveBanners();
-
-      final List<BannerModel> banners = (json["data"]["banners"] as List)
-          .map((b) => BannerModel.fromJson(b as Map<String, dynamic>))
-          .toList();
+      final banners = await remoteDataSource.getActiveBanners();
 
       return Right(banners);
     } catch (e) {

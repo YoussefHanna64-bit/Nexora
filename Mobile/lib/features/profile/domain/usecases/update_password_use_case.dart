@@ -7,10 +7,11 @@ class UpdatePasswordUseCase {
 
   UpdatePasswordUseCase(this.profileRepo);
 
-  Future<Either<Failure, String>> call(
-      {required String currentPassword,
-      required String newPassword,
-      required String confirmPassword}) {
+  Future<Either<Failure, void>> call({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) {
     return profileRepo.updatePassword(
         currentPassword, newPassword, confirmPassword);
   }

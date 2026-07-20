@@ -7,7 +7,7 @@ class DeleteAccountUseCase {
 
   DeleteAccountUseCase(this.profileRepo);
 
-  Future<Either<Failure, String>> call() {
+  Future<Either<Failure, void>> call() {
     return profileRepo.deleteAccount();
   }
 }
