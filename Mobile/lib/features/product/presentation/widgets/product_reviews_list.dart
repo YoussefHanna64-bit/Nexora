@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
-import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/utils/mock_data.dart';
+import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/features/product/presentation/widgets/review_card.dart';
 import 'package:nexora/features/reviews/domain/entities/review.dart';
 import 'package:nexora/features/reviews/presentation/manager/review_cubit.dart';
@@ -26,24 +29,14 @@ class ProductReviewsList extends StatelessWidget {
         final bool isLoading = state is ReviewLoading;
 
         final List<Review> reviews = isLoading
-            ? List.generate(
-                3,
-                (index) => Review(
-                    id: "",
-                    productId: "",
-                    userId: "",
-                    userName: "",
-                    rating: 2,
-                    createdAt: DateTime.now()))
+            ? MockData.reviews
             : (state is ReviewLoaded ? state.reviews : []);
 
         if (!isLoading && reviews.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: Text(
-              "No reviews yet. Be the first to review after purchasing",
-              style: AppTextStyles.regular14Grey,
-            ),
+          return CustomEmptyState(
+            icon: AppIcons.starBorder,
+            title: AppLocalizations.of(context)!.noReviewsYet,
+            subtitle: AppLocalizations.of(context)!.noReviewsYetSubtitle,
           );
         }
 

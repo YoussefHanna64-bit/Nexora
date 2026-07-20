@@ -7,6 +7,7 @@ import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
@@ -188,7 +189,14 @@ class _SearchViewState extends State<SearchView> {
                   ],
                 ),
                 SizedBox(height: h * 0.02),
-                ProductGrid(products: displayProducts),
+                if (!isLoading && displayProducts.isEmpty)
+                  CustomEmptyState(
+                    icon: AppIcons.search,
+                    title: l10n.noProductsFound,
+                    subtitle: l10n.noProductsFoundSubtitle,
+                  )
+                else
+                  ProductGrid(products: displayProducts),
               ],
             ),
           ),

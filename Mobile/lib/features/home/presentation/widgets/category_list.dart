@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nexora/core/entities/category.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/widgets/category_card.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
 import 'package:nexora/features/category/presentation/manager/category_state.dart';
@@ -30,14 +31,7 @@ class CategoryList extends StatelessWidget {
           state is CategoryLoading || state is CategoryInitial;
 
       final List<Category> categories = isLoading
-          ? List.generate(
-              6,
-              (index) => Category(
-                id: index.toString(),
-                name: 'Loading..',
-                image: '',
-              ),
-            )
+          ? MockData.categories
           : (state as CategorySuccess).categories;
 
       return Skeletonizer(

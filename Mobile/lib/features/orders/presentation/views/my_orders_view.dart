@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
@@ -40,12 +41,12 @@ class MyOrdersView extends StatelessWidget {
               : (state is OrderHistoryLoaded ? state.orders : []);
 
           if (!isLoading && orders.isEmpty) {
-            return Center(
-              child: Text(
-                l10n.noOrdersYet,
-                style: AppTextStyles.regular14Grey,
-                textAlign: TextAlign.center,
-              ),
+            return CustomEmptyState(
+              icon: AppIcons.shoppingBagOutlined,
+              title: l10n.noOrdersYet,
+              subtitle: l10n.noOrdersSubtitle,
+              buttonText: l10n.startShopping,
+              onButtonPressed: () => context.go(Routes.home),
             );
           }
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/utils/mock_data.dart';
-import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
+import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
@@ -32,16 +35,16 @@ class WishlistView extends StatelessWidget {
         final bool isLoading =
             state is WishlistLoading || state is WishlistInitial;
 
-        final wishList = isLoading
-            ? MockData.products
-            : (state as WishlistSuccess).wishlist;
+        final wishList =
+            isLoading ? MockData.products : (state as WishlistSuccess).wishlist;
 
         if (wishList.isEmpty) {
-          return Center(
-            child: Text(
-              l10n.wishlistEmpty,
-              style: AppTextStyles.regular14Grey,
-            ),
+          return CustomEmptyState(
+            icon: AppIcons.favoritesBorder,
+            title: l10n.wishlistEmpty,
+            subtitle: l10n.wishlistEmptySubtitle,
+            buttonText: l10n.startShopping,
+            onButtonPressed: () => context.go(Routes.home),
           );
         }
 

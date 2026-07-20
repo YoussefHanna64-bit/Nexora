@@ -1,9 +1,11 @@
 import 'package:nexora/core/entities/cart.dart';
+import 'package:nexora/core/entities/category.dart';
 import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/banner/domain/entities/banner.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
+import 'package:nexora/features/reviews/domain/entities/review.dart';
 
 class MockData {
   MockData._();
@@ -25,6 +27,15 @@ class MockData {
           categoryName: "CategoryName",
           thumbnail: "https://i.imgur.com/yVeIeDa.jpeg",
           images: ["https://i.imgur.com/yVeIeDa.jpeg"],
+        ),
+      );
+
+  static List<Category> get categories => List.generate(
+        6,
+        (i) => Category(
+          id: i.toString(),
+          name: "Category $i",
+          image: "https://i.imgur.com/yVeIeDa.jpeg",
         ),
       );
 
@@ -94,5 +105,17 @@ class MockData {
           ),
         ),
         totalPrice: 30,
+      );
+
+  static List<Review> get reviews => List.generate(
+        3,
+        (i) => Review(
+          id: i.toString(),
+          productId: "",
+          userId: "",
+          userName: "",
+          rating: 2,
+          createdAt: DateTime.now(),
+        ),
       );
 }

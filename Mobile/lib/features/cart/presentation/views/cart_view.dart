@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
+import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/core/widgets/order_summary_card.dart';
@@ -78,17 +80,20 @@ class _CartViewState extends State<CartView> {
 
             final bool isLoading = state is CartLoading || state is CartInitial;
 
-            final cartItems =
-                isLoading ? MockData.cart.items : (state as CartSuccess).cart.items;
+            final cartItems = isLoading
+                ? MockData.cart.items
+                : (state as CartSuccess).cart.items;
 
             final totalPrice =
                 isLoading ? 0.0 : (state as CartSuccess).cart.totalPrice;
 
             if (!isLoading && cartItems.isEmpty) {
-              return Center(
-                child: Text(l10n.cartEmpty,
-                    style: AppTextStyles.regular14Grey,
-                    textAlign: TextAlign.center),
+              return CustomEmptyState(
+                icon: AppIcons.shoppingBagOutlined,
+                title: l10n.cartEmpty,
+                subtitle: l10n.cartEmptySubtitle,
+                buttonText: l10n.startShopping,
+                onButtonPressed: () => context.go(Routes.home),
               );
             }
 
