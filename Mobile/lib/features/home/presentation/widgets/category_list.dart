@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/entities/category.dart';
 import 'package:nexora/core/routers/routes.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/widgets/category_card.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
@@ -17,15 +16,7 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
       if (state is CategoryError) {
-        return SizedBox(
-          height: 80,
-          child: Center(
-            child: Text(
-              state.message,
-              style: const TextStyle(color: AppColors.redColor),
-            ),
-          ),
-        );
+        return const SizedBox.shrink();
       }
       final bool isLoading =
           state is CategoryLoading || state is CategoryInitial;

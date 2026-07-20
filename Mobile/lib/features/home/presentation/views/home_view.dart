@@ -12,6 +12,8 @@ import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_state.dart';
+import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
+import 'package:nexora/features/category/presentation/manager/category_state.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/home/presentation/widgets/category_list.dart';
@@ -80,78 +82,96 @@ class _HomeViewState extends State<HomeView> {
             },
           ),
         ),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: w * 0.04, vertical: h * 0.02),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: h * 0.22, child: HomeBanners()),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
-                      Text(
-                        l10n.shopByCategory,
-                        style: AppTextStyles.regular18Black
-                            .copyWith(color: onSurface),
-                      ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
-                      CategoryList(),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            l10n.popularProducts,
-                            style: AppTextStyles.regular18Black
-                                .copyWith(color: onSurface),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                                text: l10n.viewAll,
-                                style: AppTextStyles.bold16Primary,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {}),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
-                      BlocBuilder<ProductCubit, ProductState>(
-                        builder: (context, state) {
-                          if (state is ProductError) {
-                            return CustomErrorWidget(
-                              message: state.message,
-                              onRetry: () {
-                                context
-                                    .read<ProductCubit>()
-                                    .fetchProducts(queryParameters: {
-                                  "sort": "-sold",
-                                  "limit": 6,
-                                });
-                              },
-                            );
-                          }
+        body: BlocBuilder<BannerCubit, BannerState>(
+            builder: (context, bannerState) {
+          return BlocBuilder<CategoryCubit, CategoryState>(
+              builder: (context, categoryState) {
+            return BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, productState) {
+              if (bannerState is BannerError ||
+                  categoryState is CategoryError ||
+                  productState is ProductError) {
+                String errorMessage = l10n.couldntLoadData;
+                if (bannerState is BannerError) {
+                  errorMessage = bannerState.message;
+                } else if (categoryState is CategoryError) {
+                  errorMessage = categoryState.message;
+                } else if (productState is ProductError) {
+                  errorMessage = productState.message;
+                }
 
-                          final bool isLoading = state is ProductLoading ||
-                              state is ProductInitial;
+                return CustomErrorWidget(
+                  message: errorMessage,
+                  onRetry: () {
+                    context.read<BannerCubit>().fetchBanners();
+                    context.read<CategoryCubit>().fetchCategories();
+                    context
+                        .read<ProductCubit>()
+                        .fetchProducts(queryParameters: {
+                      "sort": "-sold",
+                      "limit": 6,
+                    });
+                  },
+                );
+              }
 
-                          final displayProducts = isLoading
-                              ? MockData.products
-                              : (state as ProductSuccess).products;
+              final bool isLoading = productState is ProductLoading ||
+                  productState is ProductInitial;
 
-                          return Skeletonizer(
-                            enabled: isLoading,
-                            child: ProductGrid(products: displayProducts),
-                          );
-                        },
-                      ),
-                    ]))));
+              final displayProducts = isLoading
+                  ? MockData.products
+                  : (productState as ProductSuccess).products;
+
+              return SingleChildScrollView(
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: w * 0.04, vertical: h * 0.02),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: h * 0.22, child: HomeBanners()),
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
+                            Text(
+                              l10n.shopByCategory,
+                              style: AppTextStyles.regular18Black
+                                  .copyWith(color: onSurface),
+                            ),
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
+                            CategoryList(),
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  l10n.popularProducts,
+                                  style: AppTextStyles.regular18Black
+                                      .copyWith(color: onSurface),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                      text: l10n.viewAll,
+                                      style: AppTextStyles.bold16Primary,
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {}),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: h * 0.02,
+                            ),
+                            Skeletonizer(
+                              enabled: isLoading,
+                              child: ProductGrid(products: displayProducts),
+                            )
+                          ])));
+            });
+          });
+        }));
   }
 }

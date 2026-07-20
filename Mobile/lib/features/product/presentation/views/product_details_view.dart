@@ -17,6 +17,7 @@ import 'package:nexora/features/product/presentation/widgets/price_bottom_bar.da
 import 'package:nexora/features/product/presentation/widgets/product_image_carousel.dart';
 import 'package:nexora/features/product/presentation/widgets/product_reviews_list.dart';
 import 'package:nexora/features/reviews/presentation/manager/review_cubit.dart';
+import 'package:nexora/features/reviews/presentation/manager/review_state.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -109,127 +110,140 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         ],
       ),
       body: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
-          builder: (context, state) {
-        if (state is ProductDetailsError) {
-          return CustomErrorWidget(
-            message: state.message,
-            onRetry: () {
-              context
-                  .read<ProductDetailsCubit>()
-                  .fetchProduct(widget.productId);
-            },
-          );
-        }
+          builder: (context, productState) {
+        return BlocBuilder<ReviewCubit, ReviewState>(
+            builder: (context, reviewState) {
+          if (productState is ProductDetailsError ||
+              reviewState is ReviewError) {
+            String errorMessage = l10n.couldntLoadData;
+            if (productState is ProductDetailsError) {
+              errorMessage = productState.message;
+            } else if (reviewState is ReviewError) {
+              errorMessage = reviewState.message;
+            }
+            return CustomErrorWidget(
+              message: errorMessage,
+              onRetry: () {
+                context
+                    .read<ProductDetailsCubit>()
+                    .fetchProduct(widget.productId);
+                context
+                    .read<ReviewCubit>()
+                    .fetchProductReviews(widget.productId);
+              },
+            );
+          }
 
-        final isLoading =
-            state is ProductDetailsLoading || state is ProductDetailsInitial;
-        final product = state is ProductDetailsLoaded
-            ? state.product
-            : MockData.products[0];
+          final isLoading = productState is ProductDetailsLoading ||
+              productState is ProductDetailsInitial;
+          final product = productState is ProductDetailsLoaded
+              ? productState.product
+              : MockData.products[0];
 
-        final priceBeforeDiscount =
-            product.price / (1 - (product.discount) / 100);
+          final priceBeforeDiscount =
+              product.price / (1 - (product.discount) / 100);
 
-        return Skeletonizer(
-          enabled: isLoading,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: h * 0.45,
-                  child: ProductImageCarousel(images: product.images),
-                ),
-                Container(
-                  transform: Matrix4.translationValues(0, -20, 0),
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(24)),
+          return Skeletonizer(
+            enabled: isLoading,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: h * 0.45,
+                    child: ProductImageCarousel(images: product.images),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.brand.toUpperCase(),
-                        style: AppTextStyles.bold12Primary.copyWith(
-                          letterSpacing: 1.5,
+                  Container(
+                    transform: Matrix4.translationValues(0, -20, 0),
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(24)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.brand.toUpperCase(),
+                          style: AppTextStyles.bold12Primary.copyWith(
+                            letterSpacing: 1.5,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: h * 0.01),
-                      Text(
-                        product.name,
-                        style: AppTextStyles.extraBold24Black.copyWith(
-                          color: onSurface,
+                        SizedBox(height: h * 0.01),
+                        Text(
+                          product.name,
+                          style: AppTextStyles.extraBold24Black.copyWith(
+                            color: onSurface,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: h * 0.005),
-                      Row(
-                        children: [
-                          const Icon(AppIcons.star,
-                              color: AppColors.goldColor, size: 20),
-                          const SizedBox(width: 4),
-                          Text(product.ratingRate.toString(),
-                              style: AppTextStyles.bold14Black
-                                  .copyWith(color: onSurface)),
-                          const SizedBox(width: 8),
-                          Text(l10n.reviewsCount(product.ratingCount),
-                              style: AppTextStyles.regular14Grey),
-                        ],
-                      ),
-                      SizedBox(height: h * 0.02),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (product.discount != 0)
-                                Text(
-                                  '\$${priceBeforeDiscount.toStringAsFixed(2)}',
-                                  style: AppTextStyles.regular14Grey.copyWith(
-                                    decoration: TextDecoration.lineThrough,
+                        SizedBox(height: h * 0.005),
+                        Row(
+                          children: [
+                            const Icon(AppIcons.star,
+                                color: AppColors.goldColor, size: 20),
+                            const SizedBox(width: 4),
+                            Text(product.ratingRate.toString(),
+                                style: AppTextStyles.bold14Black
+                                    .copyWith(color: onSurface)),
+                            const SizedBox(width: 8),
+                            Text(l10n.reviewsCount(product.ratingCount),
+                                style: AppTextStyles.regular14Grey),
+                          ],
+                        ),
+                        SizedBox(height: h * 0.02),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (product.discount != 0)
+                                  Text(
+                                    '\$${priceBeforeDiscount.toStringAsFixed(2)}',
+                                    style: AppTextStyles.regular14Grey.copyWith(
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
                                   ),
+                                Text(
+                                  '\$${product.price}',
+                                  style: AppTextStyles.extraBold24Primary,
                                 ),
-                              Text(
-                                '\$${product.price}',
-                                style: AppTextStyles.extraBold24Primary,
-                              ),
-                            ],
-                          ),
-                          QuantitySelector(
-                            quantity: quantity,
-                            onIncrement: incrementQuantity,
-                            onDecrement: decrementQuantity,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: h * 0.02),
-                      Text(l10n.description,
+                              ],
+                            ),
+                            QuantitySelector(
+                              quantity: quantity,
+                              onIncrement: incrementQuantity,
+                              onDecrement: decrementQuantity,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: h * 0.02),
+                        Text(l10n.description,
+                            style: AppTextStyles.bold16White
+                                .copyWith(color: onSurface)),
+                        const SizedBox(height: 8),
+                        Text(
+                          product.description,
+                          style: AppTextStyles.regular14Grey,
+                        ),
+                        SizedBox(height: h * 0.02),
+                        Text(
+                          l10n.ratingsAndReviews,
                           style: AppTextStyles.bold16White
-                              .copyWith(color: onSurface)),
-                      const SizedBox(height: 8),
-                      Text(
-                        product.description,
-                        style: AppTextStyles.regular14Grey,
-                      ),
-                      SizedBox(height: h * 0.02),
-                      Text(
-                        l10n.ratingsAndReviews,
-                        style: AppTextStyles.bold16White
-                            .copyWith(color: onSurface),
-                      ),
-                      const SizedBox(height: 16),
-                      ProductReviewsList(currentUserId: currentUserId),
-                      SizedBox(height: h * 0.02),
-                    ],
+                              .copyWith(color: onSurface),
+                        ),
+                        const SizedBox(height: 16),
+                        ProductReviewsList(currentUserId: currentUserId),
+                        SizedBox(height: h * 0.02),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        });
       }),
       bottomNavigationBar:
           BlocBuilder<ProductDetailsCubit, ProductDetailsState>(

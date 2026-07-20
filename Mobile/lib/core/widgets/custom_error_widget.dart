@@ -8,14 +8,46 @@ class CustomErrorWidget extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;
   final double iconSize;
+  final bool isCompact;
 
   const CustomErrorWidget(
-      {super.key, required this.message, this.onRetry, this.iconSize = 64});
+      {super.key,
+      required this.message,
+      this.onRetry,
+      this.iconSize = 64,
+      this.isCompact = false});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
+
+    if (isCompact) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                message,
+                style: AppTextStyles.regular14Grey
+                    .copyWith(color: AppColors.redColor),
+                textAlign: TextAlign.center,
+              ),
+              if (onRetry != null)
+                TextButton.icon(
+                  onPressed: onRetry,
+                  icon: const Icon(AppIcons.refresh,
+                      color: AppColors.primary, size: 16),
+                  label:
+                      Text(l10n.tapToRetry, style: AppTextStyles.bold14Primary),
+                ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return Center(
       child: Padding(

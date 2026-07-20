@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/entities/category.dart';
 import 'package:nexora/core/theme/text_styles.dart';
+import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
 import 'package:nexora/features/category/presentation/manager/category_state.dart';
@@ -91,9 +92,12 @@ class _FilterState extends State<Filter> {
             BlocBuilder<CategoryCubit, CategoryState>(
               builder: (context, state) {
                 if (state is CategoryError) {
-                  return Text(state.message,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.red));
+                  return CustomErrorWidget(
+                    message: state.message,
+                    isCompact: true,
+                    onRetry: () =>
+                        context.read<CategoryCubit>().fetchCategories(),
+                  );
                 }
 
                 final bool isLoading =

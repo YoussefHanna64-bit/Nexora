@@ -25,10 +25,7 @@ class HomeBanners extends StatelessWidget {
     return BlocBuilder<BannerCubit, BannerState>(
       builder: (context, state) {
         if (state is BannerError) {
-          return Center(
-            child: Text(l10n.failedToLoadBanners,
-                style: TextStyle(color: AppColors.redColor)),
-          );
+          return const SizedBox.shrink();
         }
 
         final isLoading = state is BannerInitial || state is BannerLoading;
