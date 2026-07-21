@@ -252,5 +252,7 @@
   "popular": "الأكثر مبيعاً",
   "newest": "الأحدث",
   "priceLowToHigh": "السعر: من الأقل إلى الأعلى",
-  "priceHighToLow": "السعر: من الأعلى إلى الأقل"
+  "priceHighToLow": "السعر: من الأعلى إلى الأقل",
+  "productsOnSale": "منتجات مخفضة",
+  "onSale": "مخفضة"
 }

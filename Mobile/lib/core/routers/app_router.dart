@@ -82,10 +82,23 @@ final GoRouter appRouter = GoRouter(
       path: Routes.search,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
-        final String? query = state.extra as String?;
+        String? query;
+        Map<String, dynamic>? filters;
+
+        if (state.extra is String) {
+          query = state.extra as String;
+        } else if (state.extra is Map<String, dynamic>) {
+          final map = state.extra as Map<String, dynamic>;
+          query = map["query"] as String?;
+          filters = map["filters"] as Map<String, dynamic>?;
+        }
+
         return BlocProvider(
           create: (context) => getIt<ProductCubit>(),
-          child: SearchView(initialSearchQuery: query),
+          child: SearchView(
+            initialSearchQuery: query,
+            initialFilters: filters,
+          ),
         );
       },
     ),
@@ -191,14 +204,7 @@ final GoRouter appRouter = GoRouter(
           path: Routes.home,
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) {
-            return BlocProvider<ProductCubit>(
-              create: (context) => getIt<ProductCubit>()
-                ..fetchProducts(queryParameters: {
-                  'sort': '-sold',
-                  'limit': 6,
-                }),
-              child: const HomeView(),
-            );
+            return const HomeView();
           },
         ),
         GoRoute(

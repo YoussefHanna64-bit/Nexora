@@ -20,6 +20,7 @@ class SortBottomSheet {
       (l10n.newest, {"sort": "-createdAt"}),
       (l10n.priceLowToHigh, {"sort": "price"}),
       (l10n.priceHighToLow, {"sort": "-price"}),
+      (l10n.onSale, {"sort": "-discount"}),
     ];
 
     final currentState = cubit.state;

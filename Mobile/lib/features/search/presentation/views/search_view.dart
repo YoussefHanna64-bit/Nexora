@@ -9,8 +9,9 @@ import 'package:nexora/features/search/presentation/widgets/search_results_slive
 
 class SearchView extends StatefulWidget {
   final String? initialSearchQuery;
+  final Map<String, dynamic>? initialFilters;
 
-  const SearchView({super.key, this.initialSearchQuery});
+  const SearchView({super.key, this.initialSearchQuery, this.initialFilters});
 
   @override
   State<SearchView> createState() => _SearchViewState();
@@ -28,6 +29,10 @@ class _SearchViewState extends State<SearchView> {
     super.initState();
     _searchController =
         TextEditingController(text: widget.initialSearchQuery ?? "");
+
+    if (widget.initialFilters != null) {
+      _activeFilters = Map.from(widget.initialFilters!);
+    }
 
     _scrollController = ScrollController()..addListener(_onScroll);
 
