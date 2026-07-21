@@ -13,6 +13,7 @@ class AppIcons {
   static const IconData searchIcon = Icons.search;
   static const IconData add = Icons.add;
   static const IconData remove = Icons.remove;
+  static const IconData sort = Icons.sort_rounded;
   static const IconData tune = Icons.tune;
   static const IconData arrowBack = Icons.arrow_back_ios_new;
   static const IconData arrowForward = Icons.arrow_forward_ios;

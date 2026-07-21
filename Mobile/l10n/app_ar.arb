@@ -247,5 +247,10 @@
   "noReviewsYet": "لا توجد تقييمات حتى الآن",
   "noReviewsYetSubtitle": "كن أول من يقيّم بعد الشراء",
   "deleteReviewTitle": "حذف التقييم",
-  "deleteReviewContent": "هل أنت متأكد من أنك تريد حذف هذا التقييم؟"
+  "deleteReviewContent": "هل أنت متأكد أنك تريد حذف هذه المراجعة؟",
+  "sortBy": "ترتيب حسب",
+  "popular": "الأكثر مبيعاً",
+  "newest": "الأحدث",
+  "priceLowToHigh": "السعر: من الأقل إلى الأعلى",
+  "priceHighToLow": "السعر: من الأعلى إلى الأقل"
 }

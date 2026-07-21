@@ -1,20 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
-import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/utils/mock_data.dart';
-import 'package:nexora/core/theme/colors.dart';
-import 'package:nexora/core/theme/text_styles.dart';
-import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
-import 'package:nexora/core/widgets/custom_text_form_field.dart';
-import 'package:nexora/core/widgets/product_grid.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_cubit.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_state.dart';
-import 'package:nexora/features/search/presentation/widgets/filter.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:nexora/features/search/presentation/widgets/search_app_bar.dart';
+import 'package:nexora/features/search/presentation/widgets/search_results_sliver.dart';
 
 class SearchView extends StatefulWidget {
   final String? initialSearchQuery;
@@ -26,182 +17,105 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
-  late TextEditingController searchController;
+  late TextEditingController _searchController;
+  late ScrollController _scrollController;
 
-  Map<String, dynamic> activeFilters = {};
-
-  Timer? debounce;
+  Map<String, dynamic> _activeFilters = {};
+  Timer? _debounce;
 
   @override
   void initState() {
     super.initState();
-    searchController =
-        TextEditingController(text: widget.initialSearchQuery ?? '');
+    _searchController =
+        TextEditingController(text: widget.initialSearchQuery ?? "");
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => search());
+    _scrollController = ScrollController()..addListener(_onScroll);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _search());
   }
 
   @override
   void dispose() {
-    debounce?.cancel();
-    searchController.dispose();
+    _debounce?.cancel();
+    _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
-  void search() {
-    final Map<String, dynamic> queryParameters = {...activeFilters};
+  void _onScroll() {
+    final max = _scrollController.position.maxScrollExtent;
 
-    if (searchController.text.trim().isNotEmpty) {
-      queryParameters['keyword'] = searchController.text.trim();
+    if (_scrollController.offset >= max * 0.8) {
+      final state = context.read<ProductCubit>().state;
+      if (state is ProductPaginatedState &&
+          !state.isLoadingMore &&
+          !state.isReachedMax) {
+        context.read<ProductCubit>().fetchMoreProducts();
+      }
+    }
+  }
+
+  void _search({Map<String, dynamic>? overrideFilters}) {
+    final filters = overrideFilters ?? _activeFilters;
+    final params = Map<String, dynamic>.from(filters);
+
+    if (_searchController.text.trim().isNotEmpty) {
+      params["keyword"] = _searchController.text.trim();
     }
 
-    context
-        .read<ProductCubit>()
-        .fetchProducts(queryParameters: queryParameters);
+    context.read<ProductCubit>().fetchProductsPaginated(filters: params);
+  }
+
+  void _onSearchChanged() {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), _search);
+  }
+
+  void _onFiltersApplied(Map<String, dynamic> filters) {
+    setState(() {
+      _activeFilters = filters;
+    });
+
+    _search(overrideFilters: {
+      ...filters,
+      if (_searchController.text.trim().isNotEmpty)
+        "keyword": _searchController.text.trim(),
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final onSurface = Theme.of(context).colorScheme.onSurface;
-
     var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(AppIcons.arrowBack, color: onSurface, size: 20),
-          onPressed: () => context.pop(),
-        ),
-        titleSpacing: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: CustomTextFormField(
-                  hintText: l10n.search,
-                  controller: searchController,
-                  validator: (value) => null,
-                  autoFocus: widget.initialSearchQuery == null ||
-                      widget.initialSearchQuery!.isEmpty,
-                  onChanged: (value) {
-                    debounce?.cancel();
-                    debounce = Timer(const Duration(milliseconds: 500), () {
-                      search();
-                    });
-                  },
-                ),
-              ),
-              SizedBox(width: w * 0.02),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: IconButton(
-                  icon: const Icon(AppIcons.tune, color: AppColors.whiteColor),
-                  onPressed: () async {
-                    RangeValues? savedPriceRange;
-                    if (activeFilters.containsKey('price[gte]') &&
-                        activeFilters.containsKey('price[lte]')) {
-                      savedPriceRange = RangeValues(
-                        (activeFilters['price[gte]'] as num).toDouble(),
-                        (activeFilters['price[lte]'] as num).toDouble(),
-                      );
-                    }
+      appBar: SearchAppBar(
+        searchController: _searchController,
+        activeFilters: _activeFilters,
+        onSearchChanged: _onSearchChanged,
+        onFiltersApplied: _onFiltersApplied,
+      ),
+      body: BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          if (state is ProductError) {
+            return CustomErrorWidget(
+              message: state.message,
+              onRetry: _search,
+            );
+          }
 
-                    String? savedCategoryId = activeFilters['category'];
-
-                    double maxPrice = 10000;
-
-                    final currentState = context.read<ProductCubit>().state;
-                    if (currentState is ProductSuccess) {
-                      maxPrice = currentState.maxPrice;
-                    }
-
-                    final Map<String, dynamic>? filters =
-                        await showModalBottomSheet(
-                      context: context,
-                      showDragHandle: true,
-                      isScrollControlled: true,
-                      builder: (context) {
-                        return Filter(
-                          initialPriceRange: savedPriceRange,
-                          initialCategoryId: savedCategoryId,
-                          maxPrice: maxPrice,
-                        );
-                      },
-                    );
-
-                    if (filters != null) {
-                      setState(() {
-                        activeFilters = filters;
-                      });
-                      search();
-                    }
-                  },
-                ),
+          return CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SearchResultsSliver(
+                state: state,
+                horizontalPadding: w * 0.04,
+                verticalPadding: h * 0.02,
               ),
             ],
-          ),
-        ),
-      ),
-      body: BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
-        if (state is ProductError) {
-          return CustomErrorWidget(
-            message: state.message,
-            onRetry: () {
-              context.read<ProductCubit>().fetchProducts();
-            },
           );
-        }
-
-        final bool isLoading =
-            state is ProductLoading || state is ProductInitial;
-
-        final displayProducts =
-            (state is ProductSuccess) ? state.products : MockData.products;
-
-        return SingleChildScrollView(
-          padding:
-              EdgeInsets.symmetric(horizontal: w * 0.04, vertical: h * 0.02),
-          child: Skeletonizer(
-            enabled: isLoading,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      l10n.results,
-                      style:
-                          AppTextStyles.bold14Black.copyWith(color: onSurface),
-                    ),
-                    Text(
-                      l10n.countFound(displayProducts.length),
-                      style: AppTextStyles.regular14Grey,
-                    ),
-                  ],
-                ),
-                SizedBox(height: h * 0.02),
-                if (!isLoading && displayProducts.isEmpty)
-                  CustomEmptyState(
-                    icon: AppIcons.search,
-                    title: l10n.noProductsFound,
-                    subtitle: l10n.noProductsFoundSubtitle,
-                  )
-                else
-                  ProductGrid(products: displayProducts),
-              ],
-            ),
-          ),
-        );
-      }),
+        },
+      ),
     );
   }
 }

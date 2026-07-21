@@ -4,19 +4,11 @@ class ForgotPasswordInitial extends ForgotPasswordState {}
 
 class ForgotPasswordLoading extends ForgotPasswordState {}
 
-class ForgotPasswordEmailSent extends ForgotPasswordState {
-  final String message;
-
-  ForgotPasswordEmailSent(this.message);
-}
+class ForgotPasswordEmailSent extends ForgotPasswordState {}
 
 class ForgotPasswordOTPVerified extends ForgotPasswordState {}
 
-class ForgotPasswordSuccess extends ForgotPasswordState {
-  final String message;
-
-  ForgotPasswordSuccess(this.message);
-}
+class ForgotPasswordSuccess extends ForgotPasswordState {}
 
 class ForgotPasswordError extends ForgotPasswordState {
   final String message;
