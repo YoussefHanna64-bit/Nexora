@@ -11,6 +11,7 @@ class EndPoints {
   static const String reviews = "/reviews";
   static const String activeBanners = "/banners/active";
   static const String categories = "/categories";
+  static const String brands = "/brands";
   static const String cart = "/cart";
   static const String wishlist = "/wishlist";
   static const String orders = "/orders";

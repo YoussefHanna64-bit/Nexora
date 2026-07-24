@@ -36,6 +36,9 @@ import 'package:nexora/features/category/data/datasources/category_remote_data_s
 import 'package:nexora/features/category/data/repositories/category_repo_impl.dart';
 import 'package:nexora/features/category/domain/repositories/category_repo.dart';
 import 'package:nexora/features/category/domain/usecases/get_categories_use_case.dart';
+import 'package:nexora/features/brands/data/datasources/brand_remote_data_source.dart';
+import 'package:nexora/features/brands/data/repositories/brand_repo_impl.dart';
+import 'package:nexora/features/brands/domain/repositories/brand_repo.dart';
 import 'package:nexora/features/orders/data/datasources/order_remote_data_source.dart';
 import 'package:nexora/features/orders/data/repositories/order_repo_impl.dart';
 import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
@@ -149,6 +152,14 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<GetCategoriesUseCase>(
     () => GetCategoriesUseCase(getIt<CategoryRepo>()),
+  );
+
+  getIt.registerLazySingleton<BrandRemoteDataSource>(
+    () => BrandRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<BrandRepo>(
+    () => BrandRepoImpl(getIt<BrandRemoteDataSource>()),
   );
 
   getIt.registerLazySingleton<WishlistRemoteDataSource>(
