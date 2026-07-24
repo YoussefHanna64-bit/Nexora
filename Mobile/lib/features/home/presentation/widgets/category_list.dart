@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nexora/core/entities/category.dart';
+import 'package:nexora/features/category/domain/entities/category.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/widgets/category_card.dart';

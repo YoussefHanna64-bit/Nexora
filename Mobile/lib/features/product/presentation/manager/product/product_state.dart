@@ -1,4 +1,4 @@
-import 'package:nexora/core/entities/product.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 
 abstract class ProductState {}
 

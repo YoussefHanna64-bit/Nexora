@@ -2,10 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeProductSection extends StatelessWidget {

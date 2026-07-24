@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/errors/failure.dart';
-import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/features/product/data/datasources/product_remote_data_source.dart';
+import 'package:nexora/features/product/data/models/product_model.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 
 class ProductRepoImpl implements ProductRepo {

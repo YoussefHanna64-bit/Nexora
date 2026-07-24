@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/di/dependency_injection.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/mock_data.dart';
@@ -19,6 +18,7 @@ import 'package:nexora/features/category/presentation/manager/category_state.dar
 import 'package:nexora/features/home/presentation/widgets/category_list.dart';
 import 'package:nexora/features/home/presentation/widgets/home_banners.dart';
 import 'package:nexora/features/home/presentation/widgets/home_product_section.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_cubit.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_state.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';

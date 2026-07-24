@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:nexora/core/entities/cart.dart';
+import 'package:nexora/features/cart/domain/entities/cart.dart';
 import 'package:nexora/core/errors/failure.dart';
 import 'package:nexora/features/cart/data/datasources/cart_remote_data_source.dart';
 import 'package:nexora/features/cart/domain/repositories/cart_repo.dart';

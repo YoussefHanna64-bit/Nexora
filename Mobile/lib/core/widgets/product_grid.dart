@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/widgets/product_card.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 
@@ -101,7 +101,7 @@ class _ProductItem extends StatelessWidget {
       },
       builder: (context, isFavorite) {
         return ProductCard(
-          brand: product.brand,
+          brand: product.brand.name,
           name: product.name,
           price: product.price,
           isFavorite: isFavorite,

@@ -1,5 +1,5 @@
-import 'package:nexora/core/entities/cart.dart';
-import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/features/cart/domain/entities/cart.dart';
+import 'package:nexora/features/product/data/models/product_model.dart';
 
 class CartItemModel extends CartItem {
   CartItemModel({

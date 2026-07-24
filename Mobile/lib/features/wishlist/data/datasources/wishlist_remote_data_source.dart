@@ -1,6 +1,6 @@
-import 'package:nexora/core/models/product_model.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
+import 'package:nexora/features/product/data/models/product_model.dart';
 
 abstract class WishlistRemoteDataSource {
   Future<List<ProductModel>> getUserWishlist();

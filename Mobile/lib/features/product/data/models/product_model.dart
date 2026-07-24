@@ -1,10 +1,13 @@
-import 'package:nexora/core/entities/product.dart';
+import 'package:nexora/features/brands/data/models/brand_model.dart';
+import 'package:nexora/features/category/data/models/category_model.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 
 class ProductModel extends Product {
   ProductModel({
     required super.id,
     required super.name,
     required super.brand,
+    required super.category,
     required super.description,
     required super.price,
     required super.discount,
@@ -12,8 +15,6 @@ class ProductModel extends Product {
     required super.sold,
     required super.ratingRate,
     required super.ratingCount,
-    required super.categoryId,
-    required super.categoryName,
     required super.thumbnail,
     required super.images,
   });
@@ -22,7 +23,8 @@ class ProductModel extends Product {
     return ProductModel(
       id: json["_id"] ?? "",
       name: json["name"] ?? "Unknown Product",
-      brand: json["brand"] ?? "Unknown Brand",
+      brand: BrandModel.fromJson(json["brand"] ?? {}),
+      category: CategoryModel.fromJson(json["category"] ?? {}),
       description: json["description"] ?? "No description available.",
       price: json["price"] ?? 0,
       discount: json["discount"] ?? 0,
@@ -30,8 +32,6 @@ class ProductModel extends Product {
       sold: json["sold"] ?? 0,
       ratingRate: json["rating"]?["rate"] ?? 0,
       ratingCount: json["rating"]?["count"] ?? 0,
-      categoryId: json["category"]?["_id"] ?? "",
-      categoryName: json["category"]?["name"] ?? "Unknown Category",
       thumbnail: json["thumbnail"] ?? "",
       images: json["images"] != null ? List<String>.from(json["images"]) : [],
     );

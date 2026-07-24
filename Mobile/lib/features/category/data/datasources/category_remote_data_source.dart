@@ -1,4 +1,4 @@
-import 'package:nexora/core/models/category_model.dart';
+import 'package:nexora/features/category/data/models/category_model.dart';
 import 'package:nexora/core/network/api_service.dart';
 import 'package:nexora/core/network/end_points.dart';
 

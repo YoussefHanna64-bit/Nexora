@@ -2,11 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/quantity_selector.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 
 class CartItemCard extends StatelessWidget {
   final Product product;
@@ -80,7 +80,7 @@ class CartItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        product.brand,
+                        product.brand.name,
                         style: AppTextStyles.regular14Grey,
                       ),
                       const SizedBox(height: 12),

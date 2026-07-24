@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:nexora/core/entities/product.dart';
 import 'package:nexora/core/errors/failure.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 import 'package:nexora/features/product/domain/repositories/product_repo.dart';
 
 class GetProductByIdUseCase {

@@ -1,4 +1,4 @@
-import 'package:nexora/core/entities/category.dart';
+import 'package:nexora/features/category/domain/entities/category.dart';
 
 class CategoryModel extends Category {
   CategoryModel({

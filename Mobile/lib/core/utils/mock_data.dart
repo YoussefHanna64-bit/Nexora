@@ -1,7 +1,7 @@
-import 'package:nexora/core/entities/cart.dart';
-import 'package:nexora/core/entities/category.dart';
-import 'package:nexora/core/entities/product.dart';
-import 'package:nexora/core/models/product_model.dart';
+import 'package:nexora/features/brands/domain/entities/brand.dart';
+import 'package:nexora/features/cart/domain/entities/cart.dart';
+import 'package:nexora/features/category/domain/entities/category.dart';
+import 'package:nexora/features/product/domain/entities/product.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/banner/domain/entities/banner.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
@@ -12,10 +12,11 @@ class MockData {
 
   static List<Product> get products => List.generate(
         10,
-        (i) => ProductModel(
+        (i) => Product(
           id: i.toString(),
           name: "Product $i",
-          brand: "Brand",
+          brand: brands[0],
+          category: categories[0],
           description: "Description for Product $i",
           price: 299.99,
           discount: 20.0,
@@ -23,8 +24,6 @@ class MockData {
           sold: 120,
           ratingRate: 4.8,
           ratingCount: 320,
-          categoryId: "categoryId",
-          categoryName: "CategoryName",
           thumbnail: "https://i.imgur.com/yVeIeDa.jpeg",
           images: ["https://i.imgur.com/yVeIeDa.jpeg"],
         ),
@@ -35,6 +34,15 @@ class MockData {
         (i) => Category(
           id: i.toString(),
           name: "Category $i",
+          image: "https://i.imgur.com/yVeIeDa.jpeg",
+        ),
+      );
+
+  static List<Brand> get brands => List.generate(
+        6,
+        (i) => Brand(
+          id: i.toString(),
+          name: "Brand $i",
           image: "https://i.imgur.com/yVeIeDa.jpeg",
         ),
       );

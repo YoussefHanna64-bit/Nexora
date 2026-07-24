@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nexora/core/entities/category.dart';
+import 'package:nexora/features/category/domain/entities/category.dart';
 import 'package:nexora/core/theme/colors.dart';
 
 class CategoryFilterWrap extends StatelessWidget {
