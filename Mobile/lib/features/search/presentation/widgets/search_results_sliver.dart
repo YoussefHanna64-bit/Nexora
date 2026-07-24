@@ -5,7 +5,7 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/widgets/custom_empty_state.dart';
-import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/product/presentation/widgets/product_grid.dart';
 import 'package:nexora/features/product/presentation/manager/product/product_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

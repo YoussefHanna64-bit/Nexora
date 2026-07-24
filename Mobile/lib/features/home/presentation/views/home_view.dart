@@ -15,6 +15,7 @@ import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
 import 'package:nexora/features/category/presentation/manager/category_state.dart';
+import 'package:nexora/features/home/presentation/widgets/brand_list.dart';
 import 'package:nexora/features/home/presentation/widgets/category_list.dart';
 import 'package:nexora/features/home/presentation/widgets/home_banners.dart';
 import 'package:nexora/features/home/presentation/widgets/home_product_section.dart';
@@ -182,6 +183,18 @@ class _HomeViewState extends State<HomeView> {
                                       height: h * 0.02,
                                     ),
                                     CategoryList(),
+                                    SizedBox(
+                                      height: h * 0.02,
+                                    ),
+                                    Text(
+                                      l10n.shopByBrand,
+                                      style: AppTextStyles.regular18Black
+                                          .copyWith(color: onSurface),
+                                    ),
+                                    SizedBox(
+                                      height: h * 0.02,
+                                    ),
+                                    BrandList(),
                                     SizedBox(
                                       height: h * 0.02,
                                     ),

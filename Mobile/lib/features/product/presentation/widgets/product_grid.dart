@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/utils/app_snackbars.dart';
-import 'package:nexora/core/widgets/product_card.dart';
+import 'package:nexora/features/product/presentation/widgets/product_card.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/product/domain/entities/product.dart';

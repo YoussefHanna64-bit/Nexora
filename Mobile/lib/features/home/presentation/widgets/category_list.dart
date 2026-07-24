@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nexora/features/category/domain/entities/category.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/utils/mock_data.dart';
-import 'package:nexora/core/widgets/category_card.dart';
+import 'package:nexora/features/category/presentation/presentation/widgets/category_card.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
 import 'package:nexora/features/category/presentation/manager/category_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';

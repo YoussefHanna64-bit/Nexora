@@ -8,7 +8,7 @@ import 'package:nexora/core/utils/mock_data.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
-import 'package:nexora/core/widgets/product_grid.dart';
+import 'package:nexora/features/product/presentation/widgets/product_grid.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_cubit.dart';
 import 'package:nexora/features/wishlist/presentation/manager/wishlist_state.dart';
 import 'package:skeletonizer/skeletonizer.dart';
