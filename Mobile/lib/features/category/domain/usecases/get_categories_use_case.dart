@@ -8,7 +8,7 @@ class GetCategoriesUseCase {
 
   GetCategoriesUseCase(this.categoryRepo);
 
-  Future<Either<Failure, List<Category>>> call() async {
-    return await categoryRepo.getCategories();
+  Future<Either<Failure, List<Category>>> call() {
+    return categoryRepo.getCategories();
   }
 }
