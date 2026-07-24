@@ -265,5 +265,11 @@
   "onboardingSubtitle3": "Get your orders delivered fast with real-time tracking and reliable doorstep delivery.",
   "next": "Next",
   "getStarted": "Get Started",
-  "skip": "Skip"
+  "skip": "Skip",
+  "nexora": "Nexora",
+  "developerStory": "Developer Story",
+  "developerStoryContent": "Nexora was developed by Youssef Hanna. Built entirely during limited free time outside of a rigorous daily schedule, this hobby project is a hands-on way to use what I learned in ITI.",
+  "connect": "Connect",
+  "viewSourceOnGithub": "View source code on GitHub",
+  "contactDeveloper": "Contact Developer"
 }

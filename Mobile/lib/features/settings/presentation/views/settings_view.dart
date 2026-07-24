@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/theme/theme_cubit.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
@@ -65,7 +67,9 @@ class SettingsView extends StatelessWidget {
             CustomListTile(
               icon: AppIcons.infoOutline,
               title: l10n.aboutNexora,
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.aboutNexora);
+              },
             ),
           ],
         ),

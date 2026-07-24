@@ -18,4 +18,5 @@ class Routes {
   static const String addEditAddress = "/addEditAddress";
   static const String editProfile = "/editProfile";
   static const String changePassword = "/changePassword";
+  static const String aboutNexora = "/aboutNexora";
 }

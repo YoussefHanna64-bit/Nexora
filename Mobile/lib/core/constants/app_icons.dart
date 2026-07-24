@@ -50,4 +50,6 @@ class AppIcons {
   static const IconData errorOutlined = Icons.error_outline;
   static const IconData refresh = Icons.refresh;
   static const IconData lockOutlined = Icons.lock_outline;
+  static const IconData github = Icons.code;
+  static const IconData email = Icons.email;
 }
