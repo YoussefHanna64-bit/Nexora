@@ -1,0 +1,17 @@
+flutter_native_splash:
+  color: "#FFFFFF" 
+  image: "assets/images/Nexora.png" 
+  branding: "assets/images/NexoraBranding.png"
+
+  color_dark: "#000000" 
+  image_dark: "assets/images/Nexora.png" 
+  branding_dark: "assets/images/NexoraBranding.png"
+
+  android_12:
+    image: "assets/images/Nexora.png"
+    color: "#FFFFFF"
+    branding: "assets/images/NexoraBranding.png"
+    
+    image_dark: "assets/images/Nexora.png"
+    color_dark: "#000000"
+    branding_dark: "assets/images/NexoraBranding.png"
