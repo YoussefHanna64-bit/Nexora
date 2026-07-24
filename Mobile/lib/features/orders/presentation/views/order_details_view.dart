@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/localization/language_cubit.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/app_dialogs.dart';
@@ -44,7 +43,7 @@ class OrderDetailsView extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               l10n.placedOn(DateFormat("dd MMM yyyy, hh:mm a",
-                      context.read<LanguageCubit>().state.languageCode)
+                      Localizations.localeOf(context).languageCode)
                   .format(order.createdAt)),
               style: AppTextStyles.regular14Grey,
             ),

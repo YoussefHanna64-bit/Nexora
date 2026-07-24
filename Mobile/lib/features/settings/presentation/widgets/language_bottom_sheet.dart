@@ -10,7 +10,7 @@ class LanguageBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentLang = context.watch<LanguageCubit>().state.languageCode;
+    final currentLang = Localizations.localeOf(context).languageCode;
     final onSurface = Theme.of(context).colorScheme.onSurface;
     final surface = Theme.of(context).colorScheme.surface;
     final divider = Theme.of(context).dividerColor;

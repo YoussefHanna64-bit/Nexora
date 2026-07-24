@@ -56,12 +56,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageCubit, Locale>(builder: (context, locale) {
+    return BlocBuilder<LanguageCubit, Locale?>(builder: (context, locale) {
       return BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            title: 'Nexora',
+            title: "Nexora",
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: themeMode,
@@ -73,8 +73,8 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
             ],
             supportedLocales: const [
-              Locale('en'),
-              Locale('ar'),
+              Locale("en"),
+              Locale("ar"),
             ],
           );
         },

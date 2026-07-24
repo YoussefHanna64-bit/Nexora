@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/localization/language_cubit.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/app_dialogs.dart';
@@ -75,7 +74,7 @@ class ReviewCard extends StatelessWidget {
                   ),
                   Text(
                     DateFormat("dd MMM yyyy",
-                            context.read<LanguageCubit>().state.languageCode)
+                            Localizations.localeOf(context).languageCode)
                         .format(review.createdAt),
                     style: AppTextStyles.regular12Grey,
                   ),

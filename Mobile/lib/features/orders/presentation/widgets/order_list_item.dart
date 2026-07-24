@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/constants/app_icons.dart';
-import 'package:nexora/core/localization/language_cubit.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
@@ -45,7 +43,7 @@ class OrderListItem extends StatelessWidget {
             children: [
               Text(
                 DateFormat("dd MMM yyyy, hh:mm a",
-                        context.read<LanguageCubit>().state.languageCode)
+                        Localizations.localeOf(context).languageCode)
                     .format(order.createdAt),
                 style: AppTextStyles.regular12Grey.copyWith(color: onSurface),
               ),
