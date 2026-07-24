@@ -1,7 +1,8 @@
 import { check } from "express-validator";
 import validatorMiddleware from "../../middleware/validatorMiddleware.js";
 import Category from "../../models/categoryModel.js";
-import { CATEGORY_NOT_FOUND } from "../messages.js";
+import Brand from "../../models/brandModel.js";
+import { CATEGORY_NOT_FOUND, BRAND_NOT_FOUND } from "../messages.js";
 
 export const createProductValidator = [
   check("name")
@@ -13,8 +14,15 @@ export const createProductValidator = [
   check("brand")
     .notEmpty()
     .withMessage("Product brand is required")
-    .isLength({ min: 2 })
-    .withMessage("Product brand must be at least 2 characters long"),
+    .isMongoId()
+    .withMessage("Invalid Brand ID format")
+    .custom(async (brandId) => {
+      const brandExists = await Brand.findById(brandId);
+      if (!brandExists) {
+        throw new Error(BRAND_NOT_FOUND);
+      }
+      return true;
+    }),
 
   check("description")
     .notEmpty()

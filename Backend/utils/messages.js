@@ -1,6 +1,7 @@
 export const PRODUCT_NOT_FOUND = "Product not found";
 
 export const CATEGORY_NOT_FOUND = "Category not found";
+export const BRAND_NOT_FOUND = "Brand not found";
 export const BANNER_NOT_FOUND = "Banner not found";
 
 export const CART_NOT_FOUND = "There is no cart for this user";

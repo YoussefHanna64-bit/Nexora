@@ -9,10 +9,9 @@ const productSchema = new mongoose.Schema(
       minlength: [3, "Product name must be at least 3 characters long"],
     },
     brand: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Brand",
       required: [true, "Product brand is required"],
-      trim: true,
-      minlength: [2, "Product brand must be at least 2 characters long"],
     },
     description: {
       type: String,

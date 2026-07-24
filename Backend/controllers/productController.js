@@ -1,6 +1,5 @@
 import asyncWrapper from "../middleware/asyncWrapper.js";
 import Product from "../models/productModel.js";
-import Category from "../models/categoryModel.js";
 import httpStatus from "../utils/httpStatus.js";
 import AppError from "../utils/AppError.js";
 import ApiFeatures from "../utils/ApiFeatures.js";
@@ -20,7 +19,7 @@ export const createProduct = asyncWrapper(async (req, res, next) => {
 
 export const getAllProducts = asyncWrapper(async (req, res, next) => {
   let features = new ApiFeatures(
-    Product.find().populate("category"),
+    Product.find().populate("category").populate("brand", "name image"),
     req.query,
   ).filter();
 
@@ -45,7 +44,9 @@ export const getAllProducts = asyncWrapper(async (req, res, next) => {
 });
 
 export const getProductByID = asyncWrapper(async (req, res, next) => {
-  const product = await Product.findById(req.params.id).populate("category");
+  const product = await Product.findById(req.params.id)
+    .populate("category")
+    .populate("brand", "name image");
 
   if (!product) {
     return next(new AppError(PRODUCT_NOT_FOUND, 404));
@@ -64,7 +65,9 @@ export const updateProduct = asyncWrapper(async (req, res, next) => {
   const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     returnDocument: "after",
     runValidators: true,
-  }).populate("category");
+  })
+    .populate("category")
+    .populate("brand", "name image");
 
   if (!product) {
     return next(new AppError(PRODUCT_NOT_FOUND, 404));
