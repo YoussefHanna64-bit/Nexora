@@ -53,6 +53,7 @@ dependencies:
   carousel_slider: ^5.1.2
   image_picker: ^1.2.0
   google_sign_in: ^7.1.1
+  flutter_launcher_icons: ^0.14.4
   
 dev_dependencies:
   flutter_test:
