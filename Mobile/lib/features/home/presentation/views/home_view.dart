@@ -11,6 +11,8 @@ import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_cubit.dart';
 import 'package:nexora/features/banner/presentation/manager/banner_state.dart';
+import 'package:nexora/features/brands/presentation/manager/brand_cubit.dart';
+import 'package:nexora/features/brands/presentation/manager/brand_state.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/category/presentation/manager/category_cubit.dart';
@@ -110,114 +112,124 @@ class _HomeViewState extends State<HomeView> {
           builder: (context, bannerState) {
         return BlocBuilder<CategoryCubit, CategoryState>(
             builder: (context, categoryState) {
-          return BlocBuilder<ProductCubit, ProductState>(
-              bloc: popularCubit,
-              builder: (context, popularState) {
-                return BlocBuilder<ProductCubit, ProductState>(
-                    bloc: saleCubit,
-                    builder: (context, saleState) {
-                      if (bannerState is BannerError ||
-                          categoryState is CategoryError ||
-                          popularState is ProductError ||
-                          saleState is ProductError) {
-                        String errorMessage = l10n.couldntLoadData;
-                        if (bannerState is BannerError) {
-                          errorMessage = bannerState.message;
-                        } else if (categoryState is CategoryError) {
-                          errorMessage = categoryState.message;
-                        } else if (popularState is ProductError) {
-                          errorMessage = popularState.message;
-                        } else if (saleState is ProductError) {
-                          errorMessage = saleState.message;
+          return BlocBuilder<BrandCubit, BrandState>(
+              builder: (context, brandState) {
+            return BlocBuilder<ProductCubit, ProductState>(
+                bloc: popularCubit,
+                builder: (context, popularState) {
+                  return BlocBuilder<ProductCubit, ProductState>(
+                      bloc: saleCubit,
+                      builder: (context, saleState) {
+                        if (bannerState is BannerError ||
+                            categoryState is CategoryError ||
+                            brandState is BrandError ||
+                            popularState is ProductError ||
+                            saleState is ProductError) {
+                          String errorMessage = l10n.couldntLoadData;
+                          if (bannerState is BannerError) {
+                            errorMessage = bannerState.message;
+                          } else if (categoryState is CategoryError) {
+                            errorMessage = categoryState.message;
+                          } else if (brandState is BrandError) {
+                            errorMessage = brandState.message;
+                          } else if (popularState is ProductError) {
+                            errorMessage = popularState.message;
+                          } else if (saleState is ProductError) {
+                            errorMessage = saleState.message;
+                          }
+
+                          return CustomErrorWidget(
+                            message: errorMessage,
+                            onRetry: () {
+                              context.read<BannerCubit>().fetchBanners();
+                              context.read<CategoryCubit>().fetchCategories();
+                              context.read<BrandCubit>().fetchBrands();
+                              popularCubit.fetchProducts(queryParameters: {
+                                "sort": "-sold",
+                                "limit": 6,
+                              });
+                              saleCubit.fetchProducts(queryParameters: {
+                                "sort": "-discount",
+                                "limit": 6,
+                              });
+                            },
+                          );
                         }
 
-                        return CustomErrorWidget(
-                          message: errorMessage,
-                          onRetry: () {
-                            context.read<BannerCubit>().fetchBanners();
-                            context.read<CategoryCubit>().fetchCategories();
-                            popularCubit.fetchProducts(queryParameters: {
-                              "sort": "-sold",
-                              "limit": 6,
-                            });
-                            saleCubit.fetchProducts(queryParameters: {
-                              "sort": "-discount",
-                              "limit": 6,
-                            });
-                          },
-                        );
-                      }
+                        final bool isPopularLoading =
+                            popularState is ProductLoading ||
+                                popularState is ProductInitial;
+                        final bool isSaleLoading =
+                            saleState is ProductLoading ||
+                                saleState is ProductInitial;
 
-                      final bool isPopularLoading =
-                          popularState is ProductLoading ||
-                              popularState is ProductInitial;
-                      final bool isSaleLoading = saleState is ProductLoading ||
-                          saleState is ProductInitial;
+                        final displayPopularProducts = isPopularLoading
+                            ? MockData.products
+                            : (popularState as ProductSuccess).products;
 
-                      final displayPopularProducts = isPopularLoading
-                          ? MockData.products
-                          : (popularState as ProductSuccess).products;
+                        final displaySaleProducts = isSaleLoading
+                            ? MockData.products
+                            : (saleState as ProductSuccess).products;
 
-                      final displaySaleProducts = isSaleLoading
-                          ? MockData.products
-                          : (saleState as ProductSuccess).products;
-
-                      return SingleChildScrollView(
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: w * 0.04, vertical: h * 0.02),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                        height: h * 0.22, child: HomeBanners()),
-                                    SizedBox(
-                                      height: h * 0.02,
-                                    ),
-                                    Text(
-                                      l10n.shopByCategory,
-                                      style: AppTextStyles.regular18Black
-                                          .copyWith(color: onSurface),
-                                    ),
-                                    SizedBox(
-                                      height: h * 0.02,
-                                    ),
-                                    CategoryList(),
-                                    SizedBox(
-                                      height: h * 0.02,
-                                    ),
-                                    Text(
-                                      l10n.shopByBrand,
-                                      style: AppTextStyles.regular18Black
-                                          .copyWith(color: onSurface),
-                                    ),
-                                    SizedBox(
-                                      height: h * 0.02,
-                                    ),
-                                    BrandList(),
-                                    SizedBox(
-                                      height: h * 0.02,
-                                    ),
-                                    HomeProductSection(
-                                      title: l10n.popularProducts,
-                                      sortFilter: "-sold",
-                                      isLoading: isPopularLoading,
-                                      products: List<Product>.from(
-                                          displayPopularProducts),
-                                    ),
-                                    SizedBox(
-                                      height: h * 0.02,
-                                    ),
-                                    HomeProductSection(
-                                      title: l10n.productsOnSale,
-                                      sortFilter: "-discount",
-                                      isLoading: isSaleLoading,
-                                      products: List<Product>.from(
-                                          displaySaleProducts),
-                                    ),
-                                  ])));
-                    });
-              });
+                        return SingleChildScrollView(
+                            child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: w * 0.04, vertical: h * 0.02),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                          height: h * 0.22,
+                                          child: HomeBanners()),
+                                      SizedBox(
+                                        height: h * 0.02,
+                                      ),
+                                      Text(
+                                        l10n.shopByCategory,
+                                        style: AppTextStyles.regular18Black
+                                            .copyWith(color: onSurface),
+                                      ),
+                                      SizedBox(
+                                        height: h * 0.02,
+                                      ),
+                                      CategoryList(),
+                                      SizedBox(
+                                        height: h * 0.02,
+                                      ),
+                                      Text(
+                                        l10n.shopByBrand,
+                                        style: AppTextStyles.regular18Black
+                                            .copyWith(color: onSurface),
+                                      ),
+                                      SizedBox(
+                                        height: h * 0.02,
+                                      ),
+                                      BrandList(),
+                                      SizedBox(
+                                        height: h * 0.02,
+                                      ),
+                                      HomeProductSection(
+                                        title: l10n.popularProducts,
+                                        sortFilter: "-sold",
+                                        isLoading: isPopularLoading,
+                                        products: List<Product>.from(
+                                            displayPopularProducts),
+                                      ),
+                                      SizedBox(
+                                        height: h * 0.02,
+                                      ),
+                                      HomeProductSection(
+                                        title: l10n.productsOnSale,
+                                        sortFilter: "-discount",
+                                        isLoading: isSaleLoading,
+                                        products: List<Product>.from(
+                                            displaySaleProducts),
+                                      ),
+                                    ])));
+                      });
+                });
+          });
         });
       }),
     );

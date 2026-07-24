@@ -13,6 +13,7 @@ class SortBottomSheet {
 
   static void show(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
     final cubit = context.read<ProductCubit>();
 
     final sortOptions = [
@@ -32,40 +33,42 @@ class SortBottomSheet {
         context: context,
         showDragHandle: true,
         builder: (context) {
-          return ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(bottom: 16),
-              children: [
-                Padding(
+          return SafeArea(
+              child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Text(
-                    l10n.sortBy,
-                    style: AppTextStyles.bold16Black.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                ),
-                ...sortOptions.map((entry) {
-                  final (label, params) = entry;
-                  final isSelected = currentSort == params["sort"];
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          l10n.sortBy,
+                          style: AppTextStyles.bold20White
+                              .copyWith(color: onSurface),
+                        ),
+                        ...sortOptions.map((entry) {
+                          final (label, params) = entry;
+                          final isSelected = currentSort == params["sort"];
 
-                  return ListTile(
-                    title: Text(
-                      label,
-                      style: AppTextStyles.bold14Black.copyWith(
-                        color: isSelected ? AppColors.primary : null,
-                      ),
-                    ),
-                    trailing: isSelected
-                        ? const Icon(AppIcons.check, color: AppColors.primary)
-                        : null,
-                    onTap: () {
-                      context.pop();
-                      cubit.applySortOrder(params);
-                    },
-                  );
-                }),
-              ]);
+                          return ListTile(
+                            title: Text(
+                              label,
+                              style: AppTextStyles.bold14Black.copyWith(
+                                color:
+                                    isSelected ? AppColors.primary : onSurface,
+                              ),
+                            ),
+                            trailing: isSelected
+                                ? const Icon(AppIcons.check,
+                                    color: AppColors.primary)
+                                : null,
+                            onTap: () {
+                              context.pop();
+                              cubit.applySortOrder(params);
+                            },
+                          );
+                        }),
+                      ])));
         });
   }
 }
