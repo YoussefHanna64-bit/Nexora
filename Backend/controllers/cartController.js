@@ -69,7 +69,10 @@ export const addProductToCart = asyncWrapper(async (req, res, next) => {
 
   await cart.populate({
     path: "cartItems.product",
-    select: "name thumbnail price brand",
+    populate: [
+      { path: "brand", model: "Brand" },
+      { path: "category", model: "Category" },
+    ],
   });
 
   res.status(200).json({
@@ -85,7 +88,10 @@ export const addProductToCart = asyncWrapper(async (req, res, next) => {
 export const getUserCart = asyncWrapper(async (req, res, next) => {
   const cart = await Cart.findOne({ user: req.user.id }).populate({
     path: "cartItems.product",
-    select: "name thumbnail price brand",
+    populate: [
+      { path: "brand", model: "Brand" },
+      { path: "category", model: "Category" },
+    ],
   });
 
   if (!cart) {
@@ -134,7 +140,10 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
 
     await cart.populate({
       path: "cartItems.product",
-      select: "name thumbnail price brand",
+      populate: [
+        { path: "brand", model: "Brand" },
+        { path: "category", model: "Category" },
+      ],
     });
 
     return res.status(200).json({
@@ -166,7 +175,10 @@ export const updateCartItemQuantity = asyncWrapper(async (req, res, next) => {
 
   await cart.populate({
     path: "cartItems.product",
-    select: "name thumbnail price brand",
+    populate: [
+      { path: "brand", model: "Brand" },
+      { path: "category", model: "Category" },
+    ],
   });
 
   res.status(200).json({
@@ -186,7 +198,10 @@ export const removeCartItem = asyncWrapper(async (req, res, next) => {
     { returnDocument: "after" },
   ).populate({
     path: "cartItems.product",
-    select: "name thumbnail price brand",
+    populate: [
+      { path: "brand", model: "Brand" },
+      { path: "category", model: "Category" },
+    ],
   });
 
   if (!cart) {
