@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/di/dependency_injection.dart';
 import 'package:nexora/core/routers/routes.dart';
+import 'package:nexora/core/services/cache_helper.dart';
 import 'package:nexora/core/services/secure_storage.dart';
+import 'package:nexora/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/address/presentation/views/add_edit_address_view.dart';
 import 'package:nexora/features/address/presentation/views/shipping_addresses_view.dart';
@@ -42,12 +44,19 @@ final GoRouter appRouter = GoRouter(
   redirect: (context, state) async {
     final String? token = await SecureStorage.getToken();
     final bool isLoggedIn = token != null;
+    final bool isOnboardingCompleted =
+        await CacheHelper.isOnboardingCompleted();
 
+    final bool isGoingToOnboarding = state.matchedLocation == Routes.onboarding;
     final bool isGoingToAuth = state.matchedLocation == Routes.login ||
         state.matchedLocation == Routes.register ||
         state.matchedLocation == Routes.forgotPassword;
 
-    if (!isLoggedIn && !isGoingToAuth) {
+    if (!isOnboardingCompleted && !isGoingToOnboarding) {
+      return Routes.onboarding;
+    }
+
+    if (!isLoggedIn && !isGoingToAuth && !isGoingToOnboarding) {
       return Routes.login;
     }
 
@@ -58,6 +67,11 @@ final GoRouter appRouter = GoRouter(
     return null;
   },
   routes: [
+    GoRoute(
+      path: Routes.onboarding,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const OnboardingView(),
+    ),
     GoRoute(
       path: Routes.login,
       parentNavigatorKey: _rootNavigatorKey,

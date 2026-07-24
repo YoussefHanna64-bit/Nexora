@@ -256,5 +256,14 @@
   "priceLowToHigh": "Price: Low to High",
   "priceHighToLow": "Price: High to Low",
   "productsOnSale": "Products On Sale",
-  "onSale": "On Sale"
+  "onSale": "On Sale",
+  "onboardingTitle1": "Discover Top Electronics",
+  "onboardingSubtitle1": "Explore the latest gadgets and cutting-edge tech from the world's leading brands, all in one place.",
+  "onboardingTitle2": "Secure Tech Checkout",
+  "onboardingSubtitle2": "Shop with confidence using our encrypted payment system and multiple secure checkout options.",
+  "onboardingTitle3": "Express Tech Delivery",
+  "onboardingSubtitle3": "Get your orders delivered fast with real-time tracking and reliable doorstep delivery.",
+  "next": "Next",
+  "getStarted": "Get Started",
+  "skip": "Skip"
 }

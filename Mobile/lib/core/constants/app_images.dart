@@ -1,3 +1,7 @@
 class AppImages {
-  // static const String google = 'assets/images/google.png';
+  static const String nexora = "assets/images/Nexora.png";
+  static const String nexoraBranding = "assets/images/NexoraBranding.png";
+  static const String onboarding1 = "assets/images/onboarding1.png";
+  static const String onboarding2 = "assets/images/onboarding2.png";
+  static const String onboarding3 = "assets/images/onboarding3.png";
 }
