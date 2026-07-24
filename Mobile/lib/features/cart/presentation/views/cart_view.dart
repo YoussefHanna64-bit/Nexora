@@ -12,7 +12,7 @@ import 'package:nexora/core/widgets/custom_bottom_sheet_container.dart';
 import 'package:nexora/core/widgets/custom_empty_state.dart';
 import 'package:nexora/core/widgets/custom_error_widget.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
-import 'package:nexora/core/widgets/order_summary_card.dart';
+import 'package:nexora/features/orders/presentation/widgets/order_summary_card.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
 import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 import 'package:nexora/features/cart/presentation/widgets/cart_item_card.dart';

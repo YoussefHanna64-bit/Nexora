@@ -53,7 +53,8 @@ class BrandList extends StatelessWidget {
                       context.push(
                         Routes.search,
                         extra: {
-                          "filters": {"brand": brand.name},
+                          "query": brand.name,
+                          "filters": {"brand": brand.id},
                         },
                       );
                     }

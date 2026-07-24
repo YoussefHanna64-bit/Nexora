@@ -10,7 +10,7 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/app_dialogs.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
-import 'package:nexora/core/widgets/order_summary_card.dart';
+import 'package:nexora/features/orders/presentation/widgets/order_summary_card.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
 import 'package:nexora/features/orders/presentation/widgets/order_product_tile.dart';

@@ -40,7 +40,13 @@ class CategoryList extends StatelessWidget {
                   imageUrl: category.image,
                   onTap: () {
                     if (!isLoading) {
-                      context.push(Routes.search, extra: category.name);
+                      context.push(
+                        Routes.search,
+                        extra: {
+                          "query": category.name,
+                          "filters": {"category": category.id},
+                        },
+                      );
                     }
                   },
                 );

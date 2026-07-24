@@ -47,6 +47,7 @@
   "clearAll": "Clear All",
   "priceRange": "Price Range",
   "categories": "Categories",
+  "brands": "Brands",
   "applyFilters": "Apply Filters",
   "reviewsCount": "({count} reviews)",
   "@reviewsCount": {

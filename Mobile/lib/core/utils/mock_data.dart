@@ -38,6 +38,14 @@ class MockData {
         ),
       );
 
+  static List<Category> get mockCategories => [
+        Category(id: "1", name: "Electronics", image: ""),
+        Category(id: "2", name: "Smartphones", image: ""),
+        Category(id: "3", name: "Laptops", image: ""),
+        Category(id: "4", name: "Tablets", image: ""),
+        Category(id: "5", name: "Accessories", image: ""),
+      ];
+
   static List<Brand> get brands => List.generate(
         6,
         (i) => Brand(
@@ -46,6 +54,14 @@ class MockData {
           image: "https://i.imgur.com/yVeIeDa.jpeg",
         ),
       );
+
+  static List<Brand> get mockBrands => [
+        Brand(id: "1", name: "Apple", image: ""),
+        Brand(id: "2", name: "Samsung", image: ""),
+        Brand(id: "3", name: "Sony", image: ""),
+        Brand(id: "4", name: "Nike", image: ""),
+        Brand(id: "5", name: "Adidas", image: ""),
+      ];
 
   static List<ShippingAddress> get addresses => List.generate(
         3,

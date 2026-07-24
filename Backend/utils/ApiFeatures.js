@@ -12,6 +12,10 @@ class ApiFeatures {
     const excludedFields = ["page", "sort", "limit", "fields", "keyword"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
+    if (queryObj.brand && typeof queryObj.brand === "string" && queryObj.brand.includes(",")) {
+      queryObj.brand = { $in: queryObj.brand.split(",") };
+    }
+
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
@@ -38,6 +42,18 @@ class ApiFeatures {
       if (matchingCategories.length > 0) {
         const categoryIds = matchingCategories.map((c) => c._id);
         queryArray.push({ category: { $in: categoryIds } });
+      }
+
+      const matchingBrands = await mongoose
+        .model("Brand")
+        .find({
+          name: { $regex: keyword, $options: "i" },
+        })
+        .select("_id");
+
+      if (matchingBrands.length > 0) {
+        const brandIds = matchingBrands.map((b) => b._id);
+        queryArray.push({ brand: { $in: brandIds } });
       }
 
       this.mongooseQuery = this.mongooseQuery.find({ $or: queryArray });

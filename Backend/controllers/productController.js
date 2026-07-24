@@ -23,7 +23,7 @@ export const getAllProducts = asyncWrapper(async (req, res, next) => {
     req.query,
   ).filter();
 
-  features = await features.search(["name", "brand"]);
+  features = await features.search(["name", "description"]);
 
   features.sort().limitFields().paginate();
 

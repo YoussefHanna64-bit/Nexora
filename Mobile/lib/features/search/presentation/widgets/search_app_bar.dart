@@ -51,6 +51,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
         return Filter(
           initialPriceRange: savedPriceRange,
           initialCategoryId: activeFilters["category"],
+          initialBrandId: activeFilters["brand"],
           maxPrice: maxPrice,
         );
       },

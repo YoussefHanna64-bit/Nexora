@@ -47,6 +47,7 @@
   "clearAll": "مسح الكل",
   "priceRange": "حدود السعر",
   "categories": "الفئات",
+  "brands": "الماركات",
   "applyFilters": "تطبيق التصفية",
   "reviewsCount": "({count} تقييم)",
   "@reviewsCount": {
