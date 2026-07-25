@@ -66,6 +66,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       width: widget.width,
       height: widget.height,
       child: TextFormField(
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         maxLines: widget.maxLines ?? 1,
         onChanged: widget.onChanged,
         autofocus: widget.autoFocus,
