@@ -65,8 +65,6 @@ class _FilterState extends State<Filter> {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
-    var h = MediaQuery.of(context).size.height;
-
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -87,10 +85,10 @@ class _FilterState extends State<Filter> {
                 ),
               ],
             ),
-            SizedBox(height: h * 0.02),
+            const SizedBox(height: 16),
             Text(l10n.priceRange,
                 style: AppTextStyles.bold14Black.copyWith(color: onSurface)),
-            SizedBox(height: h * 0.02),
+            const SizedBox(height: 16),
             PriceRangeSlider(
               max: widget.maxPrice,
               currentRange: currentPriceRange,
@@ -98,10 +96,10 @@ class _FilterState extends State<Filter> {
                 setState(() => currentPriceRange = values);
               },
             ),
-            SizedBox(height: h * 0.02),
+            const SizedBox(height: 16),
             Text(l10n.categories,
                 style: AppTextStyles.bold14Black.copyWith(color: onSurface)),
-            SizedBox(height: h * 0.02),
+            const SizedBox(height: 16),
             BlocBuilder<CategoryCubit, CategoryState>(
               builder: (context, state) {
                 if (state is CategoryError) {
@@ -141,10 +139,10 @@ class _FilterState extends State<Filter> {
                 );
               },
             ),
-            SizedBox(height: h * 0.02),
+            const SizedBox(height: 16),
             Text(l10n.brands,
                 style: AppTextStyles.bold14Black.copyWith(color: onSurface)),
-            SizedBox(height: h * 0.02),
+            const SizedBox(height: 16),
             BlocBuilder<BrandCubit, BrandState>(
               builder: (context, state) {
                 if (state is BrandError) {
@@ -182,7 +180,7 @@ class _FilterState extends State<Filter> {
                 );
               },
             ),
-            SizedBox(height: h * 0.02),
+            const SizedBox(height: 16),
             CustomPrimaryButton(
               buttonText: l10n.applyFilters,
               onPressed: () {

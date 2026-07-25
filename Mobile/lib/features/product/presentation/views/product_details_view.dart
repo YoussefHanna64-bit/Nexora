@@ -170,14 +170,14 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             letterSpacing: 1.5,
                           ),
                         ),
-                        SizedBox(height: h * 0.01),
+                        const SizedBox(height: 8),
                         Text(
                           product.name,
                           style: AppTextStyles.extraBold24Black.copyWith(
                             color: onSurface,
                           ),
                         ),
-                        SizedBox(height: h * 0.005),
+                        const SizedBox(height: 4),
                         Row(
                           children: [
                             const Icon(AppIcons.star,
@@ -191,7 +191,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 style: AppTextStyles.regular14Grey),
                           ],
                         ),
-                        SizedBox(height: h * 0.02),
+                        const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -218,7 +218,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             ),
                           ],
                         ),
-                        SizedBox(height: h * 0.02),
+                        const SizedBox(height: 16),
                         Text(l10n.description,
                             style: AppTextStyles.bold16White
                                 .copyWith(color: onSurface)),
@@ -227,7 +227,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           product.description,
                           style: AppTextStyles.regular14Grey,
                         ),
-                        SizedBox(height: h * 0.02),
+                        const SizedBox(height: 16),
                         Text(
                           l10n.ratingsAndReviews,
                           style: AppTextStyles.bold16White
@@ -235,7 +235,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         ),
                         const SizedBox(height: 16),
                         ProductReviewsList(currentUserId: currentUserId),
-                        SizedBox(height: h * 0.02),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),

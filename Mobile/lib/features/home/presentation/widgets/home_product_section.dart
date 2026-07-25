@@ -26,7 +26,6 @@ class HomeProductSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
-    final h = MediaQuery.of(context).size.height;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +53,7 @@ class HomeProductSection extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(height: h * 0.02),
+        const SizedBox(height: 16),
         Skeletonizer(
           enabled: isLoading,
           child: ProductGrid(products: products),

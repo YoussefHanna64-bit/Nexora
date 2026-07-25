@@ -18,7 +18,6 @@ class QuantitySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
     final isDeleteMode = quantity == 1 && onRemove != null;
 
     return Container(
@@ -41,14 +40,14 @@ class QuantitySelector extends StatelessWidget {
                 isDeleteMode ? AppIcons.deleteOutlined : AppIcons.remove,
                 size: 20),
           ),
-          SizedBox(width: w * 0.04),
+          SizedBox(width: 16),
           Text(
             quantity.toString(),
             style: AppTextStyles.bold16White.copyWith(
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          SizedBox(width: w * 0.04),
+          SizedBox(width: 16),
           GestureDetector(
             onTap: onIncrement,
             child: const Icon(AppIcons.add, size: 20),

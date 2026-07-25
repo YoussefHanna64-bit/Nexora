@@ -11,14 +11,10 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchResultsSliver extends StatelessWidget {
   final ProductState state;
-  final double horizontalPadding;
-  final double verticalPadding;
 
   const SearchResultsSliver({
     super.key,
     required this.state,
-    required this.horizontalPadding,
-    required this.verticalPadding,
   });
 
   @override
@@ -47,8 +43,7 @@ class SearchResultsSliver extends StatelessWidget {
     return SliverMainAxisGroup(slivers: [
       SliverToBoxAdapter(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding, vertical: verticalPadding),
+          padding: EdgeInsets.all(16.0),
           child: Skeletonizer(
             enabled: isInitialLoading,
             child: Row(
@@ -76,7 +71,7 @@ class SearchResultsSliver extends StatelessWidget {
         )
       else ...[
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           sliver: Skeletonizer.sliver(
             enabled: isInitialLoading,
             child: ProductGrid(

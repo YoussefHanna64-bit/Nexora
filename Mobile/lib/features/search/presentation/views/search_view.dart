@@ -90,9 +90,6 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
-    var h = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: SearchAppBar(
         searchController: _searchController,
@@ -112,11 +109,7 @@ class _SearchViewState extends State<SearchView> {
           return CustomScrollView(
             controller: _scrollController,
             slivers: [
-              SearchResultsSliver(
-                state: state,
-                horizontalPadding: w * 0.04,
-                verticalPadding: h * 0.02,
-              ),
+              SearchResultsSliver(state: state),
             ],
           );
         },

@@ -41,8 +41,6 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
-    var w = MediaQuery.of(context).size.width;
-    var h = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
@@ -69,8 +67,7 @@ class _RegisterState extends State<Register> {
           child: Center(
             child: SingleChildScrollView(
               child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.04, vertical: h * 0.02),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -83,44 +80,34 @@ class _RegisterState extends State<Register> {
                         l10n.signUpSubtitle,
                         style: AppTextStyles.regular14Grey,
                       ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       CustomTextFormField(
                         hintText: l10n.fullName,
                         controller: nameController,
                         validator: (value) =>
                             Validators.username(context, value),
                       ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       CustomTextFormField(
                         hintText: l10n.email,
                         controller: emailController,
                         validator: (value) => Validators.email(context, value),
                       ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       CustomTextFormField(
                           hintText: l10n.password,
                           controller: passwordController,
                           validator: (value) =>
                               Validators.password(context, value),
                           obscureText: true),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       CustomTextFormField(
                           hintText: l10n.confirmPassword,
                           controller: confirmPasswordController,
                           validator: (value) => Validators.confirmPassword(
                               context, value, passwordController.text),
                           obscureText: true),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
+                      const SizedBox(height: 32),
                       CustomPrimaryButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
@@ -135,9 +122,7 @@ class _RegisterState extends State<Register> {
                           },
                           buttonText: l10n.signUp,
                           isLoading: state is AuthLoading),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       Row(children: [
                         Expanded(
                             child: Divider(
@@ -158,13 +143,9 @@ class _RegisterState extends State<Register> {
                           endIndent: 14,
                         )),
                       ]),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
+                      const SizedBox(height: 32),
                       GoogleSignInButton(),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
+                      const SizedBox(height: 32),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

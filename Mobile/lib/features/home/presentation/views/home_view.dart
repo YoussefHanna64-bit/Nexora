@@ -91,7 +91,6 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
-    var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -173,8 +172,7 @@ class _HomeViewState extends State<HomeView> {
 
                         return SingleChildScrollView(
                             child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: w * 0.04, vertical: h * 0.02),
+                                padding: const EdgeInsets.all(16.0),
                                 child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -182,33 +180,23 @@ class _HomeViewState extends State<HomeView> {
                                       SizedBox(
                                           height: h * 0.22,
                                           child: HomeBanners()),
-                                      SizedBox(
-                                        height: h * 0.02,
-                                      ),
+                                      const SizedBox(height: 16),
                                       Text(
                                         l10n.shopByCategory,
                                         style: AppTextStyles.regular18Black
                                             .copyWith(color: onSurface),
                                       ),
-                                      SizedBox(
-                                        height: h * 0.02,
-                                      ),
+                                      const SizedBox(height: 16),
                                       CategoryList(),
-                                      SizedBox(
-                                        height: h * 0.02,
-                                      ),
+                                      const SizedBox(height: 16),
                                       Text(
                                         l10n.shopByBrand,
                                         style: AppTextStyles.regular18Black
                                             .copyWith(color: onSurface),
                                       ),
-                                      SizedBox(
-                                        height: h * 0.02,
-                                      ),
+                                      const SizedBox(height: 16),
                                       BrandList(),
-                                      SizedBox(
-                                        height: h * 0.02,
-                                      ),
+                                      const SizedBox(height: 16),
                                       HomeProductSection(
                                         title: l10n.popularProducts,
                                         sortFilter: "-sold",
@@ -216,9 +204,7 @@ class _HomeViewState extends State<HomeView> {
                                         products: List<Product>.from(
                                             displayPopularProducts),
                                       ),
-                                      SizedBox(
-                                        height: h * 0.02,
-                                      ),
+                                      const SizedBox(height: 16),
                                       HomeProductSection(
                                         title: l10n.productsOnSale,
                                         sortFilter: "-discount",

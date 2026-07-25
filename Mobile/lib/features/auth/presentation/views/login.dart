@@ -8,10 +8,10 @@ import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/utils/validators.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
+import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_cubit.dart';
 import 'package:nexora/features/auth/presentation/manager/auth/auth_state.dart';
 import 'package:nexora/features/auth/presentation/widgets/google_sign_in_button.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -38,8 +38,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final onSurface = Theme.of(context).colorScheme.onSurface;
-    var w = MediaQuery.of(context).size.width;
-    var h = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
@@ -66,8 +64,7 @@ class _LoginState extends State<Login> {
           child: Center(
             child: SingleChildScrollView(
               child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.04, vertical: h * 0.02),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -80,26 +77,20 @@ class _LoginState extends State<Login> {
                         l10n.signInSubtitle,
                         style: AppTextStyles.regular14Grey,
                       ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       CustomTextFormField(
                         hintText: l10n.email,
                         controller: emailController,
                         validator: (value) => Validators.email(context, value),
                       ),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       CustomTextFormField(
                           hintText: l10n.password,
                           controller: passwordController,
                           validator: (value) =>
                               Validators.password(context, value),
                           obscureText: true),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
+                      const SizedBox(height: 32),
                       CustomPrimaryButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
@@ -110,9 +101,7 @@ class _LoginState extends State<Login> {
                           },
                           buttonText: l10n.login,
                           isLoading: state is AuthLoading),
-                      SizedBox(
-                        height: h * 0.02,
-                      ),
+                      const SizedBox(height: 16),
                       RichText(
                         text: TextSpan(
                             text: l10n.forgotPassword,
@@ -122,9 +111,7 @@ class _LoginState extends State<Login> {
                                 context.push(Routes.forgotPassword);
                               }),
                       ),
-                      SizedBox(
-                        height: h * 0.03,
-                      ),
+                      const SizedBox(height: 28),
                       Row(children: [
                         Expanded(
                             child: Divider(
@@ -145,13 +132,9 @@ class _LoginState extends State<Login> {
                           endIndent: 14,
                         )),
                       ]),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
+                      const SizedBox(height: 32),
                       GoogleSignInButton(),
-                      SizedBox(
-                        height: h * 0.04,
-                      ),
+                      const SizedBox(height: 32),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -81,83 +81,83 @@ class ReviewCard extends StatelessWidget {
                 ],
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  children: List.generate(5, (starIndex) {
-                    return Icon(
-                      starIndex < review.rating
-                          ? AppIcons.star
-                          : AppIcons.starBorder,
-                      color: AppColors.goldColor,
-                      size: 16,
-                    );
-                  }),
-                ),
-                if (isMyReview)
-                  PopupMenuButton<String>(
-                    borderRadius: BorderRadius.circular(12),
-                    icon: const Icon(AppIcons.moreVert,
-                        color: AppColors.greyColor),
-                    onSelected: (value) {
-                      if (value == "edit") {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          showDragHandle: true,
-                          builder: (sheetContext) => BlocProvider.value(
-                            value: context.read<ReviewCubit>(),
-                            child: ReviewBottomSheet(
-                              productId: review.productId,
-                              existingReview: review,
-                            ),
-                          ),
-                        );
-                      } else if (value == "remove") {
-                        AppDialogs.showConfirmDialog(
-                          context,
-                          title: l10n.deleteReviewTitle,
-                          content: l10n.deleteReviewContent,
-                          confirmText: l10n.delete,
-                          cancelText: l10n.cancel,
-                          onConfirm: () {
-                            context.read<ReviewCubit>().removeReview(review.id);
-                          },
-                          isDanger: true,
-                        );
-                      }
-                    },
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: "edit",
-                        child: Row(children: [
-                          Icon(AppIcons.edit, size: 20),
-                          SizedBox(width: 8),
-                          Text(l10n.edit)
-                        ]),
-                      ),
-                      PopupMenuItem(
-                        value: "remove",
-                        child: Row(children: [
-                          Icon(AppIcons.delete,
-                              color: AppColors.redColor, size: 20),
-                          SizedBox(width: 8),
-                          Text(l10n.remove,
-                              style: TextStyle(color: AppColors.redColor))
-                        ]),
-                      ),
-                    ],
-                  ),
-              ],
-            )
+            Row(
+              children: List.generate(5, (starIndex) {
+                return Icon(
+                  starIndex < review.rating
+                      ? AppIcons.star
+                      : AppIcons.starBorder,
+                  color: AppColors.goldColor,
+                  size: 16,
+                );
+              }),
+            ),
           ],
         ),
         if (review.comment != null && review.comment!.isNotEmpty) ...[
           const SizedBox(height: 8),
-          Text(
-            review.comment!,
-            style: AppTextStyles.regular14Grey.copyWith(color: onSurface),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                review.comment!,
+                style: AppTextStyles.regular14Grey.copyWith(color: onSurface),
+              ),
+              if (isMyReview)
+                PopupMenuButton<String>(
+                  borderRadius: BorderRadius.circular(12),
+                  icon:
+                      const Icon(AppIcons.moreVert, color: AppColors.greyColor),
+                  onSelected: (value) {
+                    if (value == "edit") {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        showDragHandle: true,
+                        builder: (sheetContext) => BlocProvider.value(
+                          value: context.read<ReviewCubit>(),
+                          child: ReviewBottomSheet(
+                            productId: review.productId,
+                            existingReview: review,
+                          ),
+                        ),
+                      );
+                    } else if (value == "remove") {
+                      AppDialogs.showConfirmDialog(
+                        context,
+                        title: l10n.deleteReviewTitle,
+                        content: l10n.deleteReviewContent,
+                        confirmText: l10n.delete,
+                        cancelText: l10n.cancel,
+                        onConfirm: () {
+                          context.read<ReviewCubit>().removeReview(review.id);
+                        },
+                        isDanger: true,
+                      );
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: "edit",
+                      child: Row(children: [
+                        Icon(AppIcons.edit, size: 20),
+                        SizedBox(width: 8),
+                        Text(l10n.edit)
+                      ]),
+                    ),
+                    PopupMenuItem(
+                      value: "remove",
+                      child: Row(children: [
+                        Icon(AppIcons.delete,
+                            color: AppColors.redColor, size: 20),
+                        SizedBox(width: 8),
+                        Text(l10n.remove,
+                            style: TextStyle(color: AppColors.redColor))
+                      ]),
+                    ),
+                  ],
+                ),
+            ],
           ),
         ]
       ],
