@@ -41,6 +41,9 @@ import 'package:nexora/features/brands/data/repositories/brand_repo_impl.dart';
 import 'package:nexora/features/brands/domain/repositories/brand_repo.dart';
 import 'package:nexora/features/brands/domain/usecases/get_brands_use_case.dart';
 import 'package:nexora/features/brands/presentation/manager/brand_cubit.dart';
+import 'package:nexora/features/feedback/data/datasources/feedback_remote_data_source.dart';
+import 'package:nexora/features/feedback/data/repositories/feedback_repo_impl.dart';
+import 'package:nexora/features/feedback/domain/repositories/feedback_repo.dart';
 import 'package:nexora/features/orders/data/datasources/order_remote_data_source.dart';
 import 'package:nexora/features/orders/data/repositories/order_repo_impl.dart';
 import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
@@ -401,5 +404,13 @@ void setupGetIt() {
       getIt<DeleteAccountUseCase>(),
       getIt<UserCacheService>(),
     ),
+  );
+
+  getIt.registerLazySingleton<FeedbackRemoteDataSource>(
+    () => FeedbackRemoteDataSourceImpl(getIt<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<FeedbackRepo>(
+    () => FeedbackRepoImpl(getIt<FeedbackRemoteDataSource>()),
   );
 }

@@ -23,4 +23,5 @@ class EndPoints {
   static const String updatePassword = "$users/updatePassword";
   static const String uploadProfilePicture = "$users/uploadProfilePicture";
   static const String addresses = "$users/addresses";
+  static const String feedbacks = "/feedbacks";
 }
