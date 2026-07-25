@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
+import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/features/cart/presentation/manager/cart_cubit.dart';
+import 'package:nexora/features/cart/presentation/manager/cart_state.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget child;
@@ -50,7 +54,27 @@ class MainLayout extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(AppIcons.home), label: l10n.home),
-          BottomNavigationBarItem(icon: Icon(AppIcons.cart), label: l10n.cart),
+          BottomNavigationBarItem(
+            icon: BlocBuilder<CartCubit, CartState>(
+              builder: (context, state) {
+                int itemCount = 0;
+
+                if (state is CartSuccess) {
+                  itemCount = state.cart.items.length;
+                }
+
+                if (itemCount > 0) {
+                  return Badge(
+                    backgroundColor: AppColors.secondary,
+                    label: Text(itemCount.toString()),
+                    child: Icon(AppIcons.cart),
+                  );
+                }
+                return Icon(AppIcons.cart);
+              },
+            ),
+            label: l10n.cart,
+          ),
           BottomNavigationBarItem(
               icon: Icon(AppIcons.favorites), label: l10n.wishlist),
           BottomNavigationBarItem(
