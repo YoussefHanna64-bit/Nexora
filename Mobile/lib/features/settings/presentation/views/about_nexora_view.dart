@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nexora/core/constants/app_images.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/features/settings/presentation/widgets/section_body.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_list_tile.dart';
@@ -56,10 +56,10 @@ class AboutNexoraView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    l10n.nexora,
-                    style: AppTextStyles.bold24Black.copyWith(color: onSurface),
+                  Image.asset(
+                    AppImages.nexoraBranding,
+                    fit: BoxFit.cover,
+                    height: 90,
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -75,23 +75,7 @@ class AboutNexoraView extends StatelessWidget {
               style: AppTextStyles.bold18Black.copyWith(color: onSurface),
             ),
             const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: AppColors.greyColor.withAlpha(50),
-                ),
-              ),
-              child: Text(
-                l10n.developerStoryContent,
-                style: AppTextStyles.regular14Black.copyWith(
-                  color: onSurface.withAlpha(200),
-                  height: 1.8,
-                ),
-              ),
-            ),
+            SectionBody(text: l10n.developerStoryContent),
             const SizedBox(height: 32),
             Text(
               l10n.connect,

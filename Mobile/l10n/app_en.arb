@@ -271,5 +271,15 @@
   "developerStoryContent": "Nexora was developed by Youssef Hanna. Built entirely during limited free time outside of a rigorous daily schedule, this hobby project is a hands-on way to use what I learned in ITI.",
   "connect": "Connect",
   "viewSourceOnGithub": "View source code on GitHub",
-  "contactDeveloper": "Contact Developer"
+  "contactDeveloper": "Contact Developer",
+  "privacyLastUpdated": "Last Updated: July 2026",
+  "privacyIntroTitle": "1. Introduction",
+  "privacyIntroBody": "Welcome to Nexora. Your privacy is critically important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our application. Nexora is a personal portfolio project developed to showcase mobile development skills, and we are committed to being completely transparent about how your data is handled.",
+  "privacyDataTitle": "2. Data Collection & Usage",
+  "privacyDataBody": "We only collect the minimum amount of data necessary to provide you with a seamless shopping experience. This includes information you provide directly, such as your name, email address, and shipping details. Because this application serves as a technical showcase, all data is stored securely in a sandboxed database and is never sold, shared, or used for third-party marketing.",
+  "privacyPaymentsTitle": "3. Payments",
+  "privacyPaymentsBody": "All payments are processed securely through Stripe. However, as this application operates as a technical demonstration, all financial transactions are strictly simulated using Stripe's test environment. Please only use test credit card numbers (e.g., 4242 4242 4242 4242). No actual charges will ever be made, and no real financial data is processed or stored.",
+  "privacyContactTitle": "4. Contact",
+  "privacyContactBody": "Nexora was developed by Youssef Hanna. If you have any questions regarding this Privacy Policy or how your data is handled, please reach out via the contact links provided in the 'About Nexora' section.",
+  "privacyFooter": "© 2026 Nexora. Developed by Youssef Hanna. All rights reserved."
 }

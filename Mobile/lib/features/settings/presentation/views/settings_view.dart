@@ -24,7 +24,7 @@ class SettingsView extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: l10n.settings, showBackButton: true),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,7 +62,9 @@ class SettingsView extends StatelessWidget {
             CustomListTile(
               icon: AppIcons.privacyTipOutlined,
               title: l10n.privacyPolicy,
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.privacyPolicy);
+              },
             ),
             CustomListTile(
               icon: AppIcons.infoOutline,
