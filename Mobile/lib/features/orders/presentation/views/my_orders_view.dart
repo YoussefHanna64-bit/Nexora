@@ -14,8 +14,19 @@ import 'package:nexora/features/orders/presentation/manager/order_history/order_
 import 'package:nexora/features/orders/presentation/widgets/order_list_item.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class MyOrdersView extends StatelessWidget {
+class MyOrdersView extends StatefulWidget {
   const MyOrdersView({super.key});
+
+  @override
+  State<MyOrdersView> createState() => _MyOrdersViewState();
+}
+
+class _MyOrdersViewState extends State<MyOrdersView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<OrderHistoryCubit>().fetchOrders();
+  }
 
   @override
   Widget build(BuildContext context) {

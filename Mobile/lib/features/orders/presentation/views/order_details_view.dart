@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/app_dialogs.dart';
+import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
 import 'package:nexora/features/orders/presentation/widgets/order_summary_card.dart';
 import 'package:nexora/features/orders/domain/entities/order.dart';
 import 'package:nexora/features/orders/presentation/manager/order_history/order_history_cubit.dart';
+import 'package:nexora/features/orders/presentation/manager/order_history/order_history_state.dart';
 import 'package:nexora/features/orders/presentation/widgets/order_product_tile.dart';
 import 'package:nexora/features/orders/presentation/widgets/order_status_badge.dart';
 import 'package:nexora/features/address/presentation/widgets/shipping_address_card.dart';
 
-class OrderDetailsView extends StatelessWidget {
+class OrderDetailsView extends StatefulWidget {
   final Order order;
 
   const OrderDetailsView({super.key, required this.order});
+
+  @override
+  State<OrderDetailsView> createState() => _OrderDetailsViewState();
+}
+
+class _OrderDetailsViewState extends State<OrderDetailsView> {
+  late Order currentOrder;
+
+  @override
+  void initState() {
+    super.initState();
+    currentOrder = widget.order;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,84 +41,116 @@ class OrderDetailsView extends StatelessWidget {
     final onSurface = Theme.of(context).colorScheme.onSurface;
 
     final bool canCancel =
-        order.status == "pending" || order.status == "processing";
-    final bool isDelivered = order.status == "delivered";
-    final bool isCanceled = order.status == "canceled";
+        currentOrder.status == "pending" || currentOrder.status == "processing";
+    final bool isDelivered = currentOrder.status == "delivered";
+    final bool isCanceled = currentOrder.status == "canceled";
 
     return Scaffold(
       appBar: CustomAppBar(title: l10n.orderDetails, showBackButton: true),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.orderIdFull(order.id),
-                style: AppTextStyles.bold16Black.copyWith(color: onSurface)),
-            const SizedBox(height: 4),
-            Text(
-              l10n.placedOn(DateFormat("dd MMM yyyy, hh:mm a",
-                      Localizations.localeOf(context).languageCode)
-                  .format(order.createdAt)),
-              style: AppTextStyles.regular14Grey,
-            ),
-            const SizedBox(height: 12),
-            OrderStatusBadge(status: order.status),
-            const Divider(height: 32),
-            Text(l10n.items,
-                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
-            ...order.cartItems.map((item) => OrderProductTile(
-                  item: item,
-                  isDelivered: isDelivered,
-                )),
-            const Divider(height: 32),
-            Text(l10n.paymentMethod,
-                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Icon(
-                  order.paymentMethodType == "card"
-                      ? AppIcons.creditCard
-                      : AppIcons.money,
-                  color: AppColors.primary,
+      body: BlocConsumer<OrderHistoryCubit, OrderHistoryState>(
+        listener: (context, state) {
+          if (state is OrderHistoryLoaded) {
+            final updated =
+                state.orders.firstWhere((o) => o.id == currentOrder.id);
+            setState(() {
+              currentOrder = updated;
+            });
+          } else if (state is OrderHistoryError) {
+            AppSnackbars.showError(context, state.message);
+          }
+        },
+        builder: (context, state) {
+          return Stack(
+            children: [
+              SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l10n.orderIdFull(currentOrder.id),
+                        style: AppTextStyles.bold16Black
+                            .copyWith(color: onSurface)),
+                    const SizedBox(height: 4),
+                    Text(
+                      l10n.placedOn(DateFormat("dd MMM yyyy, hh:mm a",
+                              Localizations.localeOf(context).languageCode)
+                          .format(currentOrder.createdAt)),
+                      style: AppTextStyles.regular14Grey,
+                    ),
+                    const SizedBox(height: 12),
+                    OrderStatusBadge(status: currentOrder.status),
+                    const Divider(height: 32),
+                    Text(l10n.items,
+                        style: AppTextStyles.bold18Black
+                            .copyWith(color: onSurface)),
+                    ...currentOrder.cartItems.map((item) => OrderProductTile(
+                          item: item,
+                          isDelivered: isDelivered,
+                        )),
+                    const Divider(height: 32),
+                    Text(l10n.paymentMethod,
+                        style: AppTextStyles.bold18Black
+                            .copyWith(color: onSurface)),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Icon(
+                          currentOrder.paymentMethodType == "card"
+                              ? AppIcons.creditCard
+                              : AppIcons.money,
+                          color: AppColors.primary,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          currentOrder.paymentMethodType == "card"
+                              ? l10n.creditDebitCard
+                              : l10n.cashOnDelivery,
+                          style: AppTextStyles.bold14Black
+                              .copyWith(color: onSurface),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Text(l10n.orderSummary,
+                        style: AppTextStyles.bold18Black
+                            .copyWith(color: onSurface)),
+                    const SizedBox(height: 12),
+                    OrderSummaryCard(
+                      subtotal: currentOrder.totalOrderPrice,
+                      total: currentOrder.totalOrderPrice,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(l10n.shippingAddress,
+                        style: AppTextStyles.bold18Black
+                            .copyWith(color: onSurface)),
+                    const SizedBox(height: 12),
+                    ShippingAddressCard(address: currentOrder.shippingAddress),
+                    const SizedBox(height: 48),
+                    if (canCancel)
+                      CustomPrimaryButton(
+                        buttonText: l10n.cancelOrder,
+                        outlineColor: AppColors.redColor,
+                        isOutlined: true,
+                        onPressed: () => _cancelConfirmation(context),
+                      )
+                    else if (isCanceled)
+                      Center(
+                        child: Text(l10n.orderHasBeenCanceled,
+                            style: TextStyle(color: AppColors.redColor)),
+                      )
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  order.paymentMethodType == "card"
-                      ? l10n.creditDebitCard
-                      : l10n.cashOnDelivery,
-                  style: AppTextStyles.bold14Black.copyWith(color: onSurface),
+              ),
+              if (state is OrderHistoryLoading)
+                Container(
+                  color: AppColors.blackColor.withAlpha(150),
+                  child: const Center(
+                    child: CircularProgressIndicator(color: AppColors.primary),
+                  ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            Text(l10n.orderSummary,
-                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
-            const SizedBox(height: 12),
-            OrderSummaryCard(
-              subtotal: order.totalOrderPrice,
-              total: order.totalOrderPrice,
-            ),
-            const SizedBox(height: 24),
-            Text(l10n.shippingAddress,
-                style: AppTextStyles.bold18Black.copyWith(color: onSurface)),
-            const SizedBox(height: 12),
-            ShippingAddressCard(address: order.shippingAddress),
-            const SizedBox(height: 48),
-            if (canCancel)
-              CustomPrimaryButton(
-                buttonText: l10n.cancelOrder,
-                outlineColor: AppColors.redColor,
-                isOutlined: true,
-                onPressed: () => _cancelConfirmation(context),
-              )
-            else if (isCanceled)
-              Center(
-                child: Text(l10n.orderHasBeenCanceled,
-                    style: TextStyle(color: AppColors.redColor)),
-              )
-          ],
-        ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -120,8 +166,7 @@ class OrderDetailsView extends StatelessWidget {
       confirmText: l10n.yesCancel,
       isDanger: true,
       onConfirm: () {
-        context.read<OrderHistoryCubit>().cancelOrder(order.id);
-        context.pop();
+        context.read<OrderHistoryCubit>().cancelOrder(currentOrder.id);
       },
     );
   }

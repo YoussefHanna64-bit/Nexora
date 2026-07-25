@@ -274,6 +274,8 @@ export const updateOrderStatus = asyncWrapper(async (req, res, next) => {
     }
   }
 
+  await updatedOrder.populate({ path: "cartItems.product", select: "name thumbnail price" });
+
   res.status(200).json({
     success: true,
     status: httpStatus.SUCCESS,
@@ -325,6 +327,8 @@ export const cancelOrder = asyncWrapper(async (req, res, next) => {
   } finally {
     session.endSession();
   }
+
+  await updatedOrder.populate({ path: "cartItems.product", select: "name thumbnail price" });
 
   res.status(200).json({
     success: true,

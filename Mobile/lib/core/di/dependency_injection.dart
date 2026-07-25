@@ -331,7 +331,7 @@ void setupGetIt() {
     () => CancelOrderUseCase(getIt<OrderRepo>()),
   );
 
-  getIt.registerFactory<OrderHistoryCubit>(
+  getIt.registerLazySingleton<OrderHistoryCubit>(
     () => OrderHistoryCubit(
         getIt<GetUserOrdersUseCase>(), getIt<CancelOrderUseCase>()),
   );

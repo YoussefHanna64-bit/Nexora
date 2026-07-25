@@ -161,8 +161,8 @@ final GoRouter appRouter = GoRouter(
       path: Routes.myOrders,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) {
-        return BlocProvider(
-          create: (context) => getIt<OrderHistoryCubit>()..fetchOrders(),
+        return BlocProvider.value(
+          value: getIt<OrderHistoryCubit>(),
           child: const MyOrdersView(),
         );
       },
