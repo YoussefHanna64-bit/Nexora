@@ -73,14 +73,13 @@ class _ReportBugTabState extends State<ReportBugTab> {
                   l10n.describe,
                   style: AppTextStyles.bold14Black.copyWith(color: onSurface),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 12),
                 CustomTextFormField(
                   hintText: l10n.feedbackHint,
                   controller: _messageController,
                   keyboardType: TextInputType.multiline,
                   maxLines: 4,
                   validator: (val) => Validators.feedback(context, val),
-                  height: 160,
                 ),
                 const SizedBox(height: 12),
                 CustomPrimaryButton(

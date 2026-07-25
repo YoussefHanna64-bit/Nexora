@@ -15,6 +15,7 @@ class TypeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
 
     final List<({String value, String label})> types = [
       (value: "bug", label: l10n.typeBug),
@@ -32,7 +33,7 @@ class TypeSelector extends StatelessWidget {
           selected: isSelected,
           selectedColor: AppColors.primary,
           labelStyle: TextStyle(
-            color: isSelected ? AppColors.whiteColor : AppColors.greyColor,
+            color: isSelected ? AppColors.whiteColor : onSurface,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
           shape: RoundedRectangleBorder(

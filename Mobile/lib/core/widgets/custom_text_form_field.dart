@@ -62,12 +62,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     final surfaceColor = widget.fillColor ?? colorScheme.surface;
     final textStyle = AppTextStyles.regular14Black.copyWith(color: onSurface);
 
-    return Container(
+    return SizedBox(
       width: widget.width,
       height: widget.height,
-      alignment: Alignment.center,
       child: TextFormField(
-        maxLines: widget.maxLines,
+        maxLines: widget.maxLines ?? 1,
         onChanged: widget.onChanged,
         autofocus: widget.autoFocus,
         style: textStyle,

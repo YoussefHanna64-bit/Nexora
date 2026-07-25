@@ -12,10 +12,12 @@ class HelpCenterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final onSurface = Theme.of(context).colorScheme.onSurface;
 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
           title: l10n.helpCenter,
           showBackButton: true,
@@ -25,9 +27,9 @@ class HelpCenterView extends StatelessWidget {
             TabBar(
               indicatorColor: AppColors.primary,
               labelColor: AppColors.primary,
-              unselectedLabelColor: AppColors.greyColor,
               labelStyle: AppTextStyles.bold14Primary,
-              unselectedLabelStyle: AppTextStyles.regular14Grey,
+              unselectedLabelStyle:
+                  AppTextStyles.regular14Grey.copyWith(color: onSurface),
               dividerColor: Colors.transparent,
               tabs: [
                 Tab(text: l10n.faq),
