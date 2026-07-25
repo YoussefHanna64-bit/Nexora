@@ -44,6 +44,8 @@ import 'package:nexora/features/brands/presentation/manager/brand_cubit.dart';
 import 'package:nexora/features/feedback/data/datasources/feedback_remote_data_source.dart';
 import 'package:nexora/features/feedback/data/repositories/feedback_repo_impl.dart';
 import 'package:nexora/features/feedback/domain/repositories/feedback_repo.dart';
+import 'package:nexora/features/feedback/domain/usecases/submit_feedback_use_case.dart';
+import 'package:nexora/features/feedback/presentation/manager/feedback_cubit.dart';
 import 'package:nexora/features/orders/data/datasources/order_remote_data_source.dart';
 import 'package:nexora/features/orders/data/repositories/order_repo_impl.dart';
 import 'package:nexora/features/orders/domain/repositories/order_repo.dart';
@@ -412,5 +414,13 @@ void setupGetIt() {
 
   getIt.registerLazySingleton<FeedbackRepo>(
     () => FeedbackRepoImpl(getIt<FeedbackRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<SubmitFeedbackUseCase>(
+    () => SubmitFeedbackUseCase(getIt<FeedbackRepo>()),
+  );
+
+  getIt.registerFactory<FeedbackCubit>(
+    () => FeedbackCubit(getIt<SubmitFeedbackUseCase>()),
   );
 }
