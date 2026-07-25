@@ -17,6 +17,7 @@ import cartRoute from "./routes/cartRoute.js";
 import wishlistRoute from "./routes/wishlistRoute.js";
 import orderRoute from "./routes/orderRoute.js";
 import paymentRoute from "./routes/paymentRoute.js";
+import feedbackRoute from "./routes/feedbackRoute.js";
 import { connectCloudinary } from "./config/cloudinaryConfig.js";
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.use("/api/cart", cartRoute);
 app.use("/api/wishlist", wishlistRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/payments", paymentRoute);
+app.use("/api/feedbacks", feedbackRoute);
 
 app.all("*any", (req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));

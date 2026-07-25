@@ -1,4 +1,5 @@
 export const PRODUCT_NOT_FOUND = "Product not found";
+export const FEEDBACK_NOT_FOUND = "Feedback not found";
 
 export const CATEGORY_NOT_FOUND = "Category not found";
 export const BRAND_NOT_FOUND = "Brand not found";

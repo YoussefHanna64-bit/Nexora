@@ -1,7 +1,7 @@
 import asyncWrapper from "../middleware/asyncWrapper.js";
 import Category from "../models/categoryModel.js";
-import httpStatus from "../utils/httpStatus.js";
 import AppError from "../utils/AppError.js";
+import httpStatus from "../utils/httpStatus.js";
 import { CATEGORY_NOT_FOUND } from "../utils/messages.js";
 
 export const createCategory = asyncWrapper(async (req, res, next) => {
