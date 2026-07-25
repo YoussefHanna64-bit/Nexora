@@ -52,10 +52,7 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
         Positioned(
           bottom: 30,
           child: DotIndicator(
-            count: widget.images.length,
-            currentIndex: currentIndex,
-            inactiveColor: AppColors.whiteColor.withAlpha(128),
-          ),
+              count: widget.images.length, currentIndex: currentIndex),
         ),
       ],
     );
