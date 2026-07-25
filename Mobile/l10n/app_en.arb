@@ -81,6 +81,7 @@
   "paymentMethod": "Payment Method",
   "settings": "Settings",
   "logOut": "Log Out",
+  "logOutConfirmation": "Are you sure you want to log out?",
   "preferences": "Preferences",
   "darkMode": "Dark Mode",
   "language": "Language",

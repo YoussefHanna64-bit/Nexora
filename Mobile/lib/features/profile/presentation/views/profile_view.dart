@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/theme/colors.dart';
+import 'package:nexora/core/utils/app_dialogs.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:nexora/features/profile/presentation/widgets/profile_header.dart';
 import 'package:nexora/core/widgets/custom_list_tile.dart';
@@ -117,17 +118,27 @@ class _ProfileViewState extends State<ProfileView> {
                 title: l10n.logOut,
                 color: AppColors.redColor,
                 showTrailing: false,
-                onTap: () async {
-                  context.read<WishlistCubit>().clearWishlist();
-                  context.read<CartCubit>().clearCart();
-                  context.read<AddressCubit>().clearAddresses();
-                  context.read<ProfileCubit>().clearProfile();
+                onTap: () {
+                  AppDialogs.showConfirmDialog(
+                    context,
+                    title: l10n.logOut,
+                    content: l10n.logOutConfirmation,
+                    confirmText: l10n.logOut,
+                    cancelText: l10n.cancel,
+                    onConfirm: () async {
+                      context.read<WishlistCubit>().clearWishlist();
+                      context.read<CartCubit>().clearCart();
+                      context.read<AddressCubit>().clearAddresses();
+                      context.read<ProfileCubit>().clearProfile();
 
-                  await context.read<AuthCubit>().logout();
+                      await context.read<AuthCubit>().logout();
 
-                  if (context.mounted) {
-                    context.go(Routes.login);
-                  }
+                      if (context.mounted) {
+                        context.go(Routes.login);
+                      }
+                    },
+                    isDanger: true,
+                  );
                 },
               ),
             ],

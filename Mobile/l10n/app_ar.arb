@@ -81,6 +81,7 @@
   "paymentMethod": "طريقة الدفع",
   "settings": "الإعدادات",
   "logOut": "تسجيل الخروج",
+  "logOutConfirmation": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "preferences": "التفضيلات",
   "darkMode": "الوضع الداكن",
   "language": "اللغة",

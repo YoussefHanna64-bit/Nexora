@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexora/core/constants/app_icons.dart';
+import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/widgets/custom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -61,23 +62,30 @@ class _MyOrdersViewState extends State<MyOrdersView> {
             );
           }
 
-          return Skeletonizer(
-            enabled: isLoading,
-            child: ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: orders.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemBuilder: (context, index) {
-                final order = orders[index];
-                return OrderListItem(
-                  order: order,
-                  onTap: isLoading
-                      ? () {}
-                      : () {
-                          context.push(Routes.orderDetails, extra: order);
-                        },
-                );
-              },
+          return RefreshIndicator(
+            onRefresh: () async {
+              await context.read<OrderHistoryCubit>().fetchOrders();
+            },
+            color: AppColors.primary,
+            child: Skeletonizer(
+              enabled: isLoading,
+              child: ListView.separated(
+                padding: const EdgeInsets.all(16),
+                itemCount: orders.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
+                itemBuilder: (context, index) {
+                  final order = orders[index];
+                  return OrderListItem(
+                    order: order,
+                    onTap: isLoading
+                        ? () {}
+                        : () {
+                            context.push(Routes.orderDetails, extra: order);
+                          },
+                  );
+                },
+              ),
             ),
           );
         }));
