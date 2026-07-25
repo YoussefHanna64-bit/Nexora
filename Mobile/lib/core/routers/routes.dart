@@ -20,4 +20,5 @@ class Routes {
   static const String changePassword = "/changePassword";
   static const String aboutNexora = "/aboutNexora";
   static const String privacyPolicy = "/privacyPolicy";
+  static const String helpCenter = "/helpCenter";
 }

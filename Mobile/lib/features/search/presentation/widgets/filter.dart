@@ -34,7 +34,7 @@ class Filter extends StatefulWidget {
 
 class _FilterState extends State<Filter> {
   late RangeValues currentPriceRange;
-  final List<String> selectedCategories = [];
+  String selectedCategory = "";
   final List<String> selectedBrands = [];
 
   @override
@@ -44,7 +44,7 @@ class _FilterState extends State<Filter> {
         widget.initialPriceRange ?? RangeValues(10, widget.maxPrice);
 
     if (widget.initialCategoryId != null) {
-      selectedCategories.add(widget.initialCategoryId!);
+      selectedCategory = widget.initialCategoryId!;
     }
 
     if (widget.initialBrandId != null && widget.initialBrandId!.isNotEmpty) {
@@ -55,7 +55,7 @@ class _FilterState extends State<Filter> {
   void clearFilters() {
     setState(() {
       currentPriceRange = RangeValues(10, widget.maxPrice);
-      selectedCategories.clear();
+      selectedCategory = "";
       selectedBrands.clear();
     });
   }
@@ -121,17 +121,16 @@ class _FilterState extends State<Filter> {
                 return Skeletonizer(
                   enabled: isLoading,
                   child: CategoryFilterWrap(
-                    selectedCategories: selectedCategories,
+                    selectedCategory: selectedCategory,
                     categories: displayCategories,
                     onCategorySelected: isLoading
                         ? (category, isSelected) {}
                         : (category, isSelected) {
                             setState(() {
                               if (isSelected) {
-                                selectedCategories.clear();
-                                selectedCategories.add(category.id);
+                                selectedCategory = category.id;
                               } else {
-                                selectedCategories.remove(category.id);
+                                selectedCategory = "";
                               }
                             });
                           },
@@ -189,8 +188,8 @@ class _FilterState extends State<Filter> {
                   "price[lte]": currentPriceRange.end,
                 };
 
-                if (selectedCategories.isNotEmpty) {
-                  filters["category"] = selectedCategories.first;
+                if (selectedCategory.isNotEmpty) {
+                  filters["category"] = selectedCategory;
                 }
 
                 if (selectedBrands.isNotEmpty) {

@@ -104,4 +104,17 @@ class Validators {
     }
     return null;
   }
+
+  static String? feedback(BuildContext context, String? value) {
+    final l10n = AppLocalizations.of(context)!;
+
+    if (value == null || value.trim().isEmpty) {
+      return l10n.feedbackRequired;
+    }
+    
+    if (value.trim().length < 10) {
+      return l10n.feedbackTooShort;
+    }
+    return null;
+  }
 }

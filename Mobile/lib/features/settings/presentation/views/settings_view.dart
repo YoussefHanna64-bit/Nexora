@@ -57,7 +57,9 @@ class SettingsView extends StatelessWidget {
             CustomListTile(
               icon: AppIcons.helpOutline,
               title: l10n.helpCenter,
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.helpCenter);
+              },
             ),
             CustomListTile(
               icon: AppIcons.privacyTipOutlined,

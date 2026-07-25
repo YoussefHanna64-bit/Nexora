@@ -6,6 +6,7 @@ import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 import 'package:nexora/core/utils/app_snackbars.dart';
 import 'package:nexora/core/widgets/custom_primary_button.dart';
+import 'package:nexora/core/widgets/custom_text_form_field.dart';
 import 'package:nexora/features/reviews/domain/entities/review.dart';
 import 'package:nexora/features/reviews/domain/usecases/params/review_params.dart';
 import 'package:nexora/features/reviews/presentation/manager/review_cubit.dart';
@@ -82,19 +83,11 @@ class _ReviewBottomSheetState extends State<ReviewBottomSheet> {
             }),
           ),
           const SizedBox(height: 16),
-          TextField(
-            controller: _commentController,
-            maxLines: 4,
-            decoration: InputDecoration(
+          CustomTextFormField(
+              controller: _commentController,
+              maxLines: 4,
               hintText: l10n.reviewHint,
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: AppColors.primary),
-              ),
-            ),
-          ),
+              validator: null),
           const SizedBox(height: 24),
           BlocConsumer<ReviewCubit, ReviewState>(
             listener: (context, state) {

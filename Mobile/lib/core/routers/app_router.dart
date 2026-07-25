@@ -5,6 +5,7 @@ import 'package:nexora/core/di/dependency_injection.dart';
 import 'package:nexora/core/routers/routes.dart';
 import 'package:nexora/core/services/cache_helper.dart';
 import 'package:nexora/core/services/secure_storage.dart';
+import 'package:nexora/features/feedback/presentation/manager/feedback_cubit.dart';
 import 'package:nexora/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:nexora/features/address/domain/entities/shipping_address.dart';
 import 'package:nexora/features/address/presentation/views/add_edit_address_view.dart';
@@ -35,6 +36,7 @@ import 'package:nexora/features/settings/presentation/views/about_nexora_view.da
 import 'package:nexora/features/settings/presentation/views/privacy_policy_view.dart';
 import 'package:nexora/features/settings/presentation/views/settings_view.dart';
 import 'package:nexora/features/wishlist/presentation/views/wishlist_view.dart';
+import 'package:nexora/features/feedback/presentation/views/help_center_view.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -219,6 +221,14 @@ final GoRouter appRouter = GoRouter(
       path: Routes.privacyPolicy,
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const PrivacyPolicyView(),
+    ),
+    GoRoute(
+      path: Routes.helpCenter,
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => BlocProvider(
+        create: (context) => getIt<FeedbackCubit>(),
+        child: const HelpCenterView(),
+      ),
     ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nexora/core/theme/colors.dart';
 import 'package:nexora/core/theme/text_styles.dart';
 
 class SectionBody extends StatelessWidget {
@@ -18,7 +17,7 @@ class SectionBody extends StatelessWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.greyColor.withAlpha(50),
+          color: Theme.of(context).dividerColor,
         ),
       ),
       child: Text(
