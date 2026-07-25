@@ -4,8 +4,10 @@ import mongoose from "mongoose";
 import Cart from "../models/cartModel.js";
 import Order from "../models/orderModel.js";
 import Product from "../models/productModel.js";
+import User from "../models/userModel.js";
 import AppError from "../utils/AppError.js";
 import httpStatus from "../utils/httpStatus.js";
+import sendEmail from "../utils/sendEmail.js";
 import {
   ORDER_ALREADY_CANCELLED,
   ORDER_ALREADY_DELIVERED,
@@ -20,6 +22,7 @@ import {
   ORDER_NOT_FOUND,
   PRODUCT_NOT_FOUND,
   stockExceeded,
+  EMAIL_SENDING_ERROR,
 } from "../utils/messages.js";
 import { updateOrderStatusValidator } from "../utils/validators/orderValidator.js";
 
@@ -109,6 +112,27 @@ export const createOrder = asyncWrapper(async (req, res, next) => {
     path: "cartItems.product",
     select: "name thumbnail price",
   });
+
+  const user = await User.findById(req.user.id).select("fullname email");
+
+  if (user) {
+    const itemLines = populatedOrder.cartItems
+      .map((item) => `  - ${item.product.name} x${item.quantity}  ($${item.price.toFixed(2)} each)`)
+      .join("\n");
+
+    const message = `Hello ${user.fullname},\n\nThank you for your purchase on Nexora! \n\nOrder Summary:\n${itemLines}\n\nTotal: $${populatedOrder.totalOrderPrice.toFixed(2)}\nPayment: ${populatedOrder.paymentMethodType}\n\nWe will notify you once your order ships.\n\nBest regards,\nThe Nexora Team`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: "Nexora - Thank you for your purchase!",
+        message,
+      });
+    } catch (err) {
+      console.error(EMAIL_SENDING_ERROR);
+
+    }
+  }
 
   res.status(201).json({
     success: true,
@@ -227,6 +251,28 @@ export const updateOrderStatus = asyncWrapper(async (req, res, next) => {
   }
 
   const updatedOrder = await order.save();
+
+  const user = await User.findById(order.user).select("fullname email");
+  if (user) {
+    const statusLabels = {
+      pending: "Pending",
+      shipped: "Shipped",
+      delivered: "Delivered",
+    };
+
+    const message = `Hello ${user.fullname},\n\nGreat news! Your Nexora order status has been updated.\n\nNew status: ${statusLabels[updatedOrder.status]}\nOrder total: $${updatedOrder.totalOrderPrice.toFixed(2)}\n\nThank you for shopping with us!\n\nBest regards,\nThe Nexora Team`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: `Nexora - Your order has been ${updatedOrder.status}`,
+        message,
+      });
+    } catch (err) {
+      console.error(EMAIL_SENDING_ERROR);
+
+    }
+  }
 
   res.status(200).json({
     success: true,
